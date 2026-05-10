@@ -1,5 +1,5 @@
 // แนะนำให้เก็บ artist_id ไว้เป็นตัวแปรกลาง ถ้าเป็นข้อมูลจำลองชุดเดียวกัน
-const MOCK_ARTIST_ID = "64f1234567890abcdef12345"; 
+const MOCK_ARTIST_ID = "64f1234567890abcdef12345";
 
 export const PRODUCTS = [
   {
@@ -15,7 +15,7 @@ export const PRODUCTS = [
     status: "published",
     deleted_at: null,
     created_at: "2026-05-09T06:00:00Z", // ใช้ ISO String แทน new Date() จะช่วยให้ข้อมูลคงที่เวลาเทส
-    updated_at: "2026-05-09T06:00:00Z"
+    updated_at: "2026-05-09T06:00:00Z",
   },
   {
     id: "p2",
@@ -30,7 +30,7 @@ export const PRODUCTS = [
     status: "published",
     deleted_at: null,
     created_at: "2026-05-09T06:00:00Z",
-    updated_at: "2026-05-09T06:00:00Z"
+    updated_at: "2026-05-09T06:00:00Z",
   },
   {
     id: "p3",
@@ -45,6 +45,6 @@ export const PRODUCTS = [
     status: "published",
     deleted_at: null,
     created_at: "2026-05-09T06:00:00Z",
-    updated_at: "2026-05-09T06:00:00Z"
-  }
+    updated_at: "2026-05-09T06:00:00Z",
+  },
 ];
