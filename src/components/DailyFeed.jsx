@@ -17,20 +17,33 @@ const sideArticles = [
 
 export default function DailyFeed() {
   return (
-    <section className="daily-feed">
-      <div className="head-txt">
-        <h2>Audtlist Daily</h2>
+    <section className="mx-[10%] mb-8 mt-24 overflow-hidden rounded-lg border border-[#d1cfcf] bg-[#E7F2EF] shadow-[0_1px_3px_rgba(0,0,0,0.07),0_1px_2px_rgba(0,0,0,0.04)]">
+      <div className="border-b border-slate-200 px-8 pb-4 pt-6">
+        <h2 className="font-['Montserrat',sans-serif] text-[28px] font-bold leading-tight tracking-normal text-slate-900">
+          Audtlist Daily
+        </h2>
       </div>
 
-      <div className="feed">
-        <article className="left-feed">
-          <img src={mainCover} alt="Featured article cover" />
-          <div className="left-feed-txt">
-            <h2>
-              <a href="#">Music Daily (Main)</a>
+      <div className="flex flex-row">
+        <article className="min-w-0 flex-[3]">
+          <img
+            className="block aspect-[16/10] w-full object-cover"
+            src={mainCover}
+            alt="Featured article cover"
+          />
+          <div className="px-8 py-6">
+            <h2 className="mb-2 w-fit text-[21px] font-bold leading-tight text-slate-900">
+              <a
+                className="text-slate-900 no-underline transition-colors duration-150 hover:text-slate-500 hover:underline"
+                href="#"
+              >
+                Music Daily (Main)
+              </a>
             </h2>
-            <h3>5 April 2026</h3>
-            <p>
+            <h3 className="mb-3 font-['Montserrat',sans-serif] text-sm font-medium tracking-[0.04em] text-slate-500">
+              5 April 2026
+            </h3>
+            <p className="max-w-[60ch] text-base leading-[1.7] text-slate-600">
               Many artists are now experimenting with unique styles and
               collaborating across cultures, creating music that connects people
               around the world. As technology evolves, the way we create and
@@ -40,12 +53,20 @@ export default function DailyFeed() {
           </div>
         </article>
 
-        <div className="right-feed">
+        <div className="ml-4 min-w-0 flex-[1.5] border-l border-slate-200">
           {sideArticles.map((article) => (
-            <article className="pic" key={article.title}>
-              <img src={article.img} alt={article.title} />
-              <h3>{article.title}</h3>
-              <p>{article.text}</p>
+            <article className="border-b border-slate-200 last:border-b-0" key={article.title}>
+              <img
+                className="block aspect-video w-full object-cover"
+                src={article.img}
+                alt={article.title}
+              />
+              <h3 className="px-4 pt-3 text-base font-bold text-slate-900">
+                {article.title}
+              </h3>
+              <p className="px-4 py-2 text-sm leading-normal text-slate-500">
+                {article.text}
+              </p>
             </article>
           ))}
         </div>

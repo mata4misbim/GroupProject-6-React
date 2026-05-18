@@ -58,16 +58,30 @@ function Radio() {
 
   return (
     <>
-      <section className="radio">
-        <div className="banner">
-          <h2>Audtlist Radio</h2>
-          <img src={coverPoster} alt="Nightmares show poster" />
-          <p>The Nightmares Show</p>
+      <section className="mx-[10%] mb-6 flex flex-row overflow-hidden rounded-lg border border-slate-200 bg-[#E7F2EF] shadow-[0_1px_3px_rgba(0,0,0,0.07),0_1px_2px_rgba(0,0,0,0.04)]">
+        <div className="min-w-0 flex-[2]">
+          <h2 className="px-4 pb-3 pt-6 font-['Montserrat',sans-serif] text-[28px] font-bold text-slate-900">
+            Audtlist Radio
+          </h2>
+          <img
+            className="block aspect-video w-full object-cover"
+            src={coverPoster}
+            alt="Nightmares show poster"
+          />
+          <p className="px-4 py-3 font-['Montserrat',sans-serif] text-sm font-semibold uppercase tracking-[0.04em] text-slate-500">
+            The Nightmares Show
+          </p>
         </div>
 
-        <div className="banner-2">
-          <img src={nowPlayingImg} alt="Now playing" />
-          <p>Name of song and description - now playing on Audtlist Radio</p>
+        <div className="flex flex-1 flex-col gap-3 border-x border-slate-200 p-8">
+          <img
+            className="block aspect-square w-full rounded-lg object-cover shadow-[0_1px_3px_rgba(0,0,0,0.07),0_1px_2px_rgba(0,0,0,0.04)]"
+            src={nowPlayingImg}
+            alt="Now playing"
+          />
+          <p className="max-w-[28ch] text-sm leading-[1.7] text-slate-500">
+            Name of song and description - now playing on Audtlist Radio
+          </p>
           <audio
             ref={audioRef}
             src={audioSrc}
@@ -75,13 +89,13 @@ function Radio() {
             onEnded={() => setIsPlaying(false)}
           />
           <button
-            className="play-icon"
+            className="flex cursor-pointer justify-center border-0 bg-transparent py-2"
             type="button"
             onClick={togglePlayback}
             aria-label={isPlaying ? "Pause radio" : "Play radio"}
           >
             <svg
-              className="play-button"
+              className="cursor-pointer fill-[#6c63ff] drop-shadow-[0_2px_8px_rgba(108,99,255,0.3)] transition-all duration-200 hover:scale-110 hover:drop-shadow-[0_4px_12px_rgba(108,99,255,0.5)]"
               xmlns="http://www.w3.org/2000/svg"
               height="48px"
               viewBox="0 -960 960 960"
@@ -97,21 +111,32 @@ function Radio() {
           </button>
         </div>
 
-        <div className="track-list">
-          <h2>Tracklist</h2>
-          <p>
+        <div className="min-w-0 flex-1 px-6 py-8 font-['TikTok_Sans','Noto_Sans_Thai',sans-serif]">
+          <h2 className="mb-3 font-['Montserrat',sans-serif] text-[28px] font-bold leading-tight text-slate-900">
+            Tracklist
+          </h2>
+          <p className="mb-6 max-w-[40ch] text-sm leading-[1.7] text-slate-500">
             Discover a new way to experience music with AudioList Radio. Enjoy
             carefully curated playlists designed for every mood whether you're
             relaxing, working, or on the move.
           </p>
 
-          <div className="track-img">
+          <div className="flex flex-col gap-0">
             {tracks.map((track, i) => (
-              <div className="track" key={i}>
-                <img src={track.img} alt="Track cover" />
-                <div className="track1-txt">
-                  <p>{track.name}</p>
-                  <p>{track.desc}</p>
+              <div
+                className="flex cursor-pointer flex-row items-center gap-4 rounded-lg border-b border-slate-200 px-2 py-3 transition-colors duration-150 hover:bg-slate-50"
+                key={i}
+              >
+                <img
+                  className="h-14 w-14 shrink-0 rounded-lg object-cover shadow-[0_1px_3px_rgba(0,0,0,0.07),0_1px_2px_rgba(0,0,0,0.04)]"
+                  src={track.img}
+                  alt="Track cover"
+                />
+                <div className="flex flex-col gap-1">
+                  <p className="text-sm font-semibold leading-tight text-slate-900">
+                    {track.name}
+                  </p>
+                  <p className="text-xs text-slate-500">{track.desc}</p>
                 </div>
               </div>
             ))}
@@ -119,14 +144,17 @@ function Radio() {
         </div>
       </section>
 
-      <div className="progress-box">
+      <div className="mx-[10%] mb-6 flex h-20 rounded-b-lg bg-[#0a0a1a] px-[5%]">
         <button
-          className="progress-container"
+          className="my-[15px] h-5 w-[90%] cursor-pointer overflow-hidden rounded-[10px] border-0 bg-slate-600 p-0"
           type="button"
           onClick={seekAudio}
           aria-label="Seek radio"
         >
-          <span className="progress" style={{ width: `${progress}%` }}></span>
+          <span
+            className="block h-full rounded-[10px] bg-white transition-[width] duration-100"
+            style={{ width: `${progress}%` }}
+          ></span>
         </button>
       </div>
     </>
