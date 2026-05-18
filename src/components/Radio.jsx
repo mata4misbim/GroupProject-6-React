@@ -45,13 +45,13 @@ const formatTime = (seconds) => {
 
 function Radio() {
   const audioRef = useRef(null);
-  const hasLoadedTrackRef = useRef(false);
+  const shouldResumePlaybackRef = useRef(false);
   const [activeTrackIndex, setActiveTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(0.8);
+  const [volume, setVolume] = useState(0.5);
   const [isMuted, setIsMuted] = useState(false);
 
   const activeTrack = tracks[activeTrackIndex];
@@ -83,12 +83,13 @@ function Radio() {
     setDuration(0);
     audio.load();
 
-    if (!hasLoadedTrackRef.current) {
-      hasLoadedTrackRef.current = true;
+    if (shouldResumePlaybackRef.current) {
+      playAudio();
+      shouldResumePlaybackRef.current = false;
       return;
     }
 
-    playAudio();
+    setIsPlaying(false);
   }, [activeTrackIndex]);
 
   const togglePlayback = () => {
@@ -134,20 +135,20 @@ function Radio() {
   };
 
   const selectTrack = (trackIndex) => {
+    shouldResumePlaybackRef.current = false;
     setActiveTrackIndex(trackIndex);
-    setIsPlaying(true);
   };
 
   const playPrevious = () => {
+    shouldResumePlaybackRef.current = isPlaying;
     setActiveTrackIndex((currentIndex) =>
       currentIndex === 0 ? tracks.length - 1 : currentIndex - 1,
     );
-    setIsPlaying(true);
   };
 
   const playNext = () => {
+    shouldResumePlaybackRef.current = isPlaying;
     setActiveTrackIndex((currentIndex) => (currentIndex + 1) % tracks.length);
-    setIsPlaying(true);
   };
 
   return (
