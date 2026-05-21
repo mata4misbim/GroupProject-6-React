@@ -1,6 +1,6 @@
-import mainCover from "../assets/0043841685_0.jpg";
-import articleOne from "../assets/0044010976_0.jpg";
-import articleTwo from "../assets/0044247710_0.jpg";
+import mainCover from "../../assets/landing-page/0043841685_0.jpg";
+import articleOne from "../../assets/landing-page/0044010976_0.jpg";
+import articleTwo from "../../assets/landing-page/0044247710_0.jpg";
 
 const sideArticles = [
   {

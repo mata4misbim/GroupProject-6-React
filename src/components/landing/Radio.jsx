@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import albumCover from "../assets/album-cover-1.jpg";
-import audioSrc from "../assets/audio.mp3";
-import coverPoster from "../assets/cover1.jpg";
-import trackCover from "../assets/cover3.png";
-import nowPlayingImg from "../assets/radio1.jpg";
+import albumCover from "../../assets/landing-page/album-cover-1.jpg";
+import audioSrc from "../../assets/audio.mp3";
+import coverPoster from "../../assets/landing-page/cover1.jpg";
+import trackCover from "../../assets/landing-page/cover3.png";
+import nowPlayingImg from "../../assets/landing-page/radio1.jpg";
 
 const tracks = [
   {

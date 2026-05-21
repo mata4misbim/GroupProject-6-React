@@ -1,7 +1,8 @@
-import cassetteImg from "../assets/cas3.avif";
-import vinylImg from "../assets/vin.avif";
-import cdsImg from "../assets/cd.avif";
-import tshirtImg from "../assets/T.webp";
+import cassetteImg from "../../assets/landing-page/cas3.avif";
+import vinylImg from "../../assets/landing-page/vin.avif";
+import cdsImg from "../../assets/landing-page/cd.avif";
+import tshirtImg from "../../assets/landing-page/T.webp";
+import { Link } from "react-router-dom";
 
 const genres = [
   "Rock",
@@ -68,26 +69,43 @@ export default function Footer() {
 
       <footer className="mx-[10%] flex min-h-[100px] flex-row items-start justify-between rounded-b-lg bg-[#0a0a1a] p-8 text-white">
         <div className="flex flex-col gap-2">
-          <a
-            className="font-['Montserrat',sans-serif] text-sm tracking-[0.04em] text-white/55 no-underline transition-colors duration-150 hover:text-white"
-            href="#"
-          >
-            About us
-          </a>
-          <a
-            className="font-['Montserrat',sans-serif] text-sm tracking-[0.04em] text-white/55 no-underline transition-colors duration-150 hover:text-white"
-            href="#"
-          >
-            Help
-          </a>
-          <a
-            className="font-['Montserrat',sans-serif] text-sm tracking-[0.04em] text-white/55 no-underline transition-colors duration-150 hover:text-white"
-            href="#"
-          >
-            Terms and conditions
-          </a>
+          <span className="font-['Caesar_Dressing',system-ui] text-[37px] leading-tight">
+          AUDTLIST 🎵
+        </span>
+         <p className="text-white/45 text-[13px] mb-6 max-w-md">
+          A marketplace for independent artists. Discover, support, and own
+          music directly from the people who make it.
+        </p>
+         <ul className="flex flex-col gap-3">
+          <li>
+            <Link
+              to="/about"
+              className="text-white/50 hover:text-white text-[14px] no-underline transition-colors"
+            >
+              About us
+            </Link>
+          </li>
+          <li>
+            <a
+              href="#"
+              className="text-white/50 hover:text-white text-[14px] no-underline transition-colors"
+            >
+              Help
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              className="text-white/50 hover:text-white text-[14px] no-underline transition-colors"
+            >
+              Terms and conditions
+            </a>
+            <p className="text-white/25 text-[11px] mt-8">
+              © 2026 Audtlist · Made with ♪ in Bangkok
+            </p>
+          </li>
+        </ul>
         </div>
-        <div className="flex-1"></div>
       </footer>
     </>
   );

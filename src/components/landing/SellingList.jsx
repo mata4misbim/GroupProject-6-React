@@ -1,13 +1,13 @@
-import t1 from "../assets/t1.jpg";
-import t2 from "../assets/t2.png";
-import album1 from "../assets/album-cover-1.jpg";
-import album2 from "../assets/album-cover-2.jpg";
-import album3 from "../assets/album-cover-3.jpg";
-import album4 from "../assets/album-cover-4.jpg";
-import album5 from "../assets/album-cover-5.jpg";
-import album6 from "../assets/album-cover-6.jpg";
-import album7 from "../assets/album-cover-7.jpg";
-import album8 from "../assets/album-cover-8.jpg";
+import t1 from "../../assets/landing-page/t1.jpg";
+import t2 from "../../assets/landing-page/t2.png";
+import album1 from "../../assets/landing-page/album-cover-1.jpg";
+import album2 from "../../assets/landing-page/album-cover-2.jpg";
+import album3 from "../../assets/landing-page/album-cover-3.jpg";
+import album4 from "../../assets/landing-page/album-cover-4.jpg";
+import album5 from "../../assets/landing-page/album-cover-5.jpg";
+import album6 from "../../assets/landing-page/album-cover-6.jpg";
+import album7 from "../../assets/landing-page/album-cover-7.jpg";
+import album8 from "../../assets/landing-page/album-cover-8.jpg";
 
 const sellingItems = [
   { img: t1, price: "$4", description: "Midnight Echo" },

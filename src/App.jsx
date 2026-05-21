@@ -1,34 +1,60 @@
-import Footer from "./components/Footer";
-import Nav from "./components/Nav";
-import flairBanner from "./assets/Flair (2).png";
-import Radio from "./components/Radio";
-import Head from "./components/Head";
-import Banner from "./components/Banner";
-import SellingList from "./components/SellingList";
-import DailyFeed from "./components/DailyFeed";
+import { useEffect } from "react";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import AboutPage from "./pages/About";
+import LoginPage from "./pages/LoginPage";
+import FanRegisterPage from "./pages/FanRegisterPage";
+import ArtistRegisterPage from "./pages/ArtistRegisterPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import MainLayout from "./layouts/MainLayout";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, [pathname]);
+
+  return null;
+}
+
+function NotFoundPage() {
+  return (
+    <main className="flex min-h-screen flex-col items-start justify-center bg-[#0a0a1a] px-[10%] text-white">
+      <p className="mb-4 font-['Montserrat',sans-serif] text-sm font-semibold uppercase tracking-[0.12em] text-white/40">
+        404
+      </p>
+      <h1 className="mb-4 text-[44px] font-bold leading-tight text-white">
+        Page not found
+      </h1>
+      <p className="mb-8 max-w-xl text-[16px] leading-[1.7] text-white/55">
+        This page is not available yet.
+      </p>
+      <Link
+        to="/"
+        className="rounded-full bg-[#6c63ff] px-6 py-3 font-['Montserrat',sans-serif] text-sm font-semibold text-white no-underline transition-colors hover:bg-[#4f46e5]"
+      >
+        Back to home
+      </Link>
+    </main>
+  );
+}
 
 export default function App() {
   return (
-    <div className="min-w-[1200px] bg-[#E7F2EF] font-['TikTok_Sans','Noto_Sans_Thai',sans-serif] text-base leading-normal text-slate-900">
-      <div className="relative min-h-[500px] w-full overflow-hidden">
-        <img
-          src={flairBanner}
-          alt="Flair banner"
-          className="block h-full min-h-[500px] w-full object-cover object-center"
-        />
-        <div className="absolute inset-0 z-[100]">
-          <Head />
-          <Nav />
-          <Banner />
-        </div>
-      </div>
-      <main>
-        <SellingList />
-        <DailyFeed />
-        <div className="h-4 bg-[#E7F2EF]"></div>
-        <Radio />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register/fan" element={<FanRegisterPage />} />
+        <Route path="/register/artist" element={<ArtistRegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route element={<MainLayout />}>
+          <Route path="/about" element={<AboutPage />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </>
   );
 }
