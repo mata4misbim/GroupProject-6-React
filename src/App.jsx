@@ -7,6 +7,10 @@ import FanRegisterPage from "./pages/FanRegisterPage";
 import ArtistRegisterPage from "./pages/ArtistRegisterPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import MainLayout from "./layouts/MainLayout";
+import ShopLayout from "./shop/ShopLayout";
+import ShopPage from "./shop/pages/ShopPage";
+import ProductDetailPage from "./shop/pages/ProductDetailPage";
+import CheckoutPage from "./shop/pages/CheckoutPage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -52,6 +56,12 @@ export default function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route element={<MainLayout />}>
           <Route path="/about" element={<AboutPage />} />
+          <Route element={<ShopLayout />}>
+            <Route path="/shop" element={<ShopPage />} />
+            <Route path="/discover/:genres" element={<ShopPage />} />
+            <Route path="/product/:slug" element={<ProductDetailPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+          </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

@@ -1,13 +1,15 @@
+import { Link } from "react-router-dom";
+
 const navItems = [
-  "Digital music",
-  "Vinyl",
-  "Compact discs",
-  "Cassettes",
-  "T-shirts",
-  "Gift cards",
-  "Editorial",
-  "Club",
-  "Store",
+  { label: "Digital music", to: "/shop?category=digital" },
+  { label: "Vinyl", to: "/shop?category=vinyl" },
+  { label: "Compact discs", to: "/shop?category=cd" },
+  { label: "Cassettes", to: "/shop?category=cassette" },
+  { label: "T-shirts", to: "/shop?category=tshirt" },
+  { label: "Gift cards", to: "/shop" },
+  { label: "Editorial", to: "/shop" },
+  { label: "Club", to: "/shop" },
+  { label: "Store", to: "/shop" },
 ];
 
 export default function Nav() {
@@ -27,14 +29,14 @@ export default function Nav() {
         {navItems.map((item) => (
           <li
             className="font-['Montserrat',sans-serif] text-sm font-medium tracking-[0.04em]"
-            key={item}
+            key={item.label}
           >
-            <a
+            <Link
               className="block rounded-lg px-3 py-2 text-white/80 no-underline transition-colors duration-150 hover:bg-white/8 hover:text-white"
-              href="#"
+              to={item.to}
             >
-              {item}
-            </a>
+              {item.label}
+            </Link>
           </li>
         ))}
       </ul>

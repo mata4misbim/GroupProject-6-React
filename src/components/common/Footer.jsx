@@ -25,10 +25,10 @@ const genres = [
 ];
 
 const categories = [
-  { title: "Cassettes", img: cassetteImg },
-  { title: "Vinyl", img: vinylImg },
-  { title: "CDs", img: cdsImg },
-  { title: "T-Shirts", img: tshirtImg },
+  { title: "Cassettes", img: cassetteImg, to: "/shop?category=cassette" },
+  { title: "Vinyl", img: vinylImg, to: "/shop?category=vinyl" },
+  { title: "CDs", img: cdsImg, to: "/shop?category=cd" },
+  { title: "T-Shirts", img: tshirtImg, to: "/shop?category=tshirt" },
 ];
 
 export default function Footer() {
@@ -41,16 +41,17 @@ export default function Footer() {
               className="cursor-pointer rounded-full border-[1.5px] border-white/15 px-4 py-2 text-sm font-medium tracking-[0.04em] transition-all duration-200 hover:-translate-y-px hover:border-[#6c63ff]/70 hover:bg-[#6c63ff]/35"
               key={`${genre}-${index}`}
             >
-              <a className="text-white no-underline" href="#">
+              <Link className="text-white no-underline" to="/shop">
                 {genre}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
 
         <div className="flex flex-wrap items-center justify-center gap-8 border-t border-white/6 p-8">
           {categories.map((category) => (
-            <div
+            <Link
+              to={category.to}
               className="relative w-[180px] cursor-pointer overflow-hidden rounded-lg text-center transition-[box-shadow,transform] duration-200 hover:-translate-y-1.5 hover:shadow-[0_16px_40px_rgba(0,0,0,0.4)]"
               key={category.title}
             >
@@ -62,7 +63,7 @@ export default function Footer() {
               <span className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap font-['Montserrat',sans-serif] text-sm font-bold uppercase tracking-[0.1em] text-white [text-shadow:0_1px_6px_rgba(0,0,0,0.6)]">
                 {category.title}
               </span>
-            </div>
+            </Link>
           ))}
         </div>
       </section>

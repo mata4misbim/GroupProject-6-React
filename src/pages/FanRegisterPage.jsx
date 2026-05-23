@@ -7,7 +7,7 @@ export default function FanRegisterPage() {
     <FanRegister
       onGoLogIn={() => navigate("/login")}
       onGoArtist={() => navigate("/register/artist")}
-      onRegisterSuccess={() => navigate("/login")}  // ← หลังสมัครไป login
+      onRegisterSuccess={() => navigate("/login")}  //
     />
   );
 }
