@@ -54,10 +54,13 @@ h4 {
   justify-content: center;
   gap: 28px;
   padding: 40px 20px;
-  background: #0e0e14;
-  color: #e8e8f0;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-    "Helvetica Neue", "Noto Sans Thai", sans-serif;
+  background:
+    radial-gradient(circle at 15% 18%, rgba(108, 99, 255, 0.18), transparent 28%),
+    radial-gradient(circle at 82% 75%, rgba(12, 20, 60, 0.14), transparent 34%),
+    linear-gradient(180deg, #eef8f5 0%, #e7f2ef 58%, #dbeae6 100%);
+  color: #102033;
+  font-family: "TikTok Sans", "Noto Sans Thai", -apple-system, BlinkMacSystemFont,
+    "SF Pro Text", "Helvetica Neue", sans-serif;
 }
 
 .ka-logo {
@@ -72,32 +75,40 @@ h4 {
   height: 40px;
   align-items: center;
   justify-content: center;
-  border: 1px solid #333348;
+  border: 1px solid rgba(15, 23, 42, 0.12);
   border-radius: 10px;
-  background: #1e1e2e;
-  color: #c5b8ff;
+  background: rgba(10, 10, 26, 0.92);
+  color: #e7f2ef;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 800;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.16);
 }
 
 .ka-logo__text {
-  color: #e8e8f0;
-  font-size: 18px;
-  font-weight: 600;
+  color: #0a0a1a;
+  font-family: "Caesar Dressing", system-ui;
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 400;
 }
 
 .ka-card {
   width: min(100%, 560px);
   padding: 32px;
-  border: 1px solid #2a2a3a;
-  border-radius: 16px;
-  background: #16161f;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 14px;
+  background: rgba(248, 250, 252, 0.92);
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.14);
+  backdrop-filter: blur(18px);
+}
+
+.ka-card--compact {
+  max-width: 420px;
 }
 
 .ka-title {
   margin: 0;
-  color: #f0f0fa;
+  color: #0f172a;
   font-size: 22px;
   font-weight: 700;
   line-height: 1.25;
@@ -106,7 +117,7 @@ h4 {
 
 .ka-subtitle {
   margin: 8px 0 24px;
-  color: #8b8b9b;
+  color: #64748b;
   font-size: 13px;
   line-height: 1.6;
   text-align: center;
@@ -118,9 +129,9 @@ h4 {
   gap: 8px;
   margin-bottom: 22px;
   padding: 4px;
-  border: 1px solid #29293a;
+  border: 1px solid rgba(15, 23, 42, 0.1);
   border-radius: 12px;
-  background: #0e0e14;
+  background: rgba(226, 232, 240, 0.72);
 }
 
 .ka-tab {
@@ -128,13 +139,14 @@ h4 {
   border: 0;
   border-radius: 9px;
   background: transparent;
-  color: #8b8b9b;
+  color: #64748b;
   font-weight: 700;
 }
 
 .ka-tab--active {
-  background: #25193c;
-  color: #c5b8ff;
+  background: #0a0a1a;
+  color: #f8fafc;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.16);
 }
 
 .ka-field {
@@ -150,7 +162,7 @@ h4 {
 .ka-label {
   display: block;
   margin-bottom: 6px;
-  color: #9a9aaa;
+  color: #475569;
   font-size: 12px;
   font-weight: 600;
 }
@@ -159,20 +171,23 @@ h4 {
   width: 100%;
   min-height: 42px;
   padding: 10px 14px;
-  border: 1px solid #2a2a3a;
+  border: 1px solid rgba(15, 23, 42, 0.14);
   border-radius: 9px;
   outline: none;
-  background: #0e0e14;
-  color: #e8e8f0;
+  background: rgba(255, 255, 255, 0.72);
+  color: #0f172a;
   font-size: 14px;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
 
 .ka-input::placeholder {
-  color: #555568;
+  color: #94a3b8;
 }
 
 .ka-input:focus {
-  border-color: #6644cc;
+  border-color: #6c63ff;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.14);
 }
 
 .ka-input[aria-invalid="true"] {
@@ -181,7 +196,7 @@ h4 {
 
 .ka-hint {
   margin: 6px 0 0;
-  color: #777789;
+  color: #64748b;
   font-size: 11px;
   line-height: 1.5;
 }
@@ -193,10 +208,10 @@ h4 {
 .ka-hint--success {
   margin-bottom: 16px;
   padding: 10px 12px;
-  border: 1px solid rgba(82, 196, 128, 0.35);
+  border: 1px solid rgba(22, 163, 74, 0.28);
   border-radius: 9px;
-  background: rgba(82, 196, 128, 0.08);
-  color: #7be2a0;
+  background: rgba(22, 163, 74, 0.08);
+  color: #15803d;
 }
 
 .ka-check {
@@ -210,19 +225,19 @@ h4 {
   width: 16px;
   height: 16px;
   margin-top: 3px;
-  accent-color: #6644cc;
+  accent-color: #6c63ff;
 }
 
 .ka-check__label,
 .ka-footer {
-  color: #777789;
+  color: #64748b;
   font-size: 12px;
   line-height: 1.7;
 }
 
 .ka-check__label a,
 .ka-footer a {
-  color: #9977ee;
+  color: #4f46e5;
   text-decoration: none;
   cursor: pointer;
 }
@@ -235,17 +250,19 @@ h4 {
 .ka-btn {
   width: 100%;
   min-height: 46px;
-  border: 1px solid #5533aa;
+  border: 0;
   border-radius: 10px;
-  background: #1e1030;
-  color: #c5b8ff;
+  background: linear-gradient(135deg, #8a8abe 0%, #0d0d99 100%);
+  color: #ffffff;
   font-size: 15px;
   font-weight: 700;
-  transition: background 160ms ease, transform 160ms ease;
+  box-shadow: 0 10px 26px rgba(13, 13, 153, 0.24);
+  transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
 }
 
 .ka-btn:hover {
-  background: #2a1845;
+  filter: brightness(1.05);
+  box-shadow: 0 14px 30px rgba(13, 13, 153, 0.28);
 }
 
 .ka-btn:active {
@@ -260,9 +277,9 @@ h4 {
 .ka-success {
   margin-bottom: 20px;
   padding: 20px;
-  border: 1px solid #2a2a3a;
+  border: 1px solid rgba(15, 23, 42, 0.1);
   border-radius: 12px;
-  background: #101018;
+  background: rgba(255, 255, 255, 0.62);
   text-align: center;
 }
 
@@ -274,22 +291,83 @@ h4 {
   justify-content: center;
   margin: 0 auto 12px;
   border-radius: 12px;
-  background: #25193c;
-  color: #c5b8ff;
+  background: #0a0a1a;
+  color: #ffffff;
   font-weight: 800;
 }
 
 .ka-success__title {
   margin: 0 0 6px;
-  color: #f0f0fa;
+  color: #0f172a;
   font-weight: 700;
 }
 
 .ka-success__text {
   margin: 0;
-  color: #8b8b9b;
+  color: #64748b;
   font-size: 12px;
   line-height: 1.6;
+}
+
+.ka-password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  display: flex;
+  min-width: 48px;
+  height: 28px;
+  transform: translateY(-50%);
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  transition: color 160ms ease, background 160ms ease;
+}
+
+.ka-password-toggle:hover {
+  background: rgba(15, 23, 42, 0.06);
+  color: #0f172a;
+}
+
+.ka-link-button {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  border: 0;
+  background: transparent;
+  color: #4f46e5;
+  text-align: right;
+  font-size: 12px;
+}
+
+.ka-link-button:hover,
+.ka-inline-button:hover,
+.ka-legal a:hover {
+  text-decoration: underline;
+}
+
+.ka-inline-button {
+  border: 0;
+  background: transparent;
+  color: #4f46e5;
+  font: inherit;
+}
+
+.ka-legal {
+  margin: 10px 0 0;
+  color: #94a3b8;
+  font-size: 11px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.ka-legal a {
+  color: #64748b;
+  text-decoration: none;
 }
 
 @media (max-width: 640px) {
