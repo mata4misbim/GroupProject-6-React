@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth.js";
+import SearchBar from "./SearchBar.jsx";
 
 export default function Head() {
   const { isLoggedIn, user, logout } = useAuth();
@@ -11,7 +12,7 @@ export default function Head() {
   };
 
   return (
-    <nav className="flex h-[68px] items-center justify-between gap-6 border-b border-white/10 bg-black/35 px-[10%] backdrop-blur-xl">
+    <nav className="relative z-[100] flex h-[68px] items-center justify-between gap-6 border-b border-white/10 bg-black/35 px-[10%] backdrop-blur-xl">
       <div className="flex shrink-0 cursor-pointer items-center gap-2 text-white transition-opacity duration-150 hover:opacity-75">
         <Link to="/">
           <span className="font-['Caesar_Dressing',system-ui] text-[37px] leading-tight">
@@ -19,7 +20,10 @@ export default function Head() {
           </span>
         </Link>
       </div>
-
+      <div className="relative z-[110] mr-auto max-w-[420px] flex-1">
+        <SearchBar />
+      </div>
+{/*   
       <div className="mr-auto max-w-[340px] flex-1">
         <form action="https://www.youtube.com/results" method="get" target="_blank">
           <div className="flex w-full items-center gap-2 rounded-full border-[1.5px] border-white/25 bg-white/12 px-4 py-2 transition-[border-color,box-shadow] duration-200 focus-within:border-white/60 focus-within:shadow-[0_0_0_3px_rgba(255,255,255,0.1)]">
@@ -37,7 +41,7 @@ export default function Head() {
             />
           </div>
         </form>
-      </div>
+      </div> */}
       {/* Auth buttons */}
       <div className="flex shrink-0 gap-2">
         {isLoggedIn ? (

@@ -45,30 +45,30 @@ export default function LogIn({ onGoFan, onGoArtist, onGoForgot, onLogIn }) {
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center bg-[#0e0e14] px-5 py-10 font-body">
-      <div className="z-10 mb-8 flex items-center gap-2.5">
-        <div className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-[#333] bg-[#1e1e2e] text-[13px] font-bold text-[#ccc]">
+    <div className="ka-root">
+      <div className="ka-logo">
+        <div className="ka-logo__icon">
           A
         </div>
-        <span className="text-lg font-medium text-[#e8e8f0]">AUDTLIST</span>
+        <span className="ka-logo__text">AUDTLIST</span>
       </div>
 
-      <div className="z-10 w-full max-w-[400px] rounded-2xl border border-[#2a2a3a] bg-[#16161f] p-8">
-        <p className="text-center text-xl font-bold text-[#f0f0fa]">Log in</p>
-        <p className="mb-7 mt-1.5 text-center text-[13px] leading-6 text-[#666]">
+      <div className="ka-card ka-card--compact">
+        <p className="ka-title">Log in</p>
+        <p className="ka-subtitle">
           Welcome back
         </p>
 
         {errors.form && (
-          <p className="mb-3 text-[11px] text-[#ff6b6b]">{errors.form}</p>
+          <p className="ka-hint ka-hint--error">{errors.form}</p>
         )}
 
-        <div className="mb-4">
-          <label className="mb-1.5 block text-xs font-medium text-[#888]">
+        <div className="ka-field">
+          <label className="ka-label">
             Email
           </label>
           <input
-            className="w-full rounded-lg border border-[#2a2a3a] bg-[#0e0e14] px-3.5 py-2.5 pr-10 text-sm text-[#e8e8f0] outline-none placeholder:text-[#444] focus:border-[#6644cc] aria-[invalid=true]:border-[#ff6b6b]"
+            className="ka-input"
             type="email"
             name="email"
             placeholder="you@mail.com"
@@ -82,19 +82,19 @@ export default function LogIn({ onGoFan, onGoArtist, onGoForgot, onLogIn }) {
             aria-describedby={errors.email ? "email-error" : undefined}
           />
           {errors.email && (
-            <p id="email-error" className="mt-1 text-[11px] text-[#ff6b6b]">
+            <p id="email-error" className="ka-hint ka-hint--error">
               {errors.email}
             </p>
           )}
         </div>
 
-        <div className="mb-4">
-          <label className="mb-1.5 block text-xs font-medium text-[#888]">
+        <div className="ka-field">
+          <label className="ka-label">
             Password
           </label>
           <div className="relative">
             <input
-              className="w-full rounded-lg border border-[#2a2a3a] bg-[#0e0e14] px-3.5 py-2.5 pr-16 text-sm text-[#e8e8f0] outline-none placeholder:text-[#444] focus:border-[#6644cc] aria-[invalid=true]:border-[#ff6b6b]"
+              className="ka-input pr-16"
               type={showPassword ? "text" : "password"}
               placeholder="********"
               value={password}
@@ -108,7 +108,7 @@ export default function LogIn({ onGoFan, onGoArtist, onGoForgot, onLogIn }) {
               aria-describedby={errors.password ? "password-error" : undefined}
             />
             <button
-              className="absolute right-2.5 top-1/2 flex h-7 min-w-12 -translate-y-1/2 items-center justify-center rounded-md bg-transparent px-2 text-xs font-medium text-[#888] transition-colors hover:text-[#aaa]"
+              className="ka-password-toggle"
               onClick={() => setShowPassword(!showPassword)}
               type="button"
               aria-label={showPassword ? "Hide password" : "Show password"}
@@ -117,12 +117,12 @@ export default function LogIn({ onGoFan, onGoArtist, onGoForgot, onLogIn }) {
             </button>
           </div>
           {errors.password && (
-            <p id="password-error" className="mt-1 text-[11px] text-[#ff6b6b]">
+            <p id="password-error" className="ka-hint ka-hint--error">
               {errors.password}
             </p>
           )}
           <button
-            className="mt-1 block w-full bg-transparent text-right text-xs text-[#9977ee] hover:underline"
+            className="ka-link-button"
             onClick={onGoForgot}
             type="button"
           >
@@ -131,7 +131,7 @@ export default function LogIn({ onGoFan, onGoArtist, onGoForgot, onLogIn }) {
         </div>
 
         <button
-          className="mt-2 w-full rounded-[10px] border border-[#5533aa] bg-[#1e1030] p-3 text-[15px] font-bold text-[#c5b8ff] transition hover:bg-[#2a1845] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
+          className="ka-btn"
           onClick={handleLogIn}
           disabled={isLoading}
           aria-busy={isLoading}
@@ -139,10 +139,10 @@ export default function LogIn({ onGoFan, onGoArtist, onGoForgot, onLogIn }) {
           {isLoading ? "Logging in..." : "Log in"}
         </button>
 
-        <div className="mt-5 text-center text-xs leading-7 text-[#555]">
+        <div className="ka-footer">
           Don't have an account?{" "}
           <button
-            className="bg-transparent text-[#9977ee] hover:underline"
+            className="ka-inline-button"
             onClick={onGoFan}
             type="button"
           >
@@ -150,7 +150,7 @@ export default function LogIn({ onGoFan, onGoArtist, onGoForgot, onLogIn }) {
           </button>{" "}
           or{" "}
           <button
-            className="bg-transparent text-[#9977ee] hover:underline"
+            className="ka-inline-button"
             onClick={onGoArtist}
             type="button"
           >
@@ -158,13 +158,13 @@ export default function LogIn({ onGoFan, onGoArtist, onGoForgot, onLogIn }) {
           </button>
         </div>
 
-        <p className="mt-2.5 text-center text-[11px] leading-5 text-[#555]">
+        <p className="ka-legal">
           This site is protected by reCAPTCHA and the Google{" "}
-          <a className="text-[#666]" href="#">
+          <a href="#">
             Privacy Policy
           </a>{" "}
           and{" "}
-          <a className="text-[#666]" href="#">
+          <a href="#">
             Terms of Service
           </a>{" "}
           apply.

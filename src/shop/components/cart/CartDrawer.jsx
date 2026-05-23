@@ -13,6 +13,7 @@ export default function CartDrawer() {
     updateQty,
     clearCart,
     total,
+    shippingCost
   } = useCart();
 
   const { isLoggedIn } = useAuth();
@@ -117,6 +118,7 @@ export default function CartDrawer() {
         {items.length > 0 && (
           <div className="px-6 py-5 border-t border-white/[0.05] space-y-3">
             <div className="flex items-center justify-between">
+              <span className="text-white/50 text-[13px]">Shipping Fee: {`${shippingCost}`}</span>
               <span className="text-white/50 text-[13px]">Total</span>
               <span className="text-white font-bold text-[20px]">
                 {formatPrice(total)}
@@ -124,7 +126,7 @@ export default function CartDrawer() {
             </div>
 
             <button onClick={handleCheckout} className="w-full bg-accent hover:bg-accent-hover text-white font-semibold text-[15px] py-3 rounded-lg transition-colors active:scale-[0.99]">
-              {isLoggedIn ? "Checkout" : "Log in to Checkout"}
+              {isLoggedIn ? "Checkout" : "Log in and Checkout"}
             </button>
             <button
               onClick={clearCart}
