@@ -59,7 +59,7 @@ export function CartProvider({ children }) {
       value={{
         items, open, setOpen,
         addToCart, removeItem, updateQty, clearCart,
-        totalItems, total,
+        totalItems, total,shippingCost
       }}
     >
       {children}
