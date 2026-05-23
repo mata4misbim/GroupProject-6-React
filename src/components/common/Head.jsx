@@ -42,7 +42,7 @@ export default function Head() {
       <div className="flex shrink-0 gap-2">
         {isLoggedIn ? (
           <>
-            <span className="max-w-[120px] truncate text-sm text-white/70">
+            <span className="max-w-[200px] truncate text-sm text-white/70   px-6 py-2">
               {user?.email}
             </span>
             <button

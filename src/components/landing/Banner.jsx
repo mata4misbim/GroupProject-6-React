@@ -1,5 +1,6 @@
 import logoImg from "../../assets/landing-page/logo.png";
 
+
 const textShadow = "shadow-black/40 [text-shadow:0_1px_8px_var(--tw-shadow-color)]";
 
 export default function Banner() {
