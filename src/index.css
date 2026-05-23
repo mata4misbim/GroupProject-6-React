@@ -1,111 +1,304 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import url("https://fonts.googleapis.com/css2?family=Caesar+Dressing&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+Thai:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=TikTok+Sans:opsz,wght@12..36,300..900&family=Space+Grotesk:wght@300..700&family=Space+Mono:wght@400;700&display=swap");
+@import "tailwindcss";
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+@theme {
+  --color-bg: #1c1c1e;
+  --color-bg-dark: #141414;
+  --color-bg-card: #2c2c2e;
+  --color-accent: #fc3c44;
+  --color-accent-hover: #e8333b;
+  --color-brand-purple: #9d6dff;
+  --color-brand-cyan: #00d9ff;
+  --color-brand-gold: #ffd700;
 }
 
 body {
   margin: 0;
+  min-width: 1200px;
+  background: #E7F2EF;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+* {
   box-sizing: border-box;
 }
 
+p,
 h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
+h2,
+h3,
+h4 {
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
 }
 
-code {
+
+/* Shared auth form styles. These components use ka-* classes directly. */
+.ka-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding: 40px 20px;
+  background: #0e0e14;
+  color: #e8e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Helvetica Neue", "Noto Sans Thai", sans-serif;
+}
+
+.ka-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ka-logo__icon {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #333348;
+  border-radius: 10px;
+  background: #1e1e2e;
+  color: #c5b8ff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ka-logo__text {
+  color: #e8e8f0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.ka-card {
+  width: min(100%, 560px);
+  padding: 32px;
+  border: 1px solid #2a2a3a;
+  border-radius: 16px;
+  background: #16161f;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+.ka-title {
+  margin: 0;
+  color: #f0f0fa;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.ka-subtitle {
+  margin: 8px 0 24px;
+  color: #8b8b9b;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.ka-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 22px;
+  padding: 4px;
+  border: 1px solid #29293a;
+  border-radius: 12px;
+  background: #0e0e14;
+}
+
+.ka-tab {
+  min-height: 38px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #8b8b9b;
+  font-weight: 700;
+}
+
+.ka-tab--active {
+  background: #25193c;
+  color: #c5b8ff;
+}
+
+.ka-field {
+  margin-bottom: 16px;
+}
+
+.ka-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.ka-label {
+  display: block;
+  margin-bottom: 6px;
+  color: #9a9aaa;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ka-input {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 1px solid #2a2a3a;
+  border-radius: 9px;
+  outline: none;
+  background: #0e0e14;
+  color: #e8e8f0;
+  font-size: 14px;
+}
+
+.ka-input::placeholder {
+  color: #555568;
+}
+
+.ka-input:focus {
+  border-color: #6644cc;
+}
+
+.ka-input[aria-invalid="true"] {
+  border-color: #ff6b6b;
+}
+
+.ka-hint {
+  margin: 6px 0 0;
+  color: #777789;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.ka-hint--error {
+  color: #ff6b6b;
+}
+
+.ka-hint--success {
+  margin-bottom: 16px;
+  padding: 10px 12px;
+  border: 1px solid rgba(82, 196, 128, 0.35);
+  border-radius: 9px;
+  background: rgba(82, 196, 128, 0.08);
+  color: #7be2a0;
+}
+
+.ka-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 4px 0 18px;
+}
+
+.ka-checkbox {
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  accent-color: #6644cc;
+}
+
+.ka-check__label,
+.ka-footer {
+  color: #777789;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.ka-check__label a,
+.ka-footer a {
+  color: #9977ee;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ka-check__label a:hover,
+.ka-footer a:hover {
+  text-decoration: underline;
+}
+
+.ka-btn {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid #5533aa;
+  border-radius: 10px;
+  background: #1e1030;
+  color: #c5b8ff;
   font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  font-weight: 700;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.ka-btn:hover {
+  background: #2a1845;
+}
+
+.ka-btn:active {
+  transform: scale(0.98);
+}
+
+.ka-footer {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.ka-success {
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #2a2a3a;
+  border-radius: 12px;
+  background: #101018;
+  text-align: center;
+}
+
+.ka-success__icon {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  border-radius: 12px;
+  background: #25193c;
+  color: #c5b8ff;
+  font-weight: 800;
+}
+
+.ka-success__title {
+  margin: 0 0 6px;
+  color: #f0f0fa;
+  font-weight: 700;
+}
+
+.ka-success__text {
+  margin: 0;
+  color: #8b8b9b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+  .ka-card {
+    padding: 24px;
+  }
+
+  .ka-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
 }
