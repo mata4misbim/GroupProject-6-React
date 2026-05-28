@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import AboutPage from "./pages/About";
+import Article1Page from "./pages/article1";
+import Article2Page from "./pages/article2";
+import Article3Page from "./pages/article3";
 import LoginPage from "./pages/LoginPage";
 import FanRegisterPage from "./pages/FanRegisterPage";
 import ArtistRegisterPage from "./pages/ArtistRegisterPage";
@@ -56,6 +59,9 @@ export default function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route element={<MainLayout />}>
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/article1" element={<Article1Page />} />
+          <Route path="/article2" element={<Article2Page />} />
+          <Route path="/article3" element={<Article3Page />} />
           <Route element={<ShopLayout />}>
             <Route path="/shop" element={<ShopPage />} />
             <Route path="/discover/:genres" element={<ShopPage />} />
