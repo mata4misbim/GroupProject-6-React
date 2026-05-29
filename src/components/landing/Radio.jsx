@@ -178,7 +178,11 @@ function Radio() {
               <p className="font-['Montserrat',sans-serif] text-sm font-semibold uppercase tracking-[0.04em] text-slate-500">
                 The Nightmares Show
               </p>
-              <span className="rounded-full bg-red-500 px-3 py-1 font-['Montserrat',sans-serif] text-xs font-bold uppercase tracking-[0.08em] text-white">
+              <span className="flex items-center gap-1.5 rounded-full bg-red-500 px-3 py-1 font-['Montserrat',sans-serif] text-xs font-bold uppercase tracking-[0.08em] text-white">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
+                </span>
                 Live
               </span>
             </div>

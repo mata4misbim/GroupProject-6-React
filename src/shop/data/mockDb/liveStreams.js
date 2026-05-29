@@ -23,7 +23,8 @@ export const liveStreams = [
       "Late-night indie rock session live from Chiang Mai. Tune in for new tracks and old favorites.",
     // คลิปสั้น (public sample) — Big Buck Bunny หรือ Pexels free clip
     // ถ้าจะ deploy จริง แนะนำหาคลิปที่ free และไฟล์เล็ก
-    video_url: "https://www.pexels.com/download/video/19233861/",
+    video_url:
+      "https://res.cloudinary.com/dfyh90ba4/video/upload/v1780043975/BABYMONSTER_%EB%B2%A0%EC%9D%B4%EB%B9%84%EB%AA%AC%EC%8A%A4%ED%84%B0_-_CHOOM_%EC%B6%A4___Show_MusicCore___MBC260509%EB%B0%A9%EC%86%A1_vwl3hp.mp4",
     thumbnail_url: "/covers/coversong-14.jpg", // Dark Romantics cover
     started_at: new Date(Date.now() - 47 * 60 * 1000), // started 47 min ago
     scheduled_duration_sec: 4 * 60 * 60, // 4 hours
@@ -34,7 +35,8 @@ export const liveStreams = [
     title: "Mall After Hours — Synthwave Live",
     description:
       "Five hours of nonstop synthwave. Empty mall vibes, neon lights, vaporwave aesthetics.",
-    video_url: "https://www.pexels.com/download/video/19233861/",
+    video_url:
+      "https://res.cloudinary.com/dfyh90ba4/video/upload/v1780043975/BABYMONSTER_%EB%B2%A0%EC%9D%B4%EB%B9%84%EB%AA%AC%EC%8A%A4%ED%84%B0_-_CHOOM_%EC%B6%A4___Show_MusicCore___MBC260509%EB%B0%A9%EC%86%A1_vwl3hp.mp4",
     thumbnail_url: "/covers/coversong-25.jpg",
     started_at: new Date(Date.now() - 23 * 60 * 1000),
     scheduled_duration_sec: 5 * 60 * 60,
@@ -45,7 +47,8 @@ export const liveStreams = [
     title: "Cabin Sessions — Acoustic Live",
     description:
       "Acoustic folk from a cabin in Pai. Birds singing, wood crackling, gentle guitar.",
-    video_url: "https://www.pexels.com/download/video/19233861/",
+    video_url:
+      "https://res.cloudinary.com/dfyh90ba4/video/upload/v1780043975/BABYMONSTER_%EB%B2%A0%EC%9D%B4%EB%B9%84%EB%AA%AC%EC%8A%A4%ED%84%B0_-_CHOOM_%EC%B6%A4___Show_MusicCore___MBC260509%EB%B0%A9%EC%86%A1_vwl3hp.mp4",
     thumbnail_url: "/covers/coversong-32.jpg",
     started_at: new Date(Date.now() - 1 * 60 * 60 * 1000 - 15 * 60 * 1000), // 1h 15m ago
     scheduled_duration_sec: 3 * 60 * 60,
