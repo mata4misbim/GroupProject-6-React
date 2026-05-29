@@ -95,12 +95,12 @@ export default function Footer() {
             </a>
           </li>
           <li>
-            <a
-              href="#"
+            <Link
+              to="/terms"
               className="text-white/50 hover:text-white text-[14px] no-underline transition-colors"
             >
               Terms and conditions
-            </a>
+            </Link>
             <p className="text-white/25 text-[11px] mt-8">
               © 2026 Audtlist · Made with ♪ in Bangkok
             </p>

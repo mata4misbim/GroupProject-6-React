@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import FanRegisterPage from "./pages/FanRegisterPage";
 import ArtistRegisterPage from "./pages/ArtistRegisterPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import TermsConditions from "./pages/TermsConditions";
 import MainLayout from "./layouts/MainLayout";
 import ShopLayout from "./shop/ShopLayout";
 import ShopPage from "./shop/pages/ShopPage";
@@ -57,6 +58,7 @@ export default function App() {
         <Route path="/register/fan" element={<FanRegisterPage />} />
         <Route path="/register/artist" element={<ArtistRegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/terms" element={<TermsConditions />} />
         <Route element={<MainLayout />}>
           <Route path="/about" element={<AboutPage />} />
           <Route path="/article1" element={<Article1Page />} />
