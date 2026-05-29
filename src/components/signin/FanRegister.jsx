@@ -30,27 +30,22 @@ export default function FanRegister({ onGoLogIn, onGoArtist, onRegisterSuccess }
     } else if (!emailPattern.test(form.email.trim())) {
       nextErrors.email = "Enter a valid email address.";
     }
-
     if (!form.firstName.trim()) {
       nextErrors.firstName = "First name is required.";
     }
-
     if (!form.lastName.trim()) {
       nextErrors.lastName = "Last name is required.";
     }
-
     if (!form.password) {
       nextErrors.password = "Password is required.";
     } else if (form.password.length < 8) {
       nextErrors.password = "Password must be at least 8 characters.";
     }
-
     if (!form.confirmPassword) {
       nextErrors.confirmPassword = "Please confirm your password.";
     } else if (form.confirmPassword !== form.password) {
       nextErrors.confirmPassword = "Passwords do not match.";
     }
-
     if (!form.acceptedTerms) {
       nextErrors.acceptedTerms = "You must agree to the terms to continue.";
     }
@@ -61,223 +56,181 @@ export default function FanRegister({ onGoLogIn, onGoArtist, onRegisterSuccess }
   const handleSubmit = (event) => {
     event.preventDefault();
     const nextErrors = validate();
-
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
       setIsSubmitted(false);
       return;
     }
-
     setErrors({});
     setIsSubmitted(true);
     if (onRegisterSuccess) setTimeout(onRegisterSuccess, 1200);
   };
 
   return (
-    <div className="ka-root">
-      <div className="ka-logo">
-        <div className="ka-logo__icon">A</div>
-        <span className="ka-logo__text">Audtlist</span>
+    <div className="ka-register-page">
+      <div className="ka-register-card">
+
+        {/* Left: image panel */}
+        <div className="ka-register-card__hero ka-register-card__hero--fan">
+          <img src="/covers/signupforfansv2.jpg" alt="" aria-hidden="true" />
+        </div>
+
+        {/* Right: form panel */}
+        <div className="ka-register-card__side">
+          <form onSubmit={handleSubmit} noValidate>
+            <p className="ka-title">Create account</p>
+            <p className="ka-subtitle">Sign up for a Kamui fan account</p>
+
+            <div className="ka-tabs" role="tablist" aria-label="Account type">
+              <button className="ka-tab ka-tab--active" type="button">
+                Fan
+              </button>
+              <button className="ka-tab" type="button" onClick={onGoArtist}>
+                Artist
+              </button>
+            </div>
+
+            {isSubmitted && (
+              <p className="ka-hint ka-hint--success" role="status">
+                Account details look good. You can now log in.
+              </p>
+            )}
+
+            <div className="ka-field">
+              <label className="ka-label" htmlFor="fan-email">Email</label>
+              <input
+                id="fan-email"
+                className="ka-input"
+                type="email"
+                name="email"
+                placeholder="you@mail.com"
+                autoComplete="email"
+                value={form.email}
+                onChange={(e) => updateField("email", e.target.value)}
+                aria-invalid={!!errors.email}
+                aria-describedby={errors.email ? "fan-email-error" : undefined}
+                required
+              />
+              {errors.email && (
+                <p id="fan-email-error" className="ka-hint ka-hint--error">{errors.email}</p>
+              )}
+            </div>
+
+            <div className="ka-row">
+              <div className="ka-field">
+                <label className="ka-label" htmlFor="fan-first-name">First name</label>
+                <input
+                  id="fan-first-name"
+                  className="ka-input"
+                  type="text"
+                  name="given-name"
+                  placeholder="First name"
+                  autoComplete="given-name"
+                  value={form.firstName}
+                  onChange={(e) => updateField("firstName", e.target.value)}
+                  aria-invalid={!!errors.firstName}
+                  aria-describedby={errors.firstName ? "fan-first-name-error" : undefined}
+                  required
+                />
+                {errors.firstName && (
+                  <p id="fan-first-name-error" className="ka-hint ka-hint--error">{errors.firstName}</p>
+                )}
+              </div>
+
+              <div className="ka-field">
+                <label className="ka-label" htmlFor="fan-last-name">Last name</label>
+                <input
+                  id="fan-last-name"
+                  className="ka-input"
+                  type="text"
+                  name="family-name"
+                  placeholder="Last name"
+                  autoComplete="family-name"
+                  value={form.lastName}
+                  onChange={(e) => updateField("lastName", e.target.value)}
+                  aria-invalid={!!errors.lastName}
+                  aria-describedby={errors.lastName ? "fan-last-name-error" : undefined}
+                  required
+                />
+                {errors.lastName && (
+                  <p id="fan-last-name-error" className="ka-hint ka-hint--error">{errors.lastName}</p>
+                )}
+              </div>
+            </div>
+
+            <div className="ka-row">
+              <div className="ka-field">
+                <label className="ka-label" htmlFor="fan-password">Password</label>
+                <input
+                  id="fan-password"
+                  className="ka-input"
+                  type="password"
+                  name="new-password"
+                  autoComplete="new-password"
+                  value={form.password}
+                  onChange={(e) => updateField("password", e.target.value)}
+                  aria-invalid={!!errors.password}
+                  aria-describedby={errors.password ? "fan-password-error" : "fan-password-hint"}
+                  minLength={8}
+                  required
+                />
+                {errors.password ? (
+                  <p id="fan-password-error" className="ka-hint ka-hint--error">{errors.password}</p>
+                ) : (
+                  <p id="fan-password-hint" className="ka-hint">Use at least 8 characters.</p>
+                )}
+              </div>
+
+              <div className="ka-field">
+                <label className="ka-label" htmlFor="fan-confirm-password">Confirm password</label>
+                <input
+                  id="fan-confirm-password"
+                  className="ka-input"
+                  type="password"
+                  name="confirm-password"
+                  autoComplete="new-password"
+                  value={form.confirmPassword}
+                  onChange={(e) => updateField("confirmPassword", e.target.value)}
+                  aria-invalid={!!errors.confirmPassword}
+                  aria-describedby={errors.confirmPassword ? "fan-confirm-password-error" : undefined}
+                  required
+                />
+                {errors.confirmPassword && (
+                  <p id="fan-confirm-password-error" className="ka-hint ka-hint--error">{errors.confirmPassword}</p>
+                )}
+              </div>
+            </div>
+
+            <div className="ka-check">
+              <input
+                type="checkbox"
+                className="ka-checkbox"
+                id="fan-terms"
+                checked={form.acceptedTerms}
+                onChange={(e) => updateField("acceptedTerms", e.target.checked)}
+                aria-invalid={!!errors.acceptedTerms}
+                aria-describedby={errors.acceptedTerms ? "fan-terms-error" : undefined}
+                required
+              />
+              <label htmlFor="fan-terms" className="ka-check__label">
+                I agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
+              </label>
+            </div>
+            {errors.acceptedTerms && (
+              <p id="fan-terms-error" className="ka-hint ka-hint--error">{errors.acceptedTerms}</p>
+            )}
+
+            <button className="ka-btn" type="submit">Create account</button>
+
+            <div className="ka-footer">
+              Already have an account? <a onClick={onGoLogIn}>Log in</a>
+              <br />
+              Are you an artist? <a onClick={onGoArtist}>Create an artist account</a>
+            </div>
+          </form>
+        </div>
+
       </div>
-
-      <form className="ka-card" onSubmit={handleSubmit} noValidate>
-        <p className="ka-title">Create account</p>
-        <p className="ka-subtitle">Sign up for a Kamui fan account</p>
-
-        <div className="ka-tabs" role="tablist" aria-label="Account type">
-          <button className="ka-tab ka-tab--active" type="button">
-            Fan
-          </button>
-          <button className="ka-tab" type="button" onClick={onGoArtist}>
-            Artist
-          </button>
-        </div>
-
-        {isSubmitted && (
-          <p className="ka-hint ka-hint--success" role="status">
-            Account details look good. You can now log in.
-          </p>
-        )}
-
-        <div className="ka-field">
-          <label className="ka-label" htmlFor="fan-email">
-            Email
-          </label>
-          <input
-            id="fan-email"
-            className="ka-input"
-            type="email"
-            name="email"
-            placeholder="you@mail.com"
-            autoComplete="email"
-            value={form.email}
-            onChange={(event) => updateField("email", event.target.value)}
-            aria-invalid={!!errors.email}
-            aria-describedby={errors.email ? "fan-email-error" : undefined}
-            required
-          />
-          {errors.email && (
-            <p id="fan-email-error" className="ka-hint ka-hint--error">
-              {errors.email}
-            </p>
-          )}
-        </div>
-
-        <div className="ka-row">
-          <div className="ka-field">
-            <label className="ka-label" htmlFor="fan-first-name">
-              First name
-            </label>
-            <input
-              id="fan-first-name"
-              className="ka-input"
-              type="text"
-              name="given-name"
-              placeholder="First name"
-              autoComplete="given-name"
-              value={form.firstName}
-              onChange={(event) => updateField("firstName", event.target.value)}
-              aria-invalid={!!errors.firstName}
-              aria-describedby={
-                errors.firstName ? "fan-first-name-error" : undefined
-              }
-              required
-            />
-            {errors.firstName && (
-              <p id="fan-first-name-error" className="ka-hint ka-hint--error">
-                {errors.firstName}
-              </p>
-            )}
-          </div>
-
-          <div className="ka-field">
-            <label className="ka-label" htmlFor="fan-last-name">
-              Last name
-            </label>
-            <input
-              id="fan-last-name"
-              className="ka-input"
-              type="text"
-              name="family-name"
-              placeholder="Last name"
-              autoComplete="family-name"
-              value={form.lastName}
-              onChange={(event) => updateField("lastName", event.target.value)}
-              aria-invalid={!!errors.lastName}
-              aria-describedby={
-                errors.lastName ? "fan-last-name-error" : undefined
-              }
-              required
-            />
-            {errors.lastName && (
-              <p id="fan-last-name-error" className="ka-hint ka-hint--error">
-                {errors.lastName}
-              </p>
-            )}
-          </div>
-        </div>
-
-        <div className="ka-row">
-          <div className="ka-field">
-            <label className="ka-label" htmlFor="fan-password">
-              Password
-            </label>
-            <input
-              id="fan-password"
-              className="ka-input"
-              type="password"
-              name="new-password"
-              autoComplete="new-password"
-              value={form.password}
-              onChange={(event) => updateField("password", event.target.value)}
-              aria-invalid={!!errors.password}
-              aria-describedby={
-                errors.password ? "fan-password-error" : "fan-password-hint"
-              }
-              minLength={8}
-              required
-            />
-            {errors.password ? (
-              <p id="fan-password-error" className="ka-hint ka-hint--error">
-                {errors.password}
-              </p>
-            ) : (
-              <p id="fan-password-hint" className="ka-hint">
-                Use at least 8 characters.
-              </p>
-            )}
-          </div>
-
-          <div className="ka-field">
-            <label className="ka-label" htmlFor="fan-confirm-password">
-              Confirm password
-            </label>
-            <input
-              id="fan-confirm-password"
-              className="ka-input"
-              type="password"
-              name="confirm-password"
-              autoComplete="new-password"
-              value={form.confirmPassword}
-              onChange={(event) =>
-                updateField("confirmPassword", event.target.value)
-              }
-              aria-invalid={!!errors.confirmPassword}
-              aria-describedby={
-                errors.confirmPassword
-                  ? "fan-confirm-password-error"
-                  : undefined
-              }
-              required
-            />
-            {errors.confirmPassword && (
-              <p
-                id="fan-confirm-password-error"
-                className="ka-hint ka-hint--error"
-              >
-                {errors.confirmPassword}
-              </p>
-            )}
-          </div>
-        </div>
-
-        <div className="ka-check">
-          <input
-            type="checkbox"
-            className="ka-checkbox"
-            id="fan-terms"
-            checked={form.acceptedTerms}
-            onChange={(event) =>
-              updateField("acceptedTerms", event.target.checked)
-            }
-            aria-invalid={!!errors.acceptedTerms}
-            aria-describedby={
-              errors.acceptedTerms ? "fan-terms-error" : undefined
-            }
-            required
-          />
-          <label htmlFor="fan-terms" className="ka-check__label">
-            I agree to the <a href="#">Terms of Use</a> and{" "}
-            <a href="#">Privacy Policy</a>.
-          </label>
-        </div>
-        {errors.acceptedTerms && (
-          <p id="fan-terms-error" className="ka-hint ka-hint--error">
-            {errors.acceptedTerms}
-          </p>
-        )}
-
-        <button className="ka-btn" type="submit">
-          Create account
-        </button>
-
-        <div className="ka-footer">
-          Already have an account? <a onClick={onGoLogIn}>Log in</a>
-          <br />
-          Are you an artist?{" "}
-          <a onClick={onGoArtist}>Create an artist account</a>
-        </div>
-      </form>
     </div>
   );
 }
