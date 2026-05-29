@@ -32,7 +32,10 @@ export default function LiveCard({ live }) {
 
         {/* Badge LIVE สีแดง กะพริบ */}
         <div className="absolute top-3 left-3 flex items-center gap-1.5 bg-[#E24B4A] px-2.5 py-1 rounded-md shadow-lg">
-          <span className="w-[7px] h-[7px] rounded-full bg-white animate-pulse" />
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
+          </span>
           <span className="text-white text-[11px] font-semibold tracking-wider">
             LIVE
           </span>
