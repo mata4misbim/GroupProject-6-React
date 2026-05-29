@@ -17,6 +17,7 @@ import ProductDetailPage from "./shop/pages/ProductDetailPage";
 import CheckoutPage from "./shop/pages/CheckoutPage";
 import ArtistPage from "./shop/pages/ArtistPage";
 import ProfilePage from "./shop/pages/ProfilePage";
+import LivePage from "./shop/pages/LivePage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -73,6 +74,7 @@ export default function App() {
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/artist/:slug" element={<ArtistPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/live/:id" element={<LivePage />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
