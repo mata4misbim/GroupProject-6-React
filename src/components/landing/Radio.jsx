@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { getRandomLive } from "../../shop/data/liveHelpers";
 import albumCover from "../../assets/landing-page/album-cover-1.jpg";
 import audioSrc from "../../assets/audio.mp3";
 import coverPoster from "../../assets/landing-page/cover1.jpg";
@@ -42,6 +44,8 @@ const formatTime = (seconds) => {
 
   return `${minutes}:${remainingSeconds}`;
 };
+
+const currentLive = getRandomLive();
 
 function Radio() {
   const audioRef = useRef(null);
@@ -158,19 +162,27 @@ function Radio() {
           <h2 className="px-4 pb-3 pt-6 font-['Montserrat',sans-serif] text-[28px] font-bold text-slate-900">
             Audtlist Radio
           </h2>
-          <img
-            className="block aspect-video w-full object-cover"
-            src={coverPoster}
-            alt="Nightmares show poster"
-          />
-          <div className="flex items-center justify-between gap-4 px-4 py-3">
-            <p className="font-['Montserrat',sans-serif] text-sm font-semibold uppercase tracking-[0.04em] text-slate-500">
-              The Nightmares Show
-            </p>
-            <span className="rounded-full bg-red-500 px-3 py-1 font-['Montserrat',sans-serif] text-xs font-bold uppercase tracking-[0.08em] text-white">
-              Live
-            </span>
-          </div>
+          <Link
+            to={currentLive ? `/live/${currentLive._id}` : "#"}
+            className="block no-underline group/live"
+          >
+            <div className="relative overflow-hidden">
+              <img
+                className="block aspect-video w-full object-cover transition-transform duration-500 group-hover/live:scale-105"
+                src={coverPoster}
+                alt="Nightmares show poster"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover/live:bg-black/20 transition-colors duration-300" />
+            </div>
+            <div className="flex items-center justify-between gap-4 px-4 py-3">
+              <p className="font-['Montserrat',sans-serif] text-sm font-semibold uppercase tracking-[0.04em] text-slate-500">
+                The Nightmares Show
+              </p>
+              <span className="rounded-full bg-red-500 px-3 py-1 font-['Montserrat',sans-serif] text-xs font-bold uppercase tracking-[0.08em] text-white">
+                Live
+              </span>
+            </div>
+          </Link>
         </div>
 
         <div className="flex min-w-0 flex-col gap-4 border-x border-slate-200 p-8">

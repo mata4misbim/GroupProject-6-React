@@ -9,14 +9,14 @@ import flairBanner from "../assets/landing-page/Flair (2).png";
 
 export default function LandingPage() {
   return (
-    <div className="min-w-[1200px] bg-[#E7F2EF] font-['TikTok_Sans','Noto_Sans_Thai',sans-serif] text-base leading-normal text-slate-900">
-      <div className="relative min-h-[500px] w-full overflow-hidden">
+    <div className="min-w-300 bg-[#E7F2EF] font-['TikTok_Sans','Noto_Sans_Thai',sans-serif] text-base leading-normal text-slate-900">
+      <div className="relative min-h-125 w-full overflow-hidden">
         <img
           src={flairBanner}
           alt="Flair banner"
-          className="block h-full min-h-[500px] w-full object-cover object-center"
+          className="block h-full min-h-125 w-full object-cover object-center"
         />
-        <div className="absolute inset-0 z-[100]">
+        <div className="absolute inset-0 z-100">
           <Head />
           <Nav />
           <Banner />
