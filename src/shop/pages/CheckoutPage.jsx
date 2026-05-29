@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useCollection } from "../context/CollectionContext";
 import { PAYMENT_METHODS } from "../components/checkout/constants.js";
 import { calculateDiscountAmount, roundToTwoDecimals } from "../components/checkout/calculations.js";
 import CartDisplay from "../components/checkout/CartDisplay.jsx";
@@ -14,6 +15,7 @@ import OrderSubmissionProcessor from "../components/checkout/OrderSubmissionProc
 
 export default function CheckoutPage() {
   const { items, clearCart } = useCart();
+  const { addToCollection } = useCollection();
   const navigate = useNavigate();
 
   // แปลง cart items จาก CartContext format → checkout format
@@ -69,10 +71,13 @@ export default function CheckoutPage() {
     setDiscountValue(0);
   }, []);
 
-  const handleOrderSuccess = useCallback(() => {
+  const handleOrderSuccess = useCallback((submittedOrder) => {
+    if (submittedOrder?.items) {
+      addToCollection(submittedOrder.items.map((i) => i.productId));
+    }
     clearCart();
     navigate("/shop");
-  }, [clearCart, navigate]);
+  }, [clearCart, navigate, addToCollection]);
 
   const paymentDetails =
     selectedPaymentMethod === PAYMENT_METHODS.CREDIT_CARD

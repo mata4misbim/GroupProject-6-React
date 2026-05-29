@@ -46,9 +46,12 @@ export default function Head() {
       <div className="flex shrink-0 gap-2">
         {isLoggedIn ? (
           <>
-            <span className="max-w-[200px] truncate text-sm text-white/70   px-6 py-2">
+            <Link
+              to="/profile"
+              className="max-w-50 truncate text-sm text-white/70 px-6 py-2 no-underline hover:text-white/90 transition-colors"
+            >
               {user?.email}
-            </span>
+            </Link>
             <button
               type="button"
               onClick={handleLogout}
