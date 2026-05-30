@@ -66,7 +66,7 @@ export default function Head() {
               to="/login"
               className="cursor-pointer rounded-full border-[1.5px] border-white/40 bg-transparent px-6 py-2 font-['Montserrat',sans-serif] text-sm font-semibold tracking-[0.04em] text-white no-underline transition-all duration-200 hover:border-white/80 hover:bg-red-500/10"
             >
-              Sign in
+              Log in
             </Link>
             <Link
               to="/register/fan"

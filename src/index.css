@@ -408,6 +408,7 @@ h4 {
   min-height: 100vh;
   display: flex;
   align-items: center;
+  position: relative;
   justify-content: center;
   padding: 40px 16px;
   font-family: "TikTok Sans", "Noto Sans Thai", -apple-system, BlinkMacSystemFont,
@@ -522,6 +523,41 @@ h4 {
   text-align: left;
 }
 
+.ka-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  padding: 7px 14px;
+  background: #3a6ea8;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.ka-back-btn:hover {
+  background: #2d5a8e;
+}
+
+.ka-back-btn--card {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  margin-bottom: 0;
+}
+
+.ka-back-btn--page {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  margin-bottom: 0;
+}
+
 /* ── Login card layout ── */
 .ka-login-page {
   min-height: 100vh;
@@ -536,8 +572,9 @@ h4 {
 
 .ka-login-card {
   display: flex;
-  width: 980px;
+  width: 1200px;
   border-radius: 16px;
+  position: relative;
   overflow: hidden;
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.5),

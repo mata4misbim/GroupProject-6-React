@@ -34,7 +34,7 @@ const categories = [
 export default function Footer() {
   return (
     <>
-      <section className="mx-[10%] flex flex-col overflow-hidden rounded-t-lg bg-linear-to-br from-[#1a1a40] to-[#0a0a1a] text-white">
+      <section className="mx-0 flex flex-col overflow-hidden rounded-t-lg bg-linear-to-br from-[#1a1a40] to-[#0a0a1a] text-white">
         <ul className="flex list-none flex-row flex-wrap gap-2 px-8 pb-6 pt-8">
           {[...genres, ...genres.slice(5)].map((genre, index) => (
             <li
@@ -68,7 +68,7 @@ export default function Footer() {
         </div>
       </section>
 
-      <footer className="mx-[10%] flex min-h-[100px] flex-row items-start justify-between rounded-b-lg bg-[#0a0a1a] p-8 text-white">
+      <footer className="mx-0 flex min-h-25 flex-row items-start justify-between rounded-b-lg bg-[#0a0a1a] p-8 text-white">
         <div className="flex flex-col gap-2">
           <span className="font-['Caesar_Dressing',system-ui] text-[37px] leading-tight">
           AUDTLIST 🎵

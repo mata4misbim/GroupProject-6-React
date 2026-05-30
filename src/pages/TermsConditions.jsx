@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Footer from "../components/common/Footer";
 
 export default function TermsConditions() {
@@ -10,17 +11,27 @@ export default function TermsConditions() {
   ];
 
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif", background: "#f7f6f2", color: "#1a1a1a", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: "#f7f6f2", color: "#1a1a1a", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
 
       {/* HERO */}
       <div style={{ background: "#1c1c1e", color: "#e8e6df", padding: "64px 24px 48px", textAlign: "center" }}>
-        <h1 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(32px, 6vw, 56px)", fontWeight: 400, lineHeight: 1.1, letterSpacing: "-0.01em" }}>
-          Terms &amp; <em style={{ fontStyle: "italic", color: "#e8533a" }}>Conditions</em>
+        <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "clamp(32px, 6vw, 56px)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.01em" }}>
+          Terms &amp; <em style={{ fontStyle: "italic", color: "#fc3c44" }}>Conditions</em>
         </h1>
       </div>
 
+      <div style={{ padding: "24px 24px 0" }}>
+        <Link to="/"
+          style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: 600, background: "#fc3c44", border: "none", borderRadius: "8px", padding: "8px 16px", transition: "background 0.2s" }}
+          onMouseEnter={e => e.currentTarget.style.background = "#e8333b"}
+          onMouseLeave={e => e.currentTarget.style.background = "#fc3c44"}
+        >
+          ← Back
+        </Link>
+      </div>
+
       {/* MAIN */}
-      <main style={{ flex: 1, maxWidth: "860px", margin: "0 auto", width: "100%", padding: "48px 24px 80px" }}>
+      <main style={{ flex: 1, maxWidth: "860px", margin: "0 auto", width: "100%", padding: "32px 24px 80px" }}>
 
         {/* ROLE TABS */}
         <div style={{ display: "flex", border: "1px solid #d9d7d0", borderRadius: "8px", overflow: "hidden", marginBottom: "48px" }}>
@@ -34,7 +45,7 @@ export default function TermsConditions() {
                 border: "none",
                 borderRight: i < tabs.length - 1 ? "1px solid #d9d7d0" : "none",
                 background: activeTab === role ? color : "#fff",
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
                 fontSize: "12px",
                 fontWeight: 500,
                 letterSpacing: "0.06em",
@@ -141,20 +152,20 @@ function RevenueChart() {
 
         {/* label "your share" — midpoint angle 57.6°, r=45 → (124, 138) */}
         <rect x="97"  y="130" width="54" height="16" rx="2" fill="#1c1c1e" />
-        <text x="124" y="142" textAnchor="middle" fontSize="9.5" fill="white" fontFamily="DM Sans, sans-serif">your share</text>
+        <text x="124" y="142" textAnchor="middle" fontSize="9.5" fill="white" fontFamily="Plus Jakarta Sans, sans-serif">your share</text>
 
         {/* label "platform fee" — midpoint angle 228.6°, r=50 → (67, 63) */}
         <rect x="38"  y="55"  width="58" height="16" rx="2" fill="#1c1c1e" />
-        <text x="67"  y="67"  textAnchor="middle" fontSize="9.5" fill="white" fontFamily="DM Sans, sans-serif">platform fee</text>
+        <text x="67"  y="67"  textAnchor="middle" fontSize="9.5" fill="white" fontFamily="Plus Jakarta Sans, sans-serif">platform fee</text>
 
         {/* label "payment fees" — midpoint angle 261°, r=60 → (91, 41) */}
         <rect x="61"  y="33"  width="60" height="16" rx="2" fill="#1c1c1e" />
-        <text x="91"  y="45"  textAnchor="middle" fontSize="9.5" fill="white" fontFamily="DM Sans, sans-serif">payment fees</text>
+        <text x="91"  y="45"  textAnchor="middle" fontSize="9.5" fill="white" fontFamily="Plus Jakarta Sans, sans-serif">payment fees</text>
       </svg>
 
       {/* TEXT */}
       <div style={{ flex: 1, minWidth: "180px" }}>
-        <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "22px", color: "#1a1a1a", marginBottom: "10px" }}>
+        <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "22px", color: "#1a1a1a", marginBottom: "10px" }}>
           Pricing
         </p>
         <p style={{ fontSize: "13px", color: "#2a6050", lineHeight: 1.65, marginBottom: "10px" }}>
@@ -172,14 +183,14 @@ function RevenueChart() {
 function SectionHeader({ num, label, title, pillText, pillBg, pillColor }) {
   return (
     <div style={{ display: "flex", alignItems: "flex-end", gap: "16px", marginBottom: "32px", paddingBottom: "20px", borderBottom: "1px solid #d9d7d0" }}>
-      <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: "64px", lineHeight: 1, fontWeight: 400, color: "#d9d7d0", flexShrink: 0 }}>
+      <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "64px", lineHeight: 1, fontWeight: 400, color: "#d9d7d0", flexShrink: 0 }}>
         {num}
       </div>
       <div style={{ flex: 1 }}>
         <p style={{ fontSize: "10px", fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "#3a3a3a", marginBottom: "4px" }}>
           {label}
         </p>
-        <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "28px", fontWeight: 400, color: "#1a1a1a" }}>
+        <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "28px", fontWeight: 400, color: "#1a1a1a" }}>
           {title}{" "}
           <span style={{ display: "inline-block", fontSize: "11px", fontWeight: 500, padding: "2px 8px", borderRadius: "20px", marginLeft: "6px", verticalAlign: "middle", background: pillBg, color: pillColor }}>
             {pillText}

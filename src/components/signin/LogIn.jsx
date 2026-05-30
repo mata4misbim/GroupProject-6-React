@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const IconUser = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -60,9 +61,11 @@ export default function LogIn({ onGoFan, onGoArtist, onGoForgot, onLogIn }) {
 
         {/* Left: Image */}
         <div className="ka-login-card__hero">
-          <img src="/covers/loginv1.jpg" alt="Music atmosphere" />
+          <img src="/covers/bannerthaiv2.jpg" alt="Music atmosphere" />
           <div className="ka-login-card__hero-overlay" />
         </div>
+
+        <Link to="/" className="ka-back-btn ka-back-btn--card">← Back to home</Link>
 
         {/* Right: Form */}
         <div className="ka-login-card__side">
