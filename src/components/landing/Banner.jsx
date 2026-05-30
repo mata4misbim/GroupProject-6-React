@@ -8,12 +8,12 @@ export default function Banner() {
     <div className="absolute left-[60%] top-[40%] z-50 flex flex-col gap-6 whitespace-nowrap">
       <img src={logoImg} alt="AUDTLIST" className="h-[150px] w-auto object-contain" />
       <p
-        className={`ml-16 mt-4 font-['Space_Mono',monospace] text-xl font-normal tracking-[0.18em] text-white ${textShadow}`}
+        className={`ml-16 mt-4 font-['Plus_Jakarta_Sans',sans-serif] text-[clamp(12px,1.4vw,20px)] font-normal tracking-[0.18em] text-white ${textShadow}`}
       >
         DROP YOUR SOUND INTO THE ZONE
       </p>
       <p
-        className={`ml-32 font-['Space_Mono',monospace] text-[15px] font-normal leading-[1.8] tracking-[0.1em] text-white/90 ${textShadow}`}
+        className={`ml-32 font-['Plus_Jakarta_Sans',sans-serif] text-[clamp(9px,1.1vw,15px)] font-normal leading-[1.8] tracking-widest text-white/90 ${textShadow}`}
       >
         YOUR SOUND, YOUR SPACE
         <br />
@@ -24,7 +24,7 @@ export default function Banner() {
         WORK WITHOUT LIMITS.
       </p>
       <p
-        className={`ml-48 font-['Space_Mono',monospace] text-[15px] font-normal leading-[1.8] tracking-[0.1em] text-white/90 ${textShadow}`}
+        className={`ml-48 font-['Plus_Jakarta_Sans',sans-serif] text-[clamp(9px,1.1vw,15px)] font-normal leading-[1.8] tracking-widest text-white/90 ${textShadow}`}
       >
         A MARKETPLACE FOR MUSIC, MERCH, AND
         <br />

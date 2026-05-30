@@ -9,12 +9,12 @@ import flairBanner from "../assets/landing-page/Flair (2).png";
 
 export default function LandingPage() {
   return (
-    <div className="min-w-300 bg-[#E7F2EF] font-['TikTok_Sans','Noto_Sans_Thai',sans-serif] text-base leading-normal text-slate-900">
-      <div className="relative min-h-125 w-full overflow-hidden">
+    <div className="min-w-300 bg-[#03030f] font-['Plus_Jakarta_Sans',sans-serif] text-base leading-normal text-white">
+      <div className="relative min-h-125 w-full overflow-hidden mask-[linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.85)_80%,rgba(0,0,0,0.5)_90%,rgba(0,0,0,0.1)_97%,transparent_100%)]">
         <img
           src={flairBanner}
           alt="Flair banner"
-          className="block h-full min-h-125 w-full object-cover object-center"
+          className="block h-full min-h-125 w-full object-cover object-[center_70%]"
         />
         <div className="absolute inset-0 z-100">
           <Head />
@@ -25,7 +25,7 @@ export default function LandingPage() {
       <main>
         <SellingList />
         <DailyFeed />
-        <div className="h-4 bg-[#E7F2EF]"></div>
+        <div className="h-4 bg-[#03030f]"></div>
         <Radio />
       </main>
       <Footer />

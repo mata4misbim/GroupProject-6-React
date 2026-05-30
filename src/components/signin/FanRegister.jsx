@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const initialForm = {
   email: "",
@@ -68,6 +69,7 @@ export default function FanRegister({ onGoLogIn, onGoArtist, onRegisterSuccess }
 
   return (
     <div className="ka-register-page">
+      <Link to="/" className="ka-back-btn ka-back-btn--page">← Back to home</Link>
       <div className="ka-register-card">
 
         {/* Left: image panel */}

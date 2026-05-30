@@ -157,30 +157,29 @@ function Radio() {
 
   return (
     <>
-      <section className="mx-[10%] mb-6 grid grid-cols-[1.35fr_1fr_1.15fr] overflow-hidden rounded-lg border border-slate-200 bg-[#E7F2EF] shadow-[0_1px_3px_rgba(0,0,0,0.07),0_1px_2px_rgba(0,0,0,0.04)]">
-        <div className="min-w-0">
-          <h2 className="px-4 pb-3 pt-6 font-['Montserrat',sans-serif] text-[28px] font-bold text-slate-900">
+      <section className="mx-[10%] mb-6 grid grid-cols-[1.35fr_1fr_1.15fr] overflow-hidden rounded-2xl bg-[#141420] font-['Plus_Jakarta_Sans',sans-serif] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+
+        {/* Left: Live show */}
+        <div className="min-w-0 border-r border-white/10">
+          <h2 className="px-5 pb-3 pt-6 text-[24px] font-bold text-white">
             Audtlist Radio
           </h2>
-          <Link
-            to={currentLive ? `/live/${currentLive._id}` : "#"}
-            className="block no-underline group/live"
-          >
+          <Link to={currentLive ? `/live/${currentLive._id}` : "#"} className="block no-underline group/live">
             <div className="relative overflow-hidden">
               <img
                 className="block aspect-video w-full object-cover transition-transform duration-500 group-hover/live:scale-105"
                 src={coverPoster}
                 alt="Nightmares show poster"
               />
-              <div className="absolute inset-0 bg-black/0 group-hover/live:bg-black/20 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover/live:bg-black/20" />
             </div>
-            <div className="flex items-center justify-between gap-4 px-4 py-3">
-              <p className="font-['Montserrat',sans-serif] text-sm font-semibold uppercase tracking-[0.04em] text-slate-500">
+            <div className="flex items-center justify-between gap-4 px-5 py-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.08em] text-white/50">
                 The Nightmares Show
               </p>
-              <span className="flex items-center gap-1.5 rounded-full bg-red-500 px-3 py-1 font-['Montserrat',sans-serif] text-xs font-bold uppercase tracking-[0.08em] text-white">
+              <span className="flex items-center gap-1.5 rounded-full bg-red-500 px-3 py-1 text-xs font-bold uppercase tracking-[0.08em] text-white">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
                 </span>
                 Live
@@ -189,22 +188,23 @@ function Radio() {
           </Link>
         </div>
 
-        <div className="flex min-w-0 flex-col gap-4 border-x border-slate-200 p-8">
+        {/* Center: Player — Apple Music style */}
+        <div className="flex min-w-0 flex-col items-center gap-5 border-x border-white/10 px-8 py-8">
           <img
-            className="block aspect-square w-full rounded-lg object-cover shadow-[0_1px_3px_rgba(0,0,0,0.07),0_1px_2px_rgba(0,0,0,0.04)]"
+            className="block aspect-square w-full rounded-2xl object-cover shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
             src={activeTrack.img}
             alt={`${activeTrack.name} cover`}
           />
 
-          <div>
-            <p className="font-['Montserrat',sans-serif] text-xs font-semibold uppercase tracking-[0.08em] text-[#6c63ff]">
+          <div className="w-full">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-red-500">
               Now playing
             </p>
-            <h3 className="mt-1 text-[21px] font-bold leading-tight text-slate-900">
+            <h3 className="mt-1 text-[20px] font-bold leading-tight text-white">
               {activeTrack.name}
             </h3>
-            <p className="mt-1 text-sm text-slate-500">
-              {activeTrack.artist} - {activeTrack.desc}
+            <p className="mt-0.5 text-sm text-white/50">
+              {activeTrack.artist} — {activeTrack.desc}
             </p>
           </div>
 
@@ -216,42 +216,42 @@ function Radio() {
             onEnded={playNext}
           />
 
-          <div>
+          <div className="w-full">
             <button
-              className="h-3 w-full cursor-pointer overflow-hidden rounded-full border-0 bg-slate-300 p-0"
+              className="h-1 w-full cursor-pointer overflow-hidden rounded-full border-0 bg-white/20 p-0"
               type="button"
               onClick={seekAudio}
               aria-label="Seek radio"
             >
               <span
-                className="block h-full rounded-full bg-[#6c63ff] transition-[width] duration-100"
+                className="block h-full rounded-full bg-white transition-[width] duration-100"
                 style={{ width: `${progress}%` }}
-              ></span>
+              />
             </button>
-            <div className="mt-2 flex justify-between font-['Montserrat',sans-serif] text-xs font-medium text-slate-500">
+            <div className="mt-1.5 flex justify-between text-[11px] font-medium text-white/40">
               <span>{formatTime(currentTime)}</span>
               <span>{formatTime(duration)}</span>
             </div>
           </div>
 
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center gap-6">
             <button
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition-all duration-150 hover:-translate-y-px hover:border-slate-500"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center text-white/60 transition-all duration-150 hover:text-white"
               type="button"
               onClick={playPrevious}
               aria-label="Previous track"
             >
-              <svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor">
+              <svg viewBox="0 -960 960 960" width="28" height="28" fill="currentColor">
                 <path d="M220-240v-480h60v480h-60Zm520 0L380-480l360-240v480Zm-60-112v-256L488-480l192 128Z" />
               </svg>
             </button>
             <button
-              className="flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border-0 bg-[#6c63ff] text-white shadow-[0_4px_16px_rgba(108,99,255,0.35)] transition-all duration-200 hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(108,99,255,0.45)]"
+              className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-white text-[#1c1c1e] shadow-[0_4px_20px_rgba(255,255,255,0.2)] transition-all duration-200 hover:scale-105"
               type="button"
               onClick={togglePlayback}
               aria-label={isPlaying ? "Pause radio" : "Play radio"}
             >
-              <svg viewBox="0 -960 960 960" width="34" height="34" fill="currentColor">
+              <svg viewBox="0 -960 960 960" width="36" height="36" fill="currentColor">
                 {isPlaying ? (
                   <path d="M360-320h80v-320h-80v320Zm160 0h80v-320h-80v320ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
                 ) : (
@@ -260,25 +260,25 @@ function Radio() {
               </svg>
             </button>
             <button
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition-all duration-150 hover:-translate-y-px hover:border-slate-500"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center text-white/60 transition-all duration-150 hover:text-white"
               type="button"
               onClick={playNext}
               aria-label="Next track"
             >
-              <svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor">
+              <svg viewBox="0 -960 960 960" width="28" height="28" fill="currentColor">
                 <path d="M680-240v-480h60v480h-60Zm-460 0v-480l360 240-360 240Zm60-112 192-128-192-128v256Z" />
               </svg>
             </button>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex w-full items-center gap-3">
             <button
-              className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition-colors duration-150 hover:border-slate-500"
+              className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center text-white/50 transition-colors duration-150 hover:text-white"
               type="button"
               onClick={() => setIsMuted((muted) => !muted)}
               aria-label={isMuted ? "Unmute radio" : "Mute radio"}
             >
-              <svg viewBox="0 -960 960 960" width="21" height="21" fill="currentColor">
+              <svg viewBox="0 -960 960 960" width="20" height="20" fill="currentColor">
                 {isMuted ? (
                   <path d="m792-56-96-96q-41 32-91 50.5T500-82v-82q35-8 66.5-21.5T625-221L480-366v126L280-440H120v-240h188L56-932l56-56L848-112l-56 56ZM820-480q0 46-10 89t-28 80l-60-60q9-26 13.5-53t4.5-56q0-83-44.5-151.5T580-729v-83q108 27 174 117t66 215ZM650-480q0-35-18.5-64.5T580-589v-92q72 24 111 80t39 121q0 21-4 41t-12 39l-64-64v-16ZM480-682 376-786l104-104v208Z" />
                 ) : (
@@ -287,7 +287,7 @@ function Radio() {
               </svg>
             </button>
             <input
-              className="h-2 w-full accent-[#6c63ff]"
+              className="h-1 w-full cursor-pointer accent-white"
               type="range"
               min="0"
               max="1"
@@ -302,25 +302,25 @@ function Radio() {
           </div>
         </div>
 
-        <div className="min-w-0 px-6 py-8 font-['TikTok_Sans','Noto_Sans_Thai',sans-serif]">
-          <h2 className="mb-3 font-['Montserrat',sans-serif] text-[28px] font-bold leading-tight text-slate-900">
+        {/* Right: Tracklist */}
+        <div className="min-w-0 px-6 py-8">
+          <h2 className="mb-2 text-[24px] font-bold leading-tight text-white">
             Tracklist
           </h2>
-          <p className="mb-6 max-w-[40ch] text-sm leading-[1.7] text-slate-500">
+          <p className="mb-6 max-w-[40ch] text-sm leading-[1.7] text-white/40">
             Tune into curated independent releases and switch between radio
             previews without leaving the station.
           </p>
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
             {tracks.map((track, index) => {
               const isActive = index === activeTrackIndex;
-
               return (
                 <button
-                  className={`flex cursor-pointer flex-row items-center gap-4 rounded-lg border px-2 py-3 text-left transition-all duration-150 ${
+                  className={`flex cursor-pointer flex-row items-center gap-4 rounded-xl px-3 py-3 text-left transition-all duration-150 ${
                     isActive
-                      ? "border-[#6c63ff]/50 bg-white shadow-[0_6px_18px_rgba(108,99,255,0.14)]"
-                      : "border-transparent border-b-slate-200 hover:bg-slate-50"
+                      ? "bg-white/10"
+                      : "hover:bg-white/5"
                   }`}
                   key={track.name}
                   type="button"
@@ -328,19 +328,19 @@ function Radio() {
                   aria-current={isActive ? "true" : undefined}
                 >
                   <img
-                    className="h-14 w-14 shrink-0 rounded-lg object-cover shadow-[0_1px_3px_rgba(0,0,0,0.07),0_1px_2px_rgba(0,0,0,0.04)]"
+                    className="h-12 w-12 shrink-0 rounded-lg object-cover"
                     src={track.img}
                     alt={`${track.name} cover`}
                   />
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-semibold leading-tight text-slate-900">
+                    <p className={`truncate text-sm font-semibold leading-tight ${isActive ? "text-red-400" : "text-white"}`}>
                       {track.name}
                     </p>
-                    <p className="mt-1 truncate text-xs text-slate-500">
-                      {track.artist} - {track.desc}
+                    <p className="mt-0.5 truncate text-xs text-white/40">
+                      {track.artist} — {track.desc}
                     </p>
                   </div>
-                  <span className="shrink-0 font-['Montserrat',sans-serif] text-xs font-semibold text-slate-400">
+                  <span className="shrink-0 text-xs font-medium text-white/30">
                     {track.duration}
                   </span>
                 </button>
@@ -348,6 +348,7 @@ function Radio() {
             })}
           </div>
         </div>
+
       </section>
     </>
   );
