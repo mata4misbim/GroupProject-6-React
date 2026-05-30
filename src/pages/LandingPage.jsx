@@ -5,7 +5,9 @@ import Banner from "../components/landing/Banner";
 import DailyFeed from "../components/landing/DailyFeed";
 import Radio from "../components/landing/Radio";
 import SellingList from "../components/landing/SellingList";
-import flairBanner from "../assets/landing-page/Flair (2).png";
+import StatsSection from "../components/landing/StatsSection";
+import FeaturedArtists from "../components/landing/FeaturedArtists";
+import flairBanner from "../assets/landing-page/bannerv4.png";
 
 export default function LandingPage() {
   return (
@@ -24,9 +26,11 @@ export default function LandingPage() {
       </div>
       <main>
         <SellingList />
+        <StatsSection />
         <DailyFeed />
         <div className="h-4 bg-[#03030f]"></div>
         <Radio />
+        <FeaturedArtists />
       </main>
       <Footer />
     </div>

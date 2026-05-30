@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getRandomLive } from "../../shop/data/liveHelpers";
 import albumCover from "../../assets/landing-page/album-cover-1.jpg";
+import albumCover2 from "../../assets/landing-page/album-cover-2.jpg";
+import albumCover3 from "../../assets/landing-page/album-cover-3.jpg";
+import albumCover4 from "../../assets/landing-page/album-cover-4.jpg";
+import albumCover5 from "../../assets/landing-page/album-cover-5.jpg";
 import audioSrc from "../../assets/audio.mp3";
 import coverPoster from "../../assets/landing-page/cover1.jpg";
 import trackCover from "../../assets/landing-page/cover3.png";
@@ -30,6 +34,38 @@ const tracks = [
     artist: "Old World Vultures",
     desc: "Live radio preview",
     duration: "4:45",
+    src: audioSrc,
+  },
+  {
+    img: albumCover2,
+    name: "Neon Drift",
+    artist: "Velvet Crows",
+    desc: "B-side exclusive",
+    duration: "3:58",
+    src: audioSrc,
+  },
+  {
+    img: albumCover3,
+    name: "Glass Cities",
+    artist: "Crystal Mall",
+    desc: "Album opener",
+    duration: "5:30",
+    src: audioSrc,
+  },
+  {
+    img: albumCover4,
+    name: "Static Hymn",
+    artist: "Static Era",
+    desc: "Live session cut",
+    duration: "4:22",
+    src: audioSrc,
+  },
+  {
+    img: albumCover5,
+    name: "Phantom Roads",
+    artist: "Bangkok Phantom",
+    desc: "Synthwave single",
+    duration: "3:47",
     src: audioSrc,
   },
 ];
@@ -157,27 +193,41 @@ function Radio() {
 
   return (
     <>
-      <section className="mx-[10%] mb-6 grid grid-cols-[1.35fr_1fr_1.15fr] overflow-hidden rounded-2xl bg-[#141420] font-['Plus_Jakarta_Sans',sans-serif] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+      <section className="mx-[10%] mb-6 overflow-hidden rounded-2xl bg-[#141420] font-['Plus_Jakarta_Sans',sans-serif] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+        <h2 className="px-5 pb-3 pt-6 text-[24px] font-bold text-white">
+          Audtlist Radio
+        </h2>
+        <div className="grid grid-cols-[1.35fr_1fr_1.15fr]">
 
         {/* Left: Live show */}
         <div className="min-w-0 border-r border-white/10">
-          <h2 className="px-5 pb-3 pt-6 text-[24px] font-bold text-white">
-            Audtlist Radio
-          </h2>
           <Link to={currentLive ? `/live/${currentLive._id}` : "#"} className="block no-underline group/live">
-            <div className="relative overflow-hidden">
+            <div className="relative overflow-hidden cursor-pointer">
               <img
                 className="block aspect-video w-full object-cover transition-transform duration-500 group-hover/live:scale-105"
                 src={coverPoster}
                 alt="Nightmares show poster"
               />
-              <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover/live:bg-black/20" />
+              <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover/live:bg-black/15" />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover/live:opacity-100">
+                <div className="flex items-center gap-2 rounded-full bg-red-500 px-5 py-2.5 text-sm font-bold text-white shadow-none">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                  Watch Live
+                </div>
+              </div>
             </div>
             <div className="flex items-center justify-between gap-4 px-5 py-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.08em] text-white/50">
-                The Nightmares Show
-              </p>
-              <span className="flex items-center gap-1.5 rounded-full bg-red-500 px-3 py-1 text-xs font-bold uppercase tracking-[0.08em] text-white">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.08em] text-white/50">
+                  The Nightmares Show
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-white/30">
+                  Catch artists live before the world does.
+                </p>
+              </div>
+              <span className="flex items-center gap-1.5 rounded-full bg-red-500 px-3 py-1 text-xs font-bold uppercase tracking-[0.08em] text-white animate-[live-glow_2s_ease-in-out_infinite]">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
@@ -189,9 +239,9 @@ function Radio() {
         </div>
 
         {/* Center: Player — Apple Music style */}
-        <div className="flex min-w-0 flex-col items-center gap-5 border-x border-white/10 px-8 py-8">
+        <div className="flex min-w-0 flex-col items-center gap-5 border-x border-white/10 px-8 pb-8">
           <img
-            className="block aspect-square w-full rounded-2xl object-cover shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
+            className="block aspect-square w-full object-cover shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
             src={activeTrack.img}
             alt={`${activeTrack.name} cover`}
           />
@@ -246,7 +296,7 @@ function Radio() {
               </svg>
             </button>
             <button
-              className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-white text-[#1c1c1e] shadow-[0_4px_20px_rgba(255,255,255,0.2)] transition-all duration-200 hover:scale-105"
+              className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-white text-bg shadow-[0_4px_20px_rgba(255,255,255,0.2)] transition-all duration-200 hover:scale-105"
               type="button"
               onClick={togglePlayback}
               aria-label={isPlaying ? "Pause radio" : "Play radio"}
@@ -303,14 +353,16 @@ function Radio() {
         </div>
 
         {/* Right: Tracklist */}
-        <div className="min-w-0 px-6 py-8">
-          <h2 className="mb-2 text-[24px] font-bold leading-tight text-white">
-            Tracklist
-          </h2>
-          <p className="mb-6 max-w-[40ch] text-sm leading-[1.7] text-white/40">
-            Tune into curated independent releases and switch between radio
-            previews without leaving the station.
-          </p>
+        <div className="min-w-0 px-6 pb-8 pt-2">
+          <div className="mb-10">
+            <h2 className="mb-2 text-[24px] font-bold leading-tight text-white">
+              Tracklist
+            </h2>
+            <p className="max-w-[40ch] text-sm leading-[1.7] text-white/40">
+              Tune into curated independent releases and switch between radio
+              previews without leaving the station.
+            </p>
+          </div>
 
           <div className="flex flex-col gap-1">
             {tracks.map((track, index) => {
@@ -349,6 +401,7 @@ function Radio() {
           </div>
         </div>
 
+        </div>
       </section>
     </>
   );
