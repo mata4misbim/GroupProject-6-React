@@ -17,6 +17,8 @@ import ProductDetailPage from "./shop/pages/ProductDetailPage";
 import CheckoutPage from "./shop/pages/CheckoutPage";
 import ArtistPage from "./shop/pages/ArtistPage";
 import ProfilePage from "./shop/pages/ProfilePage";
+import ProfilePageAdmin from "./shop/pages/ProfilePageAdmin";
+import ProfilePageArtist from "./shop/pages/ProfilePageArtist";
 import LivePage from "./shop/pages/LivePage";
 
 function ScrollToTop() {
@@ -72,6 +74,8 @@ export default function App() {
             <Route path="/discover/:genres" element={<ShopPage />} />
             <Route path="/product/:slug" element={<ProductDetailPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/admin" element={<ProfilePageAdmin />} />
+            <Route path="/artist" element={<ProfilePageArtist />} />
             <Route path="/artist/:slug" element={<ArtistPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/live/:id" element={<LivePage />} />
