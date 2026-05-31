@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth.js";
 import SearchBar from "./SearchBar.jsx";
+import logoA from "../../assets/landing-page/logoa.png";
 
 export default function Head() {
   const { isLoggedIn, user, logout } = useAuth();
@@ -15,9 +16,7 @@ export default function Head() {
     <nav className="relative z-[100] flex h-[68px] items-center justify-between gap-6 border-b border-white/10 bg-black/35 px-[10%] backdrop-blur-xl">
       <div className="flex shrink-0 cursor-pointer items-center gap-2 text-white transition-opacity duration-150 hover:opacity-75">
         <Link to="/">
-          <span className="font-['Caesar_Dressing',system-ui] text-[37px] leading-tight">
-            AUDTLIST
-          </span>
+          <img src={logoA} alt="AUDTLIST" className="h-24 w-auto object-contain" />
         </Link>
       </div>
       <div className="relative z-[110] mr-auto max-w-[420px] flex-1">

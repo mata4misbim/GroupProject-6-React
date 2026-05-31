@@ -1,4 +1,5 @@
 import cassetteImg from "../../assets/landing-page/cas3.avif";
+import logoA from "../../assets/landing-page/logoa.png";
 import vinylImg from "../../assets/landing-page/vin.avif";
 import cdsImg from "../../assets/landing-page/cd.avif";
 import tshirtImg from "../../assets/landing-page/T.webp";
@@ -68,44 +69,33 @@ export default function Footer() {
         </div>
       </section>
 
-      <footer className="mx-0 flex min-h-25 flex-row items-start justify-between rounded-b-lg bg-[#0a0a1a] p-8 text-white">
-        <div className="flex flex-col gap-2">
-          <span className="font-['Caesar_Dressing',system-ui] text-[37px] leading-tight">
-          AUDTLIST
-        </span>
-         <p className="text-white/45 text-[13px] mb-6 max-w-md">
-          A marketplace for independent artists. Discover, support, and own
-          music directly from the people who make it.
-        </p>
-         <ul className="flex flex-col gap-3">
-          <li>
-            <Link
-              to="/about"
-              className="text-white/50 hover:text-white text-[14px] no-underline transition-colors"
-            >
-              About us
-            </Link>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="text-white/50 hover:text-white text-[14px] no-underline transition-colors"
-            >
-              Help
-            </a>
-          </li>
-          <li>
-            <Link
-              to="/terms"
-              className="text-white/50 hover:text-white text-[14px] no-underline transition-colors"
-            >
-              Terms and conditions
-            </Link>
-            <p className="text-white/25 text-[11px] mt-8">
-              © 2026 Audtlist · Made with ♪ in Bangkok
-            </p>
-          </li>
-        </ul>
+      <footer className="mx-0 bg-[#0a0a1a] px-10 py-10 text-white">
+        <div className="flex flex-col gap-3">
+          <img src={logoA} alt="AUDTLIST" className="h-24 w-auto object-contain self-start" />
+          <p className="text-white/45 text-[13px] max-w-sm leading-relaxed">
+            A marketplace for independent artists. Discover, support, and own
+            music directly from the people who make it.
+          </p>
+          <ul className="mt-2 flex flex-col gap-3">
+            <li>
+              <Link to="/about" className="text-white/50 hover:text-white text-[14px] no-underline transition-colors">
+                About us
+              </Link>
+            </li>
+            <li>
+              <a href="#" className="text-white/50 hover:text-white text-[14px] no-underline transition-colors">
+                Help
+              </a>
+            </li>
+            <li>
+              <Link to="/terms" className="text-white/50 hover:text-white text-[14px] no-underline transition-colors">
+                Terms and conditions
+              </Link>
+            </li>
+          </ul>
+          <p className="mt-6 text-white/25 text-[11px]">
+            © 2026 Audtlist · Made with ♪ in Bangkok
+          </p>
         </div>
       </footer>
     </>

@@ -5,7 +5,7 @@ const textShadow = "shadow-black/40 [text-shadow:0_1px_8px_var(--tw-shadow-color
 
 export default function Banner() {
   return (
-    <div className="absolute left-[60%] top-[40%] z-50 flex flex-col gap-6 whitespace-nowrap">
+    <div className="absolute left-[10%] top-[30%] z-50 flex flex-col gap-6 whitespace-nowrap">
       <img src={logoImg} alt="AUDTLIST" className="h-[150px] w-auto object-contain" />
       <p
         className={`ml-16 mt-4 font-['Plus_Jakarta_Sans',sans-serif] text-[clamp(12px,1.4vw,20px)] font-normal tracking-[0.18em] text-white ${textShadow}`}
