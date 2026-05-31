@@ -83,14 +83,14 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <a href="#" className="text-white/50 hover:text-white text-[14px] no-underline transition-colors">
+              <Link to="/help" className="text-white/50 hover:text-white text-[14px] no-underline transition-colors">
                 Help
-              </a>
+              </Link>
             </li>
             <li>
-              <Link to="/terms" className="text-white/50 hover:text-white text-[14px] no-underline transition-colors">
+              <a Link to="/terms" className="text-white/50 hover:text-white text-[14px] no-underline transition-colors">
                 Terms and conditions
-              </Link>
+              </a>
             </li>
           </ul>
           <p className="mt-6 text-white/25 text-[11px]">

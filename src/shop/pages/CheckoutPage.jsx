@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext";
 import { useCollection } from "../context/CollectionContext";
 import { PAYMENT_METHODS } from "../components/checkout/constants.js";
 import { calculateDiscountAmount, roundToTwoDecimals } from "../components/checkout/calculations.js";
+import { FIXED_SHIPPING_THB } from "../data/constants.js";
 import CartDisplay from "../components/checkout/CartDisplay.jsx";
 import ShippingForm from "../components/checkout/ShippingForm.jsx";
 import PaymentMethodSelector from "../components/checkout/PaymentMethodSelector.jsx";
@@ -24,6 +25,7 @@ export default function CheckoutPage() {
       id: item.key,
       productId: item.product_id,
       name: item.title_snapshot,
+      artist: item.artist_name_snapshot,
       image: item.cover_url || `https://via.placeholder.com/200x200/1a1a1a/ffffff?text=${encodeURIComponent(item.title_snapshot)}`,
       unitPrice: item.unit_price,
       quantity: item.quantity,
@@ -75,9 +77,32 @@ export default function CheckoutPage() {
     if (submittedOrder?.items) {
       addToCollection(submittedOrder.items.map((i) => i.productId));
     }
+    const hasPhysicalItems = submittedOrder.items.some((item) => item.type === "merchandise");
+    const shipping = hasPhysicalItems ? FIXED_SHIPPING_THB : 0;
+    const createdAt = new Date(submittedOrder.createdAt);
+    const orderData = {
+      orderId: submittedOrder.id,
+      purchaseDate: createdAt.toISOString(),
+      purchaseTime: createdAt.toLocaleTimeString("en-GB", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      paymentMethod:
+        selectedPaymentMethod === PAYMENT_METHODS.QR_PROMPTPAY
+          ? "QR PromptPay"
+          : "Credit Card",
+      items: submittedOrder.items,
+      shippingAddress: submittedOrder.shipping,
+      subtotal: submittedOrder.subtotal,
+      discountAmount: submittedOrder.discountAmount,
+      shipping,
+      tax: 0,
+      total: roundToTwoDecimals(submittedOrder.total + shipping),
+      confirmationEmail: submittedOrder.shipping?.email,
+    };
     clearCart();
-    navigate("/shop");
-  }, [clearCart, navigate, addToCollection]);
+    navigate("/order-confirmed", { state: { orderData } });
+  }, [clearCart, navigate, addToCollection, selectedPaymentMethod]);
 
   const paymentDetails =
     selectedPaymentMethod === PAYMENT_METHODS.CREDIT_CARD

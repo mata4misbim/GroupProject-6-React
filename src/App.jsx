@@ -18,6 +18,10 @@ import CheckoutPage from "./shop/pages/CheckoutPage";
 import ArtistPage from "./shop/pages/ArtistPage";
 import ProfilePage from "./shop/pages/ProfilePage";
 import LivePage from "./shop/pages/LivePage";
+import HelpPage from "./pages/HelpPage";
+import HelpArticlePage from "./pages/HelpArticlePage";
+import OrderConfirmedPage from "./shop/pages/OrderConfirmedPage";
+
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -61,6 +65,8 @@ export default function App() {
         <Route path="/register/fan" element={<FanRegisterPage />} />
         <Route path="/register/artist" element={<ArtistRegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/help" element={<HelpPage />} />
+        <Route path="/help/:slug" element={<HelpArticlePage />} />
         <Route path="/terms" element={<TermsConditions />} />
         <Route element={<MainLayout />}>
           <Route path="/about" element={<AboutPage />} />
@@ -72,6 +78,7 @@ export default function App() {
             <Route path="/discover/:genres" element={<ShopPage />} />
             <Route path="/product/:slug" element={<ProductDetailPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/order-confirmed" element={<OrderConfirmedPage />} />
             <Route path="/artist/:slug" element={<ArtistPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/live/:id" element={<LivePage />} />
