@@ -20,7 +20,7 @@ const sideArticles = [
 
 export default function DailyFeed() {
   return (
-    <section className="mx-[10%] mb-8 mt-24 overflow-hidden rounded-2xl border border-white/10 bg-[#141420] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+    <section className="mx-[10%] mb-8 mt-8 overflow-hidden rounded-2xl border border-white/10 bg-[#141420] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
       <div className="border-b border-white/10 px-8 pb-4 pt-6">
         <h2 className="font-['Plus_Jakarta_Sans',sans-serif] text-[28px] font-bold leading-tight text-white">
           Audtlist Daily

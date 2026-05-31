@@ -71,7 +71,7 @@ export default function Footer() {
       <footer className="mx-0 flex min-h-25 flex-row items-start justify-between rounded-b-lg bg-[#0a0a1a] p-8 text-white">
         <div className="flex flex-col gap-2">
           <span className="font-['Caesar_Dressing',system-ui] text-[37px] leading-tight">
-          AUDTLIST 🎵
+          AUDTLIST
         </span>
          <p className="text-white/45 text-[13px] mb-6 max-w-md">
           A marketplace for independent artists. Discover, support, and own
