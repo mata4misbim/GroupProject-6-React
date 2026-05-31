@@ -17,6 +17,8 @@ import ProductDetailPage from "./shop/pages/ProductDetailPage";
 import CheckoutPage from "./shop/pages/CheckoutPage";
 import ArtistPage from "./shop/pages/ArtistPage";
 import ProfilePage from "./shop/pages/ProfilePage";
+import ProfilePageAdmin from "./shop/pages/ProfilePageAdmin";
+import ProfilePageArtist from "./shop/pages/ProfilePageArtist";
 import LivePage from "./shop/pages/LivePage";
 import HelpPage from "./pages/HelpPage";
 import HelpArticlePage from "./pages/HelpArticlePage";
@@ -78,6 +80,8 @@ export default function App() {
             <Route path="/discover/:genres" element={<ShopPage />} />
             <Route path="/product/:slug" element={<ProductDetailPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/admin" element={<ProfilePageAdmin />} />
+            <Route path="/artist" element={<ProfilePageArtist />} />
             <Route path="/order-confirmed" element={<OrderConfirmedPage />} />
             <Route path="/artist/:slug" element={<ArtistPage />} />
             <Route path="/profile" element={<ProfilePage />} />
