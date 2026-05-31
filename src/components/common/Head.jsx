@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth.js";
 import SearchBar from "./SearchBar.jsx";
+import logoA from "../../assets/landing-page/logoa.png";
 
 export default function Head() {
   const { isLoggedIn, user, logout } = useAuth();
@@ -15,9 +16,7 @@ export default function Head() {
     <nav className="relative z-[100] flex h-[68px] items-center justify-between gap-6 border-b border-white/10 bg-black/35 px-[10%] backdrop-blur-xl">
       <div className="flex shrink-0 cursor-pointer items-center gap-2 text-white transition-opacity duration-150 hover:opacity-75">
         <Link to="/">
-          <span className="font-['Caesar_Dressing',system-ui] text-[37px] leading-tight">
-            AUDTLIST
-          </span>
+          <img src={logoA} alt="AUDTLIST" className="h-24 w-auto object-contain" />
         </Link>
       </div>
       <div className="relative z-[110] mr-auto max-w-[420px] flex-1">
@@ -46,9 +45,12 @@ export default function Head() {
       <div className="flex shrink-0 gap-2">
         {isLoggedIn ? (
           <>
-            <span className="max-w-[200px] truncate text-sm text-white/70   px-6 py-2">
+            <Link
+              to="/profile"
+              className="max-w-50 truncate text-sm text-white/70 px-6 py-2 no-underline hover:text-white/90 transition-colors"
+            >
               {user?.email}
-            </span>
+            </Link>
             <button
               type="button"
               onClick={handleLogout}
@@ -63,7 +65,7 @@ export default function Head() {
               to="/login"
               className="cursor-pointer rounded-full border-[1.5px] border-white/40 bg-transparent px-6 py-2 font-['Montserrat',sans-serif] text-sm font-semibold tracking-[0.04em] text-white no-underline transition-all duration-200 hover:border-white/80 hover:bg-red-500/10"
             >
-              Sign in
+              Log in
             </Link>
             <Link
               to="/register/fan"

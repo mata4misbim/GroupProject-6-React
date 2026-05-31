@@ -5,18 +5,20 @@ import Banner from "../components/landing/Banner";
 import DailyFeed from "../components/landing/DailyFeed";
 import Radio from "../components/landing/Radio";
 import SellingList from "../components/landing/SellingList";
-import flairBanner from "../assets/landing-page/Flair (2).png";
+import StatsSection from "../components/landing/StatsSection";
+import FeaturedArtists from "../components/landing/FeaturedArtists";
+import flairBanner from "../assets/landing-page/bannerfix.png";
 
 export default function LandingPage() {
   return (
-    <div className="min-w-[1200px] bg-[#E7F2EF] font-['TikTok_Sans','Noto_Sans_Thai',sans-serif] text-base leading-normal text-slate-900">
-      <div className="relative min-h-[500px] w-full overflow-hidden">
+    <div className="min-w-300 bg-[#03030f] font-['Plus_Jakarta_Sans',sans-serif] text-base leading-normal text-white">
+      <div className="relative min-h-125 w-full overflow-hidden mask-[linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.85)_80%,rgba(0,0,0,0.5)_90%,rgba(0,0,0,0.1)_97%,transparent_100%)]">
         <img
           src={flairBanner}
           alt="Flair banner"
-          className="block h-full min-h-[500px] w-full object-cover object-center"
+          className="block h-full min-h-125 w-full object-cover object-[center_20%]"
         />
-        <div className="absolute inset-0 z-[100]">
+        <div className="absolute inset-0 z-100">
           <Head />
           <Nav />
           <Banner />
@@ -24,9 +26,11 @@ export default function LandingPage() {
       </div>
       <main>
         <SellingList />
+        <StatsSection />
         <DailyFeed />
-        <div className="h-4 bg-[#E7F2EF]"></div>
+        <div className="h-4 bg-[#03030f]"></div>
         <Radio />
+        <FeaturedArtists />
       </main>
       <Footer />
     </div>

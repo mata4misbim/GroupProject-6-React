@@ -215,7 +215,18 @@ export default function ProductCard({ product, contextQueue }) {
           {product.title}
         </h3>
         <p className="text-white/45 text-[12px] truncate">
-          by {product.artist?.name || "Unknown"}
+          by{" "}
+          {product.artist?.slug ? (
+            <Link
+              to={`/artist/${product.artist.slug}`}
+              onClick={(e) => e.stopPropagation()}
+              className="hover:text-white/75 transition-colors"
+            >
+              {product.artist.name}
+            </Link>
+          ) : (
+            product.artist?.name || "Unknown"
+          )}
         </p>
         {genres.length > 0 && (
           <div className="flex flex-wrap gap-1 mt-1">

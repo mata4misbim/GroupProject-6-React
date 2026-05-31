@@ -30,18 +30,18 @@ function ItemRow({ hidden = false }) {
     >
       {sellingItems.map((item) => (
         <article
-          className="flex w-40 shrink-0 cursor-pointer flex-col items-start rounded-lg border border-slate-200 bg-slate-50 p-2 text-xs transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-1.5 hover:border-slate-400 hover:shadow-[0_4px_16px_rgba(0,0,0,0.1),0_2px_6px_rgba(0,0,0,0.06)]"
+          className="flex w-40 shrink-0 cursor-pointer flex-col items-start rounded-xl border border-white/10 bg-[#141420] p-2 text-xs transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-1.5 hover:border-white/25 hover:shadow-[0_4px_16px_rgba(0,0,0,0.4)]"
           key={`${item.description}-${hidden}`}
         >
           <img
-            className="aspect-square w-full rounded-sm object-cover shadow-[0_1px_3px_rgba(0,0,0,0.07),0_1px_2px_rgba(0,0,0,0.04)]"
+            className="aspect-square w-full rounded-lg object-cover"
             src={item.img}
             alt={hidden ? "" : item.description}
           />
-          <p className="mt-2 w-full overflow-hidden text-ellipsis whitespace-nowrap px-1 font-['Montserrat',sans-serif] text-sm font-bold leading-tight text-slate-900">
+          <p className="mt-2 w-full overflow-hidden text-ellipsis whitespace-nowrap px-1 font-['Plus_Jakarta_Sans',sans-serif] text-sm font-bold leading-tight text-white">
             {item.price}
           </p>
-          <p className="mt-2 w-full overflow-hidden text-ellipsis whitespace-nowrap px-1 text-xs leading-tight text-slate-500">
+          <p className="mt-1 w-full overflow-hidden text-ellipsis whitespace-nowrap px-1 text-xs leading-tight text-white/40">
             {item.description}
           </p>
         </article>
@@ -53,13 +53,13 @@ function ItemRow({ hidden = false }) {
 export default function SellingList() {
   return (
     <section>
-      <div className="flex items-baseline gap-4 bg-[#E7F2EF] px-[10%] pb-4 pt-8 after:h-[1.5px] after:flex-1 after:bg-linear-to-r after:from-slate-200 after:to-transparent after:content-['']">
-        <h2 className="font-['Montserrat',sans-serif] text-[28px] font-extrabold uppercase text-slate-900">
+      <div className="flex items-baseline gap-4 bg-[#03030f] px-[10%] pb-4 pt-8 after:h-px after:flex-1 after:bg-linear-to-r after:from-white/15 after:to-transparent after:content-['']">
+        <h2 className="font-['Plus_Jakarta_Sans',sans-serif] text-[28px] font-extrabold uppercase text-white">
           Selling right now
         </h2>
       </div>
 
-      <div className="flex h-[300px] overflow-hidden bg-[#E7F2EF] pb-6 hover:[&>div]:[animation-play-state:paused]">
+      <div className="flex h-[300px] overflow-hidden bg-[#03030f] pb-6 hover:[&>div]:[animation-play-state:paused]">
         <ItemRow />
         <ItemRow hidden />
       </div>

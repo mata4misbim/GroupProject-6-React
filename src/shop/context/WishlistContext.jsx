@@ -27,8 +27,10 @@ export function WishlistProvider({ children }) {
 
   const isWishlisted = (productId) => ids.has(productId);
 
+  const wishlistedIds = [...ids];
+
   return (
-    <WishlistContext.Provider value={{ toggleWishlist, isWishlisted }}>
+    <WishlistContext.Provider value={{ toggleWishlist, isWishlisted, wishlistedIds }}>
       {children}
     </WishlistContext.Provider>
   );

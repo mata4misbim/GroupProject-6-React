@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../../hooks/useAuth";
 
 export default function Header() {
   const { totalItems, setOpen } = useCart();
@@ -50,9 +50,12 @@ export default function Header() {
           {/* Auth buttons */}
           {isLoggedIn ? (
             <div className="flex items-center gap-2">
-              <span className="text-white/60 text-[13px] hidden sm:block max-w-[120px] truncate">
+              <Link
+                to="/profile"
+                className="text-white/60 text-[13px] hidden sm:block max-w-30 truncate hover:text-white/90 transition-colors no-underline"
+              >
                 {user?.email}
-              </span>
+              </Link>
               <button
                 onClick={() => { logout(); navigate("/"); }}
                 className="px-[18px] py-[9px] rounded-full text-[14px] font-semibold border-[1.5px] border-white/25 text-white/85 hover:border-white/50 hover:bg-white/8 transition-all"
