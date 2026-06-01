@@ -13,24 +13,54 @@ import h11 from "../../assets/art11.jpg";
 import h12 from "../../assets/art12.jpg";
 
 const artists = [
-  { img: h1,  name: "Old World Vultures", genre: "Indie Rock",   slug: "old-world-vultures" },
-  { img: h2,  name: "Velvet Crows",       genre: "Alternative",  slug: "velvet-crows" },
-  { img: h3,  name: "Crystal Mall",       genre: "Electronic",   slug: "crystal-mall" },
-  { img: h4,  name: "Static Era",         genre: "Post-Rock",    slug: "static-era" },
-  { img: h5,  name: "Bangkok Phantom",    genre: "Synthwave",    slug: "bangkok-phantom" },
-  { img: h6,  name: "Mira Sol",           genre: "Jazz",         slug: "mira-sol" },
-  { img: h7,  name: "Old World Vultures", genre: "Indie Rock",   slug: "old-world-vultures" },
-  { img: h8,  name: "Velvet Crows",       genre: "Alternative",  slug: "velvet-crows" },
-  { img: h9,  name: "Crystal Mall",       genre: "Electronic",   slug: "crystal-mall" },
-  { img: h10, name: "Static Era",         genre: "Post-Rock",    slug: "static-era" },
-  { img: h11, name: "Bangkok Phantom",    genre: "Synthwave",    slug: "bangkok-phantom" },
-  { img: h12, name: "Mira Sol",           genre: "Jazz",         slug: "mira-sol" },
-  { img: h1,  name: "Old World Vultures", genre: "Indie Rock",   slug: "old-world-vultures" },
-  { img: h2,  name: "Velvet Crows",       genre: "Alternative",  slug: "velvet-crows" },
-  { img: h3,  name: "Crystal Mall",       genre: "Electronic",   slug: "crystal-mall" },
-  { img: h4,  name: "Static Era",         genre: "Post-Rock",    slug: "static-era" },
-  { img: h5,  name: "Bangkok Phantom",    genre: "Synthwave",    slug: "bangkok-phantom" },
-  { img: h6,  name: "Mira Sol",           genre: "Jazz",         slug: "mira-sol" },
+  {
+    img: h1,
+    name: "Old World Vultures",
+    genre: "Indie Rock",
+    slug: "old-world-vultures",
+  },
+  { img: h2, name: "Velvet Crows", genre: "Alternative", slug: "velvet-crows" },
+  { img: h3, name: "Crystal Mall", genre: "Electronic", slug: "crystal-mall" },
+  { img: h4, name: "Static Era", genre: "Post-Rock", slug: "static-era" },
+  {
+    img: h5,
+    name: "Bangkok Phantom",
+    genre: "Synthwave",
+    slug: "bangkok-phantom",
+  },
+  { img: h6, name: "Mira Sol", genre: "Jazz", slug: "mira-sol" },
+  {
+    img: h7,
+    name: "Old World Vultures",
+    genre: "Indie Rock",
+    slug: "old-world-vultures",
+  },
+  { img: h8, name: "Velvet Crows", genre: "Alternative", slug: "velvet-crows" },
+  { img: h9, name: "Crystal Mall", genre: "Electronic", slug: "crystal-mall" },
+  { img: h10, name: "Static Era", genre: "Post-Rock", slug: "static-era" },
+  {
+    img: h11,
+    name: "Bangkok Phantom",
+    genre: "Synthwave",
+    slug: "bangkok-phantom",
+  },
+  { img: h12, name: "Mira Sol", genre: "Jazz", slug: "mira-sol" },
+  {
+    img: h1,
+    name: "Old World Vultures",
+    genre: "Indie Rock",
+    slug: "old-world-vultures",
+  },
+  { img: h2, name: "Velvet Crows", genre: "Alternative", slug: "velvet-crows" },
+  { img: h3, name: "Crystal Mall", genre: "Electronic", slug: "crystal-mall" },
+  { img: h4, name: "Static Era", genre: "Post-Rock", slug: "static-era" },
+  {
+    img: h5,
+    name: "Bangkok Phantom",
+    genre: "Synthwave",
+    slug: "bangkok-phantom",
+  },
+  { img: h6, name: "Mira Sol", genre: "Jazz", slug: "mira-sol" },
 ];
 
 function ArtistRow({ hidden = false }) {
@@ -73,7 +103,7 @@ export default function FeaturedArtists() {
         </h2>
       </div>
 
-      <div className="flex overflow-hidden hover:[&>div]:[animation-play-state:paused]">
+      <div className="p-1 flex overflow-hidden hover:[&>div]:[animation-play-state:paused]">
         <ArtistRow />
         <ArtistRow hidden />
       </div>
