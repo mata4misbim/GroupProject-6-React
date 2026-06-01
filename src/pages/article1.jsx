@@ -1,14 +1,10 @@
 import Footer from '../components/common/Footer';
-import Head from '../components/common/Head';
-import Nav from '../components/common/Nav';
 import { Link } from "react-router-dom";
 import mainCover from "../assets/landing-page/0043841685_0.jpg";
 
 export default function Article1Page() {
   return (
 <>
-    <Head />
-    <Nav />
     <main className="min-h-screen bg-[#03030f] px-[10%] py-16 text-white">
       <article className="mx-auto max-w-[980px] overflow-hidden rounded-lg border border-[#d1cfcf] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.07),0_1px_2px_rgba(0,0,0,0.04)]">
         <img

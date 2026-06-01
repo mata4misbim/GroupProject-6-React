@@ -37,7 +37,7 @@ export default function SearchBar() {
             </span>
           </button>
           <input
-            className="w-full border-0 bg-transparent font-['TikTok_Sans','Noto_Sans_Thai',sans-serif] text-sm text-white outline-none placeholder:text-white/55"
+            className="w-full border-0 bg-transparent font-['Plus_Jakarta_Sans',sans-serif] text-sm text-white outline-none placeholder:text-white/55"
             type="text"
             placeholder="Search music, artist, merch"
             value={input}

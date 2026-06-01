@@ -71,7 +71,7 @@ export default function Footer({ simple = false }) {
 
       <footer className="mx-0 bg-[#0a0a1a] px-10 py-10 text-white">
         <div className="flex flex-col gap-3">
-          <img src={logoA} alt="AUDTLIST" className="h-24 w-auto object-left object-contain self-start -ml-3" />
+          <Link to="/"><img src={logoA} alt="AUDTLIST" className="h-24 w-auto object-left object-contain self-start -ml-3 hover:opacity-80 transition-opacity cursor-pointer" /></Link>
           <p className="text-white/45 text-[13px] max-w-sm leading-relaxed">
             A marketplace for independent artists. Discover, support, and own
             music directly from the people who make it.
