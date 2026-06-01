@@ -95,39 +95,36 @@ export default function HelpPage() {
   return (
     <div className="min-h-screen bg-white font-['Plus_Jakarta_Sans',sans-serif]">
       {/* Header with Teal Background */}
-      <div className="bg-gradient-to-r from-teal-400 to-teal-500 text-white py-12 px-4">
-        <div className="max-w-4xl mx-auto">
-          {/* Logo and Title */}
-          <div className="mb-8">
-            <Link to="/" className="inline-flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                <span className="text-teal-500 font-bold text-lg">A</span>
-              </div>
-              <span className="text-xl font-bold">Audtlist Help</span>
-            </Link>
-          </div>
+      <div className="bg-linear-to-r from-teal-400 to-teal-500 text-white py-14 px-4">
+        <div className="max-w-2xl mx-auto text-center">
+          {/* Logo */}
+          <Link to="/" className="inline-flex items-center gap-2 mb-8 opacity-90 hover:opacity-100 transition-opacity">
+            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+              <span className="text-teal-500 font-bold text-base">A</span>
+            </div>
+            <span className="text-base font-semibold">Audtlist Help</span>
+          </Link>
 
-          {/* Main Heading */}
           <h1 className="text-4xl font-bold mb-2">How can we help you?</h1>
-          <p className="text-teal-50 mb-6">
-            Find answers to your questions about Audtlist
-          </p>
+          <p className="text-teal-50 mb-10 text-sm">Find answers to your questions about Audtlist</p>
 
           {/* Search Bar */}
-          <form onSubmit={handleSearch} className="relative">
-            <div className="flex gap-2">
-              <input
-                type="text"
-                placeholder="Search for help..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
-              />
+          <form onSubmit={handleSearch} className="mt-6">
+            <div className="flex bg-white rounded-2xl shadow-lg overflow-hidden p-1.5 gap-1.5">
+              <div className="flex items-center flex-1 gap-2 px-3">
+                <Search className="w-4 h-4 text-gray-400 shrink-0" />
+                <input
+                  type="text"
+                  placeholder="Search for help..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="flex-1 py-2 text-gray-800 text-sm placeholder:text-gray-400 focus:outline-none"
+                />
+              </div>
               <button
                 type="submit"
-                className="px-6 py-3 bg-white text-teal-500 font-semibold rounded-lg hover:bg-teal-50 transition-colors flex items-center gap-2"
+                className="px-5 py-2.5 bg-teal-500 text-white font-semibold rounded-xl hover:bg-teal-600 transition-colors text-sm shrink-0"
               >
-                <Search className="w-5 h-5" />
                 Search
               </button>
             </div>
@@ -174,7 +171,7 @@ export default function HelpPage() {
                               <h4 className="font-medium text-gray-900 group-hover:text-teal-600">
                                 {article.title}
                               </h4>
-                              <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-teal-600 flex-shrink-0" />
+                              <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-teal-600 shrink-0" />
                             </div>
                           </Link>
                         ))}
@@ -262,23 +259,23 @@ export default function HelpPage() {
         )}
 
         {/* Contact Support Section */}
-        <div className="mt-16 bg-gray-50 rounded-lg p-8 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
+        <div className="mt-16 bg-linear-to-r from-teal-400 to-teal-500 rounded-2xl p-10 text-center shadow-sm">
+          <h3 className="text-2xl font-bold text-white mb-3">
             Can't find what you're looking for?
           </h3>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+          <p className="text-teal-50 text-sm leading-relaxed text-center">
             Our support team is here to help. Get in touch with us and we'll be happy to assist you.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mt-10">
             <Link
               to="/contact"
-              className="px-6 py-3 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition-colors"
+              className="px-6 py-3 bg-white text-teal-600 font-semibold rounded-xl hover:bg-teal-50 transition-colors text-sm"
             >
               Contact Support
             </Link>
             <a
               href="mailto:support@audtlist.com"
-              className="px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
+              className="px-6 py-3 border border-white/40 text-white font-semibold rounded-xl hover:bg-white/10 transition-colors text-sm"
             >
               Email Us
             </a>
@@ -372,7 +369,7 @@ export default function HelpPage() {
             </div>
           </div>
           <div className="border-t border-gray-300 pt-8 text-center text-sm text-gray-600">
-            <p>&copy; 2025 Audtlist. All rights reserved.</p>
+            <p>&copy; 2026 Audtlist. All rights reserved.</p>
           </div>
         </div>
       </footer>

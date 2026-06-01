@@ -40,7 +40,7 @@ function ScrollToTop() {
 function NotFoundPage() {
   return (
     <main className="flex min-h-screen flex-col items-start justify-center bg-[#0a0a1a] px-[10%] text-white">
-      <p className="mb-4 font-['Montserrat',sans-serif] text-sm font-semibold uppercase tracking-[0.12em] text-white/40">
+      <p className="mb-4 font-['Plus_Jakarta_Sans',sans-serif] text-sm font-semibold uppercase tracking-[0.12em] text-white/40">
         404
       </p>
       <h1 className="mb-4 text-[44px] font-bold leading-tight text-white">
@@ -51,7 +51,7 @@ function NotFoundPage() {
       </p>
       <Link
         to="/"
-        className="rounded-full bg-[#6c63ff] px-6 py-3 font-['Montserrat',sans-serif] text-sm font-semibold text-white no-underline transition-colors hover:bg-[#4f46e5]"
+        className="rounded-full bg-[#6c63ff] px-6 py-3 font-['Plus_Jakarta_Sans',sans-serif] text-sm font-semibold text-white no-underline transition-colors hover:bg-[#4f46e5]"
       >
         Back to home
       </Link>

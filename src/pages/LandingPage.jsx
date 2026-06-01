@@ -7,7 +7,7 @@ import Radio from "../components/landing/Radio";
 import SellingList from "../components/landing/SellingList";
 import StatsSection from "../components/landing/StatsSection";
 import FeaturedArtists from "../components/landing/FeaturedArtists";
-import flairBanner from "../assets/landing-page/bannerfix.png";
+import flairBanner from "../assets/landing-page/bannerv05.png";
 
 export default function LandingPage() {
   return (
@@ -16,7 +16,7 @@ export default function LandingPage() {
         <img
           src={flairBanner}
           alt="Flair banner"
-          className="block h-full min-h-125 w-full object-cover object-[center_20%]"
+          className="block h-full min-h-125 w-full object-cover object-[center_80%]"
         />
         <div className="absolute inset-0 z-100">
           <Head />

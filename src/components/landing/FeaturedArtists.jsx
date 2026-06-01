@@ -25,6 +25,12 @@ const artists = [
   { img: h10, name: "Static Era",         genre: "Post-Rock",    slug: "static-era" },
   { img: h11, name: "Bangkok Phantom",    genre: "Synthwave",    slug: "bangkok-phantom" },
   { img: h12, name: "Mira Sol",           genre: "Jazz",         slug: "mira-sol" },
+  { img: h1,  name: "Old World Vultures", genre: "Indie Rock",   slug: "old-world-vultures" },
+  { img: h2,  name: "Velvet Crows",       genre: "Alternative",  slug: "velvet-crows" },
+  { img: h3,  name: "Crystal Mall",       genre: "Electronic",   slug: "crystal-mall" },
+  { img: h4,  name: "Static Era",         genre: "Post-Rock",    slug: "static-era" },
+  { img: h5,  name: "Bangkok Phantom",    genre: "Synthwave",    slug: "bangkok-phantom" },
+  { img: h6,  name: "Mira Sol",           genre: "Jazz",         slug: "mira-sol" },
 ];
 
 function ArtistRow({ hidden = false }) {
@@ -39,12 +45,14 @@ function ArtistRow({ hidden = false }) {
           to={`/artist/${artist.slug}`}
           className="flex shrink-0 flex-col items-center gap-3 no-underline"
         >
-          <div className="h-20 w-20 overflow-hidden rounded-full ring-2 ring-white/10 transition-all duration-300 hover:scale-105 hover:ring-accent">
-            <img
-              className="h-full w-full object-cover"
-              src={artist.img}
-              alt={hidden ? "" : artist.name}
-            />
+          <div className="h-20 w-20 rounded-full ring-2 ring-white/10 transition-all duration-300 hover:scale-105 hover:ring-accent">
+            <div className="h-full w-full rounded-full overflow-hidden">
+              <img
+                className="h-full w-full object-cover"
+                src={artist.img}
+                alt={hidden ? "" : artist.name}
+              />
+            </div>
           </div>
           <div className="text-center">
             <p className="text-sm font-semibold text-white">{artist.name}</p>

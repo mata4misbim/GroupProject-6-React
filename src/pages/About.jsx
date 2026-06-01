@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Footer from "../components/common/Footer";
 
 const stats = [
   { value: "1,200+", label: "Independent Artists" },
@@ -249,6 +250,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      <Footer simple />
     </div>
   );
 }
