@@ -32,10 +32,10 @@ const categories = [
   { title: "T-Shirts", img: tshirtImg, to: "/shop?category=tshirt" },
 ];
 
-export default function Footer() {
+export default function Footer({ simple = false }) {
   return (
     <>
-      <section className="mx-0 flex flex-col overflow-hidden rounded-t-lg bg-linear-to-br from-[#1a1a40] to-[#0a0a1a] text-white">
+      {!simple && <section className="mx-0 flex flex-col overflow-hidden rounded-t-lg bg-linear-to-br from-[#1a1a40] to-[#0a0a1a] text-white">
         <ul className="flex list-none flex-row flex-wrap gap-2 px-8 pb-6 pt-8">
           {[...genres, ...genres.slice(5)].map((genre, index) => (
             <li
@@ -67,7 +67,7 @@ export default function Footer() {
             </Link>
           ))}
         </div>
-      </section>
+      </section>}
 
       <footer className="mx-0 bg-[#0a0a1a] px-10 py-10 text-white">
         <div className="flex flex-col gap-3">
@@ -88,9 +88,9 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <a Link to="/terms" className="text-white/50 hover:text-white text-[14px] no-underline transition-colors">
+              <Link to="/terms" className="text-white/50 hover:text-white text-[14px] no-underline transition-colors">
                 Terms and conditions
-              </a>
+              </Link>
             </li>
           </ul>
           <p className="mt-6 text-white/25 text-[11px]">

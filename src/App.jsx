@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
+import MiniPlayer from "./components/common/MiniPlayer";
 import LandingPage from "./pages/LandingPage";
 import AboutPage from "./pages/About";
 import Article1Page from "./pages/article1";
@@ -90,6 +91,7 @@ export default function App() {
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <MiniPlayer />
     </>
   );
 }
