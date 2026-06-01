@@ -25,7 +25,7 @@ import LivePage from "./shop/pages/LivePage";
 import HelpPage from "./pages/HelpPage";
 import HelpArticlePage from "./pages/HelpArticlePage";
 import OrderConfirmedPage from "./shop/pages/OrderConfirmedPage";
-
+import ProfileSetting from "./pages/profilesetting";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -88,6 +88,7 @@ export default function App() {
             <Route path="/artist/:slug" element={<ArtistPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/live/:id" element={<LivePage />} />
+            <Route path="/profilesetting" element={<ProfileSetting />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
