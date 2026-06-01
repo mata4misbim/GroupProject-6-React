@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
-import h1 from "../../assets/h1.jpg";
-import h2 from "../../assets/h2.jpg";
-import h3 from "../../assets/h3.jpg";
-import h4 from "../../assets/h4.jpg";
-import h5 from "../../assets/h5.jpg";
-import h6 from "../../assets/h6.jpg";
-import h7 from "../../assets/h7.jpg";
-import h8 from "../../assets/h8.jpg";
-import h9 from "../../assets/h9.jpg";
-import h10 from "../../assets/h10.jpg";
-import h11 from "../../assets/h11.jpg";
-import h12 from "../../assets/h12.jpg";
+import h1 from "../../assets/art1.jpg";
+import h2 from "../../assets/art2.jpg";
+import h3 from "../../assets/art3.jpg";
+import h4 from "../../assets/art4.jpg";
+import h5 from "../../assets/art5.jpg";
+import h6 from "../../assets/art6.jpg";
+import h7 from "../../assets/art7.jpg";
+import h8 from "../../assets/art8.jpg";
+import h9 from "../../assets/art9.jpg";
+import h10 from "../../assets/art10.jpg";
+import h11 from "../../assets/art11.jpg";
+import h12 from "../../assets/art12.jpg";
 
 const artists = [
   { img: h1,  name: "Old World Vultures", genre: "Indie Rock",   slug: "old-world-vultures" },

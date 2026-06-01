@@ -6,27 +6,30 @@ export default function TermsConditions() {
   const [activeTab, setActiveTab] = useState("fan");
 
   const tabs = [
-    { role: "fan",    label: "Fans",    color: "#3a6ea8" },
-    { role: "artist", label: "Artists", color: "#2d8c6e" },
+    { role: "fan",    label: "Fans",    color: "#14b8a6" },
+    { role: "artist", label: "Artists", color: "#0d9488" },
   ];
 
   return (
-    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: "#f7f6f2", color: "#1a1a1a", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: "#f9fafb", color: "#111827", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
 
       {/* HERO */}
-      <div style={{ background: "#1c1c1e", color: "#e8e6df", padding: "64px 24px 48px", textAlign: "center" }}>
-        <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "clamp(32px, 6vw, 56px)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.01em" }}>
-          Terms &amp; <em style={{ fontStyle: "italic", color: "#fc3c44" }}>Conditions</em>
+      <div style={{ background: "linear-gradient(to right, #2dd4bf, #14b8a6)", color: "#fff", padding: "56px 24px 48px", textAlign: "center" }}>
+        <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "clamp(28px, 5vw, 48px)", fontWeight: 700, lineHeight: 1.1, letterSpacing: "-0.01em" }}>
+          Terms &amp; <em style={{ fontStyle: "italic" }}>Conditions</em>
         </h1>
+        <p style={{ marginTop: "10px", fontSize: "15px", color: "rgba(255,255,255,0.8)" }}>
+          Please read these terms carefully before using Audtlist.
+        </p>
       </div>
 
       <div style={{ padding: "24px 24px 0" }}>
         <Link to="/"
-          style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: 600, background: "#fc3c44", border: "none", borderRadius: "8px", padding: "8px 16px", transition: "background 0.2s" }}
-          onMouseEnter={e => e.currentTarget.style.background = "#e8333b"}
-          onMouseLeave={e => e.currentTarget.style.background = "#fc3c44"}
+          style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#fff", textDecoration: "none", fontSize: "13px", fontWeight: 600, background: "#14b8a6", borderRadius: "8px", padding: "8px 18px", letterSpacing: "0.03em", boxShadow: "0 2px 8px rgba(20,184,166,0.3)", transition: "all 0.2s" }}
+          onMouseEnter={e => { e.currentTarget.style.background = "#0d9488"; e.currentTarget.style.boxShadow = "0 4px_14px rgba(20,184,166,0.4)"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "#14b8a6"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(20,184,166,0.3)"; }}
         >
-          ← Back
+          ← Back to home
         </Link>
       </div>
 
@@ -34,7 +37,7 @@ export default function TermsConditions() {
       <main style={{ flex: 1, maxWidth: "860px", margin: "0 auto", width: "100%", padding: "32px 24px 80px" }}>
 
         {/* ROLE TABS */}
-        <div style={{ display: "flex", border: "1px solid #d9d7d0", borderRadius: "8px", overflow: "hidden", marginBottom: "48px" }}>
+        <div style={{ display: "flex", border: "1px solid #e5e7eb", borderRadius: "8px", overflow: "hidden", marginBottom: "48px" }}>
           {tabs.map(({ role, label, color }, i) => (
             <button
               key={role}
@@ -43,7 +46,7 @@ export default function TermsConditions() {
                 flex: 1,
                 padding: "10px 12px",
                 border: "none",
-                borderRight: i < tabs.length - 1 ? "1px solid #d9d7d0" : "none",
+                borderRight: i < tabs.length - 1 ? "1px solid #e5e7eb" : "none",
                 background: activeTab === role ? color : "#fff",
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 fontSize: "12px",
@@ -51,7 +54,7 @@ export default function TermsConditions() {
                 letterSpacing: "0.06em",
                 textTransform: "uppercase",
                 cursor: "pointer",
-                color: activeTab === role ? "#fff" : "#3a3a3a",
+                color: activeTab === role ? "#fff" : "#6b7280",
                 transition: "all 0.2s",
                 display: "flex",
                 alignItems: "center",
@@ -101,7 +104,7 @@ export default function TermsConditions() {
 
       </main>
 
-      <Footer />
+      <Footer simple />
 
       <style>{`
         @keyframes fadeIn {
@@ -123,8 +126,8 @@ function RevenueChart() {
       flexWrap: "wrap",
       marginTop: "12px",
       padding: "24px",
-      background: "#f0faf6",
-      border: "1px solid #a8dcc8",
+      background: "#f0fdfa",
+      border: "1px solid #99f6e4",
       borderRadius: "8px",
     }}>
 
@@ -165,14 +168,14 @@ function RevenueChart() {
 
       {/* TEXT */}
       <div style={{ flex: 1, minWidth: "180px" }}>
-        <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "22px", color: "#1a1a1a", marginBottom: "10px" }}>
+        <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "22px", color: "#111827", marginBottom: "10px" }}>
           Pricing
         </p>
-        <p style={{ fontSize: "13px", color: "#2a6050", lineHeight: 1.65, marginBottom: "10px" }}>
+        <p style={{ fontSize: "13px", color: "#6b7280", lineHeight: 1.65, marginBottom: "10px" }}>
           Artist accounts are free. We make money through a <strong>10% revenue share on merch sales</strong> and <strong>15% on digital music</strong> (payment processor fees are separate and vary by transaction size).
         </p>
-        <p style={{ fontSize: "13px", color: "#2a6050", lineHeight: 1.65 }}>
-          The remainder — <strong style={{ color: "#2d8c6e" }}>82% on average</strong> — goes directly into your PayPal account, typically within 24 to 48 hours.
+        <p style={{ fontSize: "13px", color: "#6b7280", lineHeight: 1.65 }}>
+          The remainder — <strong style={{ color: "#0d9488" }}>82% on average</strong> — goes directly into your PayPal account, typically within 24 to 48 hours.
         </p>
       </div>
 
@@ -182,15 +185,15 @@ function RevenueChart() {
 
 function SectionHeader({ num, label, title, pillText, pillBg, pillColor }) {
   return (
-    <div style={{ display: "flex", alignItems: "flex-end", gap: "16px", marginBottom: "32px", paddingBottom: "20px", borderBottom: "1px solid #d9d7d0" }}>
-      <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "64px", lineHeight: 1, fontWeight: 400, color: "#d9d7d0", flexShrink: 0 }}>
+    <div style={{ display: "flex", alignItems: "flex-end", gap: "16px", marginBottom: "32px", paddingBottom: "20px", borderBottom: "1px solid #e5e7eb" }}>
+      <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "64px", lineHeight: 1, fontWeight: 400, color: "#d1d5db", flexShrink: 0 }}>
         {num}
       </div>
       <div style={{ flex: 1 }}>
-        <p style={{ fontSize: "10px", fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "#3a3a3a", marginBottom: "4px" }}>
+        <p style={{ fontSize: "10px", fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "#9ca3af", marginBottom: "4px" }}>
           {label}
         </p>
-        <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "28px", fontWeight: 400, color: "#1a1a1a" }}>
+        <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "28px", fontWeight: 600, color: "#111827" }}>
           {title}{" "}
           <span style={{ display: "inline-block", fontSize: "11px", fontWeight: 500, padding: "2px 8px", borderRadius: "20px", marginLeft: "6px", verticalAlign: "middle", background: pillBg, color: pillColor }}>
             {pillText}
@@ -217,7 +220,7 @@ function Rules({ items }) {
             key={i}
             style={{
               background: "#fff",
-              border: "1px solid #d9d7d0",
+              border: "1px solid #e5e7eb",
               borderRadius: radius,
               padding: "20px 24px",
               display: "grid",
@@ -228,8 +231,8 @@ function Rules({ items }) {
           >
             <div style={{ fontSize: "22px", marginTop: "2px" }}>{item.icon}</div>
             <div>
-              <p style={{ fontSize: "13px", fontWeight: 500, color: "#1a1a1a", marginBottom: "5px" }}>{item.title}</p>
-              <p style={{ fontSize: "13px", color: "#3a3a3a", lineHeight: 1.65 }}>{item.desc}</p>
+              <p style={{ fontSize: "13px", fontWeight: 500, color: "#111827", marginBottom: "5px" }}>{item.title}</p>
+              <p style={{ fontSize: "13px", color: "#6b7280", lineHeight: 1.65 }}>{item.desc}</p>
               {item.callout && item.callout}
             </div>
           </div>

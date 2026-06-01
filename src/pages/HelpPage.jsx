@@ -135,6 +135,18 @@ export default function HelpPage() {
         </div>
       </div>
 
+      {/* Back button */}
+      <div className="px-4 pt-6">
+        <Link
+          to="/"
+          style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#fff", textDecoration: "none", fontSize: "13px", fontWeight: 600, background: "#14b8a6", borderRadius: "8px", padding: "8px 18px", letterSpacing: "0.03em", boxShadow: "0 2px 8px rgba(20,184,166,0.3)", transition: "all 0.2s" }}
+          onMouseEnter={e => { e.currentTarget.style.background = "#0d9488"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "#14b8a6"; }}
+        >
+          ← Back to home
+        </Link>
+      </div>
+
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 py-12">
         {/* Search Results */}

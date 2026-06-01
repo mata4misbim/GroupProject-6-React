@@ -1,74 +1,7 @@
-import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getRandomLive } from "../../shop/data/liveHelpers";
-import albumCover from "../../assets/landing-page/album-cover-1.jpg";
-import albumCover2 from "../../assets/landing-page/album-cover-2.jpg";
-import albumCover3 from "../../assets/landing-page/album-cover-3.jpg";
-import albumCover4 from "../../assets/landing-page/album-cover-4.jpg";
-import albumCover5 from "../../assets/landing-page/album-cover-5.jpg";
-import audioSrc from "../../assets/audio.mp3";
 import coverPoster from "../../assets/landing-page/cover1.jpg";
-import trackCover from "../../assets/landing-page/cover3.png";
-import nowPlayingImg from "../../assets/landing-page/radio1.jpg";
-
-const tracks = [
-  {
-    img: trackCover,
-    name: "Crimson Dawn",
-    artist: "Old World Vultures",
-    desc: "Indie rock single",
-    duration: "4:05",
-    src: audioSrc,
-  },
-  {
-    img: albumCover,
-    name: "Midnight Echoes",
-    artist: "Old World Vultures",
-    desc: "Late-night album cut",
-    duration: "5:12",
-    src: audioSrc,
-  },
-  {
-    img: nowPlayingImg,
-    name: "Shadow of the Vulture",
-    artist: "Old World Vultures",
-    desc: "Live radio preview",
-    duration: "4:45",
-    src: audioSrc,
-  },
-  {
-    img: albumCover2,
-    name: "Neon Drift",
-    artist: "Velvet Crows",
-    desc: "B-side exclusive",
-    duration: "3:58",
-    src: audioSrc,
-  },
-  {
-    img: albumCover3,
-    name: "Glass Cities",
-    artist: "Crystal Mall",
-    desc: "Album opener",
-    duration: "5:30",
-    src: audioSrc,
-  },
-  {
-    img: albumCover4,
-    name: "Static Hymn",
-    artist: "Static Era",
-    desc: "Live session cut",
-    duration: "4:22",
-    src: audioSrc,
-  },
-  {
-    img: albumCover5,
-    name: "Phantom Roads",
-    artist: "Bangkok Phantom",
-    desc: "Synthwave single",
-    duration: "3:47",
-    src: audioSrc,
-  },
-];
+import { useAudio, tracks } from "../../contexts/AudioContext";
 
 const formatTime = (seconds) => {
   if (!Number.isFinite(seconds)) return "0:00";
@@ -84,112 +17,13 @@ const formatTime = (seconds) => {
 const currentLive = getRandomLive();
 
 function Radio() {
-  const audioRef = useRef(null);
-  const shouldResumePlaybackRef = useRef(false);
-  const [activeTrackIndex, setActiveTrackIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(0.5);
-  const [isMuted, setIsMuted] = useState(false);
-
-  const activeTrack = tracks[activeTrackIndex];
-
-  useEffect(() => {
-    const audio = audioRef.current;
-
-    if (!audio) return;
-
-    audio.volume = volume;
-    audio.muted = isMuted;
-  }, [volume, isMuted]);
-
-  const playAudio = () => {
-    const audio = audioRef.current;
-
-    if (!audio) return;
-
-    audio.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
-  };
-
-  useEffect(() => {
-    const audio = audioRef.current;
-
-    if (!audio) return;
-
-    setProgress(0);
-    setCurrentTime(0);
-    setDuration(0);
-    audio.load();
-
-    if (shouldResumePlaybackRef.current) {
-      playAudio();
-      shouldResumePlaybackRef.current = false;
-      return;
-    }
-
-    setIsPlaying(false);
-  }, [activeTrackIndex]);
-
-  const togglePlayback = () => {
-    const audio = audioRef.current;
-
-    if (!audio) return;
-
-    if (isPlaying) {
-      audio.pause();
-      setIsPlaying(false);
-      return;
-    }
-
-    playAudio();
-  };
-
-  const updateProgress = () => {
-    const audio = audioRef.current;
-
-    if (!audio?.duration) return;
-
-    setCurrentTime(audio.currentTime);
-    setDuration(audio.duration);
-    setProgress((audio.currentTime / audio.duration) * 100);
-  };
-
-  const updateDuration = () => {
-    const audio = audioRef.current;
-
-    if (!audio?.duration) return;
-
-    setDuration(audio.duration);
-  };
-
-  const seekAudio = (event) => {
-    const audio = audioRef.current;
-
-    if (!audio?.duration) return;
-
-    const { left, width } = event.currentTarget.getBoundingClientRect();
-    const clickX = event.clientX - left;
-    audio.currentTime = Math.min(Math.max(clickX / width, 0), 1) * audio.duration;
-  };
-
-  const selectTrack = (trackIndex) => {
-    shouldResumePlaybackRef.current = false;
-    setActiveTrackIndex(trackIndex);
-  };
-
-  const playPrevious = () => {
-    shouldResumePlaybackRef.current = isPlaying;
-    setActiveTrackIndex((currentIndex) =>
-      currentIndex === 0 ? tracks.length - 1 : currentIndex - 1,
-    );
-  };
-
-  const playNext = () => {
-    shouldResumePlaybackRef.current = isPlaying;
-    setActiveTrackIndex((currentIndex) => (currentIndex + 1) % tracks.length);
-  };
+  const {
+    activeTrack, activeTrackIndex,
+    isPlaying, progress, currentTime, duration,
+    volume, isMuted,
+    togglePlayback, playNext, playPrevious, selectTrack, seekAudio,
+    setVolume, setIsMuted,
+  } = useAudio();
 
   return (
     <>
@@ -257,14 +91,6 @@ function Radio() {
               {activeTrack.artist} — {activeTrack.desc}
             </p>
           </div>
-
-          <audio
-            ref={audioRef}
-            src={activeTrack.src}
-            onLoadedMetadata={updateDuration}
-            onTimeUpdate={updateProgress}
-            onEnded={playNext}
-          />
 
           <div className="w-full">
             <button
