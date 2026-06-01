@@ -19,24 +19,24 @@ export default function CartDisplay({ cartItems = [], onQuantityChange, onRemove
   // Show empty cart message if no items
   if (cartItems.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
+      <div className="bg-transparent p-6 md:p-8">
         <div className="text-center py-12">
-          <p className="text-lg text-gray-600">Your cart is empty</p>
-          <p className="text-sm text-gray-500 mt-2">Add items to get started</p>
+          <p className="text-lg text-white/60">Your cart is empty</p>
+          <p className="text-sm text-white/40 mt-2">Add items to get started</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+    <div className="bg-transparent overflow-hidden">
       {/* Cart header */}
-      <div className="border-b border-gray-200 px-6 py-4 md:px-8 md:py-5">
-        <h2 className="text-xl font-semibold text-gray-900">Shopping Cart</h2>
+      <div className="border-b border-white/10 px-6 py-4 md:px-8 md:py-5">
+        <h2 className="text-xl font-semibold text-white">Shopping Cart</h2>
       </div>
 
       {/* Cart items list */}
-      <div className="divide-y divide-gray-200">
+      <div className="divide-y divide-white/10">
         {cartItems.map((item) => (
           <CartItem
             key={item.id}
@@ -72,7 +72,7 @@ function CartItem({ item, onQuantityChange, onRemoveItem }) {
         <img
           src={item.image}
           alt={item.name}
-          className="w-20 h-20 md:w-24 md:h-24 object-cover rounded-md bg-gray-100"
+          className="w-20 h-20 md:w-24 md:h-24 object-cover rounded-md bg-white/10"
         />
       </div>
 
@@ -81,20 +81,20 @@ function CartItem({ item, onQuantityChange, onRemoveItem }) {
         <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 md:gap-4">
           {/* Name and price */}
           <div className="min-w-0">
-            <h3 className="text-base md:text-lg font-medium text-gray-900 truncate">
+            <h3 className="text-base md:text-lg font-medium text-white truncate">
               {item.name}
             </h3>
-            <p className="text-sm md:text-base text-gray-600 mt-1">
+            <p className="text-sm md:text-base text-white/60 mt-1">
               {formatCurrency(item.unitPrice)} each
             </p>
           </div>
 
           {/* Subtotal */}
           <div className="text-right">
-            <p className="text-base md:text-lg font-semibold text-gray-900">
+            <p className="text-base md:text-lg font-semibold text-white">
               {formatCurrency(subtotal)}
             </p>
-            <p className="text-xs md:text-sm text-gray-500 mt-1">
+            <p className="text-xs md:text-sm text-white/40 mt-1">
               Qty: {item.quantity}
             </p>
           </div>
@@ -113,7 +113,7 @@ function CartItem({ item, onQuantityChange, onRemoveItem }) {
 
           <button
             onClick={() => onRemoveItem?.(item.id)}
-            className="ml-auto px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md transition-colors"
+            className="ml-auto px-4 py-2 text-sm text-accent hover:bg-accent/10 rounded-md transition-colors"
             aria-label={`Remove ${item.name} from cart`}
           >
             Remove

@@ -132,10 +132,10 @@ export default function ShippingForm({ onSubmit, initialValues = {} }) {
     const isTouched = touched[name];
 
     return (
-      <div key={name} className="mb-md">
+      <div key={name} className="mb-4">
         <label
           htmlFor={name}
-          className="block text-sm font-medium text-gray-700 mb-xs"
+          className="block text-sm font-medium text-white/70 mb-1.5"
         >
           {label}
           <span className="text-red-500 ml-xs" aria-label="required">
@@ -152,16 +152,16 @@ export default function ShippingForm({ onSubmit, initialValues = {} }) {
           onBlur={handleBlur}
           aria-invalid={hasError ? 'true' : 'false'}
           aria-describedby={hasError ? `${name}-error` : undefined}
-          className={`w-full px-md py-sm border rounded-md focus:outline-none focus:ring-2 transition-colors ${
+          className={`w-full px-4 py-2.5 border rounded-md focus:outline-none focus:ring-2 transition-colors bg-white/5 text-white placeholder:text-white/25 ${
             hasError && isTouched
-              ? 'border-red-500 focus:ring-red-500 bg-red-50'
-              : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+              ? 'border-accent/60 focus:ring-accent/30'
+              : 'border-white/15 focus:ring-white/20 focus:border-white/35'
           }`}
         />
         {hasError && isTouched && (
           <p
             id={`${name}-error`}
-            className="mt-xs text-sm text-red-600"
+            className="mt-1 text-xs text-accent"
             role="alert"
           >
             {hasError}
@@ -172,9 +172,9 @@ export default function ShippingForm({ onSubmit, initialValues = {} }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-md">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <fieldset>
-        <legend className="text-lg font-semibold text-gray-900 mb-md">
+        <legend className="text-lg font-semibold text-white mb-4">
           Shipping Information
         </legend>
 
@@ -187,7 +187,7 @@ export default function ShippingForm({ onSubmit, initialValues = {} }) {
 
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white font-medium py-md px-lg rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+        className="w-full bg-accent text-white font-semibold py-3 px-6 rounded-xl hover:bg-accent-hover focus:outline-none transition-all shadow-[0_4px_16px_rgba(252,60,68,0.3)]"
       >
         Continue to Payment
       </button>

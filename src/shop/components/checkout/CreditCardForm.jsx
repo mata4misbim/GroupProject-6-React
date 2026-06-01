@@ -156,18 +156,15 @@ export default function CreditCardForm({
   }
 
   return (
-    <div className="credit-card-form mt-6 p-6 border-2 border-gray-200 rounded-lg bg-white">
-      <h3 className="text-lg font-semibold mb-4 text-gray-900">
-        Credit Card Details
+    <div className="credit-card-form mt-4 pt-4 border-t border-white/8">
+      <h3 className="text-[13px] font-semibold uppercase tracking-widest text-white/40 mb-4">
+        Card Details
       </h3>
 
-      <form className="space-y-4">
+      <form className="space-y-3">
         {/* Card Number Field */}
-        <div className="form-group">
-          <label
-            htmlFor="cardNumber"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
+        <div>
+          <label htmlFor="cardNumber" className="block text-xs font-medium text-white/50 mb-1.5">
             Card Number
           </label>
           <input
@@ -179,15 +176,11 @@ export default function CreditCardForm({
             onBlur={handleFieldBlur}
             placeholder="1234 5678 9012 3456"
             maxLength="19"
-            className={`
-              w-full px-3 py-2 border rounded-lg text-sm
-              focus:outline-none focus:ring-2 focus:ring-blue-500
-              ${
-                errors.cardNumber && touched.cardNumber
-                  ? 'border-red-500 bg-red-50'
-                  : 'border-gray-300'
-              }
-            `}
+            className={`w-full px-4 py-2.5 rounded-xl text-sm bg-white/5 text-white placeholder:text-white/20 border focus:outline-none focus:ring-1 transition-all ${
+              errors.cardNumber && touched.cardNumber
+                ? 'border-accent/60 focus:ring-accent/30'
+                : 'border-white/10 focus:ring-white/20 focus:border-white/25'
+            }`}
             aria-label="Card number"
             aria-invalid={!!(errors.cardNumber && touched.cardNumber)}
             aria-describedby={
@@ -195,7 +188,7 @@ export default function CreditCardForm({
             }
           />
           {errors.cardNumber && touched.cardNumber && (
-            <p id="cardNumber-error" className="text-red-600 text-sm mt-1">
+            <p id="cardNumber-error" className="text-accent text-xs mt-1">
               {errors.cardNumber}
             </p>
           )}
@@ -205,7 +198,7 @@ export default function CreditCardForm({
         <div className="form-group">
           <label
             htmlFor="cardholderName"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-xs font-medium text-white/50 mb-1.5"
           >
             Cardholder Name
           </label>
@@ -218,13 +211,11 @@ export default function CreditCardForm({
             onBlur={handleFieldBlur}
             placeholder="John Doe"
             className={`
-              w-full px-3 py-2 border rounded-lg text-sm
-              focus:outline-none focus:ring-2 focus:ring-blue-500
-              ${
-                errors.cardholderName && touched.cardholderName
-                  ? 'border-red-500 bg-red-50'
-                  : 'border-gray-300'
-              }
+              w-full px-4 py-2.5 rounded-xl text-sm bg-white/5 text-white placeholder:text-white/20 border focus:outline-none focus:ring-1 transition-all ${
+              errors.cardholderName && touched.cardholderName
+                ? 'border-accent/60 focus:ring-accent/30'
+                : 'border-white/10 focus:ring-white/20 focus:border-white/25'
+            }
             `}
             aria-label="Cardholder name"
             aria-invalid={!!(errors.cardholderName && touched.cardholderName)}
@@ -235,7 +226,7 @@ export default function CreditCardForm({
             }
           />
           {errors.cardholderName && touched.cardholderName && (
-            <p id="cardholderName-error" className="text-red-600 text-sm mt-1">
+            <p id="cardholderName-error" className="text-accent text-xs mt-1">
               {errors.cardholderName}
             </p>
           )}
@@ -247,7 +238,7 @@ export default function CreditCardForm({
           <div className="form-group">
             <label
               htmlFor="expiryDate"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="block text-xs font-medium text-white/50 mb-1.5"
             >
               Expiry Date
             </label>
@@ -261,13 +252,11 @@ export default function CreditCardForm({
               placeholder="MM/YY"
               maxLength="5"
               className={`
-                w-full px-3 py-2 border rounded-lg text-sm
-                focus:outline-none focus:ring-2 focus:ring-blue-500
-                ${
-                  errors.expiryDate && touched.expiryDate
-                    ? 'border-red-500 bg-red-50'
-                    : 'border-gray-300'
-                }
+                w-full px-4 py-2.5 rounded-xl text-sm bg-white/5 text-white placeholder:text-white/20 border focus:outline-none focus:ring-1 transition-all ${
+                errors.expiryDate && touched.expiryDate
+                  ? 'border-accent/60 focus:ring-accent/30'
+                  : 'border-white/10 focus:ring-white/20 focus:border-white/25'
+              }
               `}
               aria-label="Expiry date"
               aria-invalid={!!(errors.expiryDate && touched.expiryDate)}
@@ -278,7 +267,7 @@ export default function CreditCardForm({
               }
             />
             {errors.expiryDate && touched.expiryDate && (
-              <p id="expiryDate-error" className="text-red-600 text-sm mt-1">
+              <p id="expiryDate-error" className="text-accent text-xs mt-1">
                 {errors.expiryDate}
               </p>
             )}
@@ -288,7 +277,7 @@ export default function CreditCardForm({
           <div className="form-group">
             <label
               htmlFor="cvv"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="block text-xs font-medium text-white/50 mb-1.5"
             >
               CVV
             </label>
@@ -302,13 +291,11 @@ export default function CreditCardForm({
               placeholder="123"
               maxLength="4"
               className={`
-                w-full px-3 py-2 border rounded-lg text-sm
-                focus:outline-none focus:ring-2 focus:ring-blue-500
-                ${
-                  errors.cvv && touched.cvv
-                    ? 'border-red-500 bg-red-50'
-                    : 'border-gray-300'
-                }
+                w-full px-4 py-2.5 rounded-xl text-sm bg-white/5 text-white placeholder:text-white/20 border focus:outline-none focus:ring-1 transition-all ${
+                errors.cvv && touched.cvv
+                  ? 'border-accent/60 focus:ring-accent/30'
+                  : 'border-white/10 focus:ring-white/20 focus:border-white/25'
+              }
               `}
               aria-label="CVV"
               aria-invalid={!!(errors.cvv && touched.cvv)}
@@ -317,7 +304,7 @@ export default function CreditCardForm({
               }
             />
             {errors.cvv && touched.cvv && (
-              <p id="cvv-error" className="text-red-600 text-sm mt-1">
+              <p id="cvv-error" className="text-accent text-xs mt-1">
                 {errors.cvv}
               </p>
             )}
@@ -325,7 +312,7 @@ export default function CreditCardForm({
         </div>
 
         {/* Security Notice */}
-        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded text-sm text-gray-700">
+        <div className="mt-4 p-3 bg-white/4 border border-white/8 rounded-xl text-sm text-white/50">
           <p>
             <strong>🔒 Secure:</strong> Your card information is encrypted and
             secure. We never store your full card details.

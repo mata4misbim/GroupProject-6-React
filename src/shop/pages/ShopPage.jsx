@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import Footer from "../../components/common/Footer";
 import ProductCard from "../components/product/ProductCard";
 import { genres } from "../data/mockDb";
 import { CATEGORIES } from "../data/constants";
@@ -74,7 +75,7 @@ export default function ShopPage() {
   };
  
   return (
-    <div className="min-h-screen bg-bg">
+    <div className="min-h-screen bg-bg font-['Plus_Jakarta_Sans',sans-serif]">
       {/* Hero */}
       <div className="px-[5%] pt-10 pb-6">
         <h1 className="text-white text-[2.6rem] font-bold tracking-tight">
@@ -215,7 +216,7 @@ export default function ShopPage() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-6">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-x-3 gap-y-5">
             {filtered.map((product) => (
               <ProductCard
                 key={product._id}
@@ -226,6 +227,7 @@ export default function ShopPage() {
           </div>
         )}
       </div>
+      <Footer simple />
     </div>
   );
 }

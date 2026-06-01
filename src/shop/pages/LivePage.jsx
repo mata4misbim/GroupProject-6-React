@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Footer from "../../components/common/Footer";
 import { useParams, Link } from "react-router-dom";
 import {
   findLiveById,
@@ -116,7 +117,8 @@ export default function LivePage() {
   }
 
   return (
-    <div className="min-h-screen bg-bg px-[5%] py-8">
+    <div className="min-h-screen bg-bg font-['Plus_Jakarta_Sans',sans-serif]">
+      <div className="px-[5%] py-8">
       {/* Back link */}
       <Link
         to="/"
@@ -262,6 +264,8 @@ export default function LivePage() {
         {/* ── ฝั่งขวา: Chat ── */}
         <LiveChat liveId={live._id} />
       </div>
+      </div>
+      <Footer simple />
     </div>
   );
 }

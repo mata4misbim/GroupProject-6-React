@@ -93,7 +93,7 @@ export default function HelpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white font-['Plus_Jakarta_Sans',sans-serif]">
       {/* Header with Teal Background */}
       <div className="bg-gradient-to-r from-teal-400 to-teal-500 text-white py-12 px-4">
         <div className="max-w-4xl mx-auto">

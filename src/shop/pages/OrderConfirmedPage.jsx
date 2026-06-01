@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import Footer from "../../components/common/Footer";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CheckCircle, Download, FileText } from "lucide-react";
 
@@ -47,38 +48,34 @@ export default function OrderConfirmedPage() {
     });
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <main className="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-8">
-        <nav className="mb-6 text-sm text-gray-500" aria-label="Breadcrumb">
+    <div className="min-h-screen bg-[#0c1428] font-['Plus_Jakarta_Sans',sans-serif]">
+      <main className="mx-auto max-w-6xl px-6 py-10">
+        <nav className="mb-8 text-sm text-white/30" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2">
-            <li>
-              <Link to="/" className="hover:text-gray-700">Home</Link>
-            </li>
+            <li><Link to="/" className="hover:text-white/60 transition-colors">Home</Link></li>
             <li>/</li>
-            <li>
-              <Link to="/shop" className="hover:text-gray-700">Shop</Link>
-            </li>
+            <li><Link to="/shop" className="hover:text-white/60 transition-colors">Shop</Link></li>
             <li>/</li>
-            <li className="text-gray-900">Order confirmation</li>
+            <li className="text-white/50">Order confirmation</li>
           </ol>
         </nav>
 
-        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+        <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
           <div>
-            <h1 className="mb-2 text-3xl font-bold text-gray-900">Order confirmed</h1>
-            <p className="text-gray-600">Thank you for your purchase</p>
+            <h1 className="mb-1 text-3xl font-bold text-white">Order confirmed</h1>
+            <p className="text-white/45">Thank you for your purchase</p>
           </div>
-          <div className="flex items-center gap-2 rounded-lg bg-green-50 px-4 py-2 text-green-700">
-            <CheckCircle className="h-5 w-5" />
-            <span className="font-medium">Payment successful</span>
+          <div className="flex items-center gap-2 rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-2 text-green-400">
+            <CheckCircle className="h-4 w-4" />
+            <span className="text-sm font-semibold">Payment successful</span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
-          <div className="space-y-6 lg:col-span-2">
-            <section className="rounded-lg bg-white p-6 shadow-sm">
-              <h2 className="mb-4 text-lg font-semibold text-gray-900">ORDER DETAILS</h2>
-              <div className="grid grid-cols-2 gap-4 text-sm">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+          <div className="space-y-5 lg:col-span-2">
+            <section className="rounded-2xl border border-white/8 bg-[#162040] p-6">
+              <h2 className="mb-5 text-[13px] font-semibold uppercase tracking-widest text-white/40">Order Details</h2>
+              <div className="grid grid-cols-2 gap-y-6 gap-x-8 text-sm">
                 <Detail label="Order no." value={orderId} />
                 <Detail label="Purchase date" value={formatDate(purchaseDate)} />
                 <Detail label="Purchase time" value={purchaseTime} />
@@ -86,25 +83,21 @@ export default function OrderConfirmedPage() {
               </div>
             </section>
 
-            <section className="rounded-lg bg-white p-6 shadow-sm">
-              <h2 className="mb-4 text-lg font-semibold text-gray-900">ITEMS PURCHASED</h2>
-              <div className="space-y-4">
+            <section className="rounded-2xl border border-white/8 bg-[#162040] p-6">
+              <h2 className="mb-5 text-[13px] font-semibold uppercase tracking-widest text-white/40">Items Purchased</h2>
+              <div className="space-y-6">
                 {items.map((item) => (
-                  <div key={item.id} className="flex gap-4">
-                    <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded bg-gray-100">
+                  <div key={item.id} className="flex gap-5 p-4 rounded-xl bg-white/3 border border-white/6">
+                    <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl bg-white/5">
                       <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="mb-1 font-semibold text-gray-900">{item.name}</h3>
-                      <p className="text-sm text-gray-500">{item.artist || "Unknown artist"}</p>
-                      <p className="mt-1 text-sm text-gray-500">Qty: {item.quantity}</p>
-                      <span
-                        className={`mt-2 inline-block rounded px-3 py-1 text-xs font-medium ${
-                          item.type === "digital"
-                            ? "bg-blue-50 text-blue-700"
-                            : "bg-gray-100 text-gray-700"
-                        }`}
-                      >
+                    <div className="min-w-0 flex-1 flex flex-col gap-1.5 justify-center">
+                      <h3 className="font-semibold text-white text-base">{item.name}</h3>
+                      <p className="text-sm text-white/45">{item.artist || "Unknown artist"}</p>
+                      <p className="text-xs text-white/30">Qty: {item.quantity}</p>
+                      <span className={`mt-1 self-start rounded-full px-3 py-1 text-xs font-medium ${
+                        item.type === "digital" ? "bg-blue-500/15 text-blue-300" : "bg-white/8 text-white/50"
+                      }`}>
                         {item.type === "digital" ? "Digital download" : "Physical item"}
                       </span>
                     </div>
@@ -114,10 +107,10 @@ export default function OrderConfirmedPage() {
             </section>
 
             {hasPhysicalItems && shippingAddress && (
-              <section className="rounded-lg bg-white p-6 shadow-sm">
-                <h2 className="mb-4 text-lg font-semibold text-gray-900">SHIPPING ADDRESS</h2>
-                <div className="space-y-1 text-sm text-gray-700">
-                  <p className="font-semibold">{shippingAddress.fullName}</p>
+              <section className="rounded-2xl border border-white/8 bg-[#162040] p-6">
+                <h2 className="mb-4 text-[13px] font-semibold uppercase tracking-widest text-white/40">Shipping Address</h2>
+                <div className="space-y-1 text-sm text-white/70">
+                  <p className="font-semibold text-white">{shippingAddress.fullName}</p>
                   <p>{shippingAddress.address}</p>
                   <p>{shippingAddress.city} {shippingAddress.postalCode}</p>
                 </div>
@@ -125,64 +118,57 @@ export default function OrderConfirmedPage() {
             )}
 
             {hasDigitalItems && (
-              <section className="rounded-lg bg-white p-6 shadow-sm">
-                <h2 className="mb-2 text-lg font-semibold text-gray-900">DOWNLOAD YOUR MUSIC</h2>
-                <p className="mb-4 text-sm text-gray-600">Download links are also sent to your email.</p>
-                <div className="space-y-3">
-                  {items
-                    .filter((item) => item.type === "digital")
-                    .map((item) => (
-                      <div key={item.id} className="space-y-2">
-                        <p className="text-sm font-medium text-gray-900">{item.name}</p>
-                        <div className="flex flex-wrap gap-3">
-                          <button className="flex items-center gap-2 rounded bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700">
-                            <Download className="h-4 w-4" />
-                            Download all (MP3)
-                          </button>
-                          <button className="flex items-center gap-2 rounded border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50">
-                            <Download className="h-4 w-4" />
-                            Download all (FLAC)
-                          </button>
-                        </div>
+              <section className="rounded-2xl border border-white/8 bg-[#162040] p-6">
+                <h2 className="mb-3 text-[13px] font-semibold uppercase tracking-widest text-white/40">Download Your Music</h2>
+                <p className="text-sm text-white/40 leading-relaxed">Download links are also sent to your email.</p>
+                <div className="mt-8 pt-6 border-t border-white/8 space-y-6">
+                  {items.filter((item) => item.type === "digital").map((item) => (
+                    <div key={item.id} className="flex flex-col gap-6">
+                      <p className="text-base font-semibold text-white mt-2">{item.name}</p>
+                      <div className="flex flex-wrap gap-3">
+                        <button className="flex items-center gap-2 rounded-xl bg-accent px-4 py-2 text-sm font-semibold text-white hover:bg-accent-hover transition-all">
+                          <Download className="h-4 w-4" />Download all (MP3)
+                        </button>
+                        <button className="flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/70 hover:bg-white/10 transition-all">
+                          <Download className="h-4 w-4" />Download all (FLAC)
+                        </button>
                       </div>
-                    ))}
+                    </div>
+                  ))}
                 </div>
               </section>
             )}
           </div>
 
           <aside>
-            <div className="space-y-6 lg:sticky lg:top-8">
-              <section className="rounded-lg bg-white p-6 shadow-sm">
-                <h2 className="mb-4 text-lg font-semibold text-gray-900">ORDER SUMMARY</h2>
-                <div className="space-y-3 text-sm">
+            <div className="space-y-5 lg:sticky lg:top-24">
+              <section className="rounded-2xl border border-white/8 bg-[#162040] p-6">
+                <h2 className="mb-4 text-[13px] font-semibold uppercase tracking-widest text-white/40">Order Summary</h2>
+                <div className="space-y-4 text-sm">
                   <SummaryRow label="Subtotal" value={formatCurrency(subtotal)} />
                   {discountAmount > 0 && (
-                    <SummaryRow label="Discount" value={`-${formatCurrency(discountAmount)}`} valueClassName="text-green-700" />
+                    <SummaryRow label="Discount" value={`-${formatCurrency(discountAmount)}`} valueClassName="text-green-400" />
                   )}
                   {shipping > 0 && <SummaryRow label="Shipping" value={formatCurrency(shipping)} />}
                   {tax > 0 && <SummaryRow label="Tax (VAT 7%)" value={formatCurrency(tax)} />}
-                  <div className="flex justify-between border-t pt-3 text-base font-semibold">
-                    <span className="text-gray-900">Total</span>
-                    <span className="text-gray-900">{formatCurrency(total)}</span>
+                  <div className="flex justify-between border-t border-white/10 pt-3 text-base font-bold">
+                    <span className="text-white">Total</span>
+                    <span className="text-white">{formatCurrency(total)}</span>
                   </div>
                 </div>
               </section>
 
-              <section className="rounded-lg bg-blue-50 p-6">
-                <h2 className="mb-2 text-sm font-semibold text-gray-900">CONFIRMATION SENT TO</h2>
-                <p className="mb-2 text-sm font-medium text-gray-900">{confirmationEmail}</p>
-                <p className="text-xs text-gray-600">Check spam if not received within 5 mins</p>
+              <section className="rounded-2xl border border-white/8 bg-[#162040] p-5">
+                <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-white/40">Confirmation sent to</h2>
+                <p className="text-sm font-semibold text-white">{confirmationEmail}</p>
+                <p className="mt-3 text-xs text-white/35 leading-relaxed">Check spam if not received within 5 mins</p>
               </section>
 
               <div className="space-y-3">
-                <Link
-                  to="/shop"
-                  className="block w-full rounded-lg bg-indigo-600 px-4 py-3 text-center font-medium text-white transition-colors hover:bg-indigo-700"
-                >
+                <Link to="/shop" className="block w-full rounded-xl bg-accent px-4 py-3 text-center font-semibold text-white hover:bg-accent-hover transition-all shadow-[0_4px_16px_rgba(252,60,68,0.25)]">
                   Continue shopping
                 </Link>
-                <button className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-50">
+                <button className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-3 font-semibold text-white/60 hover:bg-white/10 transition-all">
                   <FileText className="h-4 w-4" />
                   Download receipt (PDF)
                 </button>
@@ -191,24 +177,25 @@ export default function OrderConfirmedPage() {
           </aside>
         </div>
       </main>
+      <Footer simple />
     </div>
   );
 }
 
 function Detail({ label, value }) {
   return (
-    <div>
-      <p className="mb-1 text-gray-500">{label}</p>
-      <p className="font-semibold text-gray-900">{value}</p>
+    <div className="flex flex-col gap-2">
+      <p className="text-[11px] text-white/35 uppercase tracking-widest">{label}</p>
+      <p className="font-semibold text-white text-sm leading-loose">{value}</p>
     </div>
   );
 }
 
-function SummaryRow({ label, value, valueClassName = "text-gray-900" }) {
+function SummaryRow({ label, value, valueClassName = "text-white" }) {
   return (
-    <div className="flex justify-between">
-      <span className="text-gray-600">{label}</span>
-      <span className={valueClassName}>{value}</span>
+    <div className="flex justify-between py-1">
+      <span className="text-white/45 leading-relaxed">{label}</span>
+      <span className={`${valueClassName} leading-relaxed`}>{value}</span>
     </div>
   );
 }

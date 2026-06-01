@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import logoB from "../../assets/landing-page/logob.png";
 
 const ARTIST_GENRES = [
   "Rock", "Alternative", "Electronic", "Metal", "Pop", "Jazz",
@@ -110,8 +111,7 @@ export default function ArtistRegister({ onGoLogIn, onGoFan, onRegisterSuccess }
 
   return (
     <div className="ka-register-page">
-      <Link to="/" className="ka-back-btn ka-back-btn--page">← Back to home</Link>
-      <div className="ka-register-card">
+<div className="ka-register-card">
 
         {/* Left: image panel */}
         <div className="ka-register-card__hero">
@@ -120,6 +120,7 @@ export default function ArtistRegister({ onGoLogIn, onGoFan, onRegisterSuccess }
 
         {/* Right: form panel */}
         <div className="ka-register-card__side">
+          <Link to="/"><img src={logoB} alt="AUDTLIST" className="h-29 w-auto object-contain object-left mb-4 ml-[-5%] hover:opacity-80 transition-opacity" /></Link>
           <form onSubmit={handleSubmit} noValidate>
             <p className="ka-title">Create artist account</p>
             <p className="ka-subtitle">
@@ -268,7 +269,7 @@ export default function ArtistRegister({ onGoLogIn, onGoFan, onRegisterSuccess }
                 required
               />
               <label htmlFor="artist-terms" className="ka-check__label">
-                I agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
+                I agree to the <Link to="/terms">Terms of Use</Link> and <Link to="/terms">Privacy Policy</Link>.
               </label>
             </div>
             {errors.acceptedTerms && (
