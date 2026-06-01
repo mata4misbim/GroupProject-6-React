@@ -75,7 +75,7 @@ const values = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[#0a0a1a]">
+    <div className="min-h-screen bg-[#0a0a1a] font-['Plus_Jakarta_Sans',sans-serif]">
 
       {/* Hero */}
       <section className="relative overflow-hidden px-[10%] pt-24 pb-20">

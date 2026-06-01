@@ -36,15 +36,15 @@ export default function OrderSummary({
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+    <div className="bg-transparent p-6 shadow-sm">
       {/* Header */}
-      <h2 className="text-xl font-bold text-gray-900 mb-6">Order Summary</h2>
+      <h2 className="text-xl font-bold text-white mb-6">Order Summary</h2>
 
       {/* Subtotal Section */}
-      <div className="border-b border-gray-200 pb-4 mb-4">
+      <div className="border-b border-white/10 pb-4 mb-4">
         <div className="flex justify-between items-center">
-          <span className="text-gray-600">Subtotal</span>
-          <span className="text-gray-900 font-medium" data-testid="subtotal">
+          <span className="text-white/55">Subtotal</span>
+          <span className="text-white font-medium" data-testid="subtotal">
             {formatCurrency(subtotal)}
           </span>
         </div>
@@ -52,10 +52,10 @@ export default function OrderSummary({
 
       {/* Discount Section - Only show if discount is applied */}
       {validDiscountAmount > 0 && (
-        <div className="border-b border-gray-200 pb-4 mb-4">
+        <div className="border-b border-white/10 pb-4 mb-4">
           <div className="flex justify-between items-center">
-            <span className="text-gray-600">Discount</span>
-            <span className="text-green-600 font-medium" data-testid="discount-amount">
+            <span className="text-white/55">Discount</span>
+            <span className="text-green-400 font-medium" data-testid="discount-amount">
               -{formatCurrency(validDiscountAmount)}
             </span>
           </div>
@@ -63,11 +63,11 @@ export default function OrderSummary({
       )}
 
       {/* Total Section */}
-      <div className="bg-gray-50 rounded-lg p-4 mb-6">
+      <div className="bg-white/5 rounded-lg p-4 mb-6">
         <div className="flex justify-between items-center">
-          <span className="text-lg font-semibold text-gray-900">Total</span>
+          <span className="text-lg font-semibold text-white">Total</span>
           <span
-            className="text-2xl font-bold text-gray-900"
+            className="text-2xl font-bold text-white"
             data-testid="total-amount"
           >
             {formatCurrency(total)}
@@ -76,11 +76,11 @@ export default function OrderSummary({
       </div>
 
       {/* Payment Method Section */}
-      <div className="border-t border-gray-200 pt-4">
+      <div className="border-t border-white/10 pt-4">
         <div className="flex justify-between items-center">
-          <span className="text-gray-600">Payment Method</span>
+          <span className="text-white/55">Payment Method</span>
           <span
-            className="text-gray-900 font-medium"
+            className="text-white font-medium"
             data-testid="payment-method"
           >
             {getPaymentMethodLabel()}

@@ -106,7 +106,7 @@ export default function DiscountCodeInput({
       {/* Discount Code Input Section */}
       {!appliedCode ? (
         <div className="space-y-2">
-          <label htmlFor="discount-code" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="discount-code" className="block text-sm font-medium text-white/90">
             Discount Code
           </label>
           <div className="flex gap-2">
@@ -118,14 +118,14 @@ export default function DiscountCodeInput({
               onKeyPress={handleKeyPress}
               placeholder="Enter discount code"
               disabled={isLoading}
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
+              className="flex-1 px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-1 focus:ring-white/30 focus:border-white/35 disabled:bg-white/5 disabled:cursor-not-allowed text-sm bg-white/5 text-white placeholder:text-white/30"
               aria-label="Discount code input"
               aria-describedby={error ? 'discount-error' : undefined}
             />
             <button
               onClick={handleApply}
               disabled={isLoading || !inputValue.trim()}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed font-medium text-sm transition-colors"
+              className="px-4 py-2 bg-white text-[#0c1428] rounded-md hover:bg-white/90 disabled:bg-white/20 disabled:cursor-not-allowed font-medium text-sm transition-colors"
               aria-label="Apply discount code"
             >
               {isLoading ? 'Applying...' : 'Apply'}
@@ -136,7 +136,7 @@ export default function DiscountCodeInput({
           {error && (
             <div
               id="discount-error"
-              className="text-red-600 text-sm flex items-center gap-1"
+              className="text-red-400 text-sm flex items-center gap-1"
               role="alert"
             >
               <span className="font-medium">✕</span>
@@ -146,29 +146,29 @@ export default function DiscountCodeInput({
         </div>
       ) : (
         /* Applied Discount Display */
-        <div className="bg-green-50 border border-green-200 rounded-md p-3 space-y-2">
+        <div className="bg-green-500/10 border border-green-500/30 rounded-md p-3 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-green-600 font-medium">✓</span>
+              <span className="text-green-400 font-medium">✓</span>
               <div>
-                <p className="text-sm font-medium text-gray-900">
+                <p className="text-sm font-medium text-white">
                   Discount Code Applied
                 </p>
-                <p className="text-xs text-gray-600">
+                <p className="text-xs text-white/60">
                   Code: <span className="font-mono font-semibold">{appliedCode}</span>
                 </p>
               </div>
             </div>
             <button
               onClick={handleRemove}
-              className="text-gray-500 hover:text-gray-700 font-medium text-sm"
+              className="text-white/40 hover:text-white/70 font-medium text-sm"
               aria-label="Remove discount code"
             >
               Remove
             </button>
           </div>
           {discountAmount > 0 && (
-            <div className="text-sm text-green-700 font-medium">
+            <div className="text-sm text-green-300 font-medium">
               Discount: -${discountAmount.toFixed(2)}
             </div>
           )}

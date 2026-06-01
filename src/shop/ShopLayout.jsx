@@ -1,24 +1,30 @@
 import { Outlet } from "react-router-dom";
 import AudioPlayer from "./components/audio/AudioPlayer";
 import CartDrawer from "./components/cart/CartDrawer";
-import { AudioPlayerProvider } from "./context/AudioPlayerContext";
-import { CartProvider } from "./context/CartContext";
+import { AudioPlayerProvider, useAudioPlayer } from "./context/AudioPlayerContext";
 import { WishlistProvider } from "./context/WishlistContext";
 import { FollowProvider } from "../contexts/FollowContext";
 import { CollectionProvider } from "./context/CollectionContext";
+
+function ShopContent() {
+  const { isOpen } = useAudioPlayer();
+  return (
+    <div className={`transition-[padding] duration-300 ${isOpen ? "pr-75" : ""}`}>
+      <Outlet />
+      <CartDrawer />
+      <AudioPlayer />
+    </div>
+  );
+}
 
 export default function ShopLayout() {
   return (
     <WishlistProvider>
       <FollowProvider>
         <CollectionProvider>
-          <CartProvider>
-            <AudioPlayerProvider>
-              <Outlet />
-              <CartDrawer />
-              <AudioPlayer />
-            </AudioPlayerProvider>
-          </CartProvider>
+          <AudioPlayerProvider>
+            <ShopContent />
+          </AudioPlayerProvider>
         </CollectionProvider>
       </FollowProvider>
     </WishlistProvider>

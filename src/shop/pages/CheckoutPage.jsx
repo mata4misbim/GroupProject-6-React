@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import Footer from "../../components/common/Footer";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useCollection } from "../context/CollectionContext";
@@ -110,13 +111,16 @@ export default function CheckoutPage() {
       : { method: PAYMENT_METHODS.QR_PROMPTPAY };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <main className="max-w-7xl mx-auto py-6 px-4 md:py-8 md:px-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">Checkout</h1>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+    <div className="min-h-screen bg-[#0c1428] font-['Plus_Jakarta_Sans',sans-serif]">
+      <main className="max-w-6xl mx-auto py-10 px-6">
+        <h1 className="text-3xl font-bold text-white mb-2">Checkout</h1>
+        <p className="text-white/40 text-sm">Complete your purchase</p>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-10">
           {/* Left: Cart + Shipping + Payment */}
-          <div className="lg:col-span-2 space-y-6">
-            <section aria-label="Shopping cart">
+          <div className="lg:col-span-2 space-y-5">
+            <section aria-label="Shopping cart" className="rounded-2xl border border-white/10 bg-[#162040] p-6">
+              <h2 className="text-[15px] font-semibold uppercase tracking-widest text-white/40 mb-5">Cart</h2>
               <CartDisplay
                 cartItems={cartItems}
                 onQuantityChange={handleQuantityChange}
@@ -124,12 +128,13 @@ export default function CheckoutPage() {
               />
             </section>
 
-            <section className="bg-white rounded-lg shadow-sm p-4 md:p-6">
+            <section className="rounded-2xl border border-white/10 bg-[#162040] p-6">
+              <h2 className="text-[15px] font-semibold uppercase tracking-widest text-white/40 mb-5">Shipping</h2>
               <ShippingForm onSubmit={handleShippingSubmit} />
             </section>
 
-            <section className="bg-white rounded-lg shadow-sm p-4 md:p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Payment</h2>
+            <section className="rounded-2xl border border-white/10 bg-[#162040] p-6">
+              <h2 className="text-[15px] font-semibold uppercase tracking-widest text-white/40 mb-5">Payment</h2>
               <PaymentMethodSelector
                 selectedMethod={selectedPaymentMethod}
                 onMethodSelect={setSelectedPaymentMethod}
@@ -146,9 +151,9 @@ export default function CheckoutPage() {
 
           {/* Right: Summary */}
           <div className="lg:col-span-1">
-            <div className="space-y-6 lg:sticky lg:top-8">
-              <section className="bg-white rounded-lg shadow-sm p-4 md:p-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">Discount</h2>
+            <div className="space-y-5 lg:sticky lg:top-24">
+              <section className="rounded-2xl border border-white/10 bg-[#162040] p-6">
+                <h2 className="text-[15px] font-semibold uppercase tracking-widest text-white/40 mb-5">Discount</h2>
                 <DiscountCodeInput
                   onApply={handleDiscountApply}
                   onRemove={handleDiscountRemove}
@@ -157,7 +162,7 @@ export default function CheckoutPage() {
                 />
               </section>
 
-              <section>
+              <section className="rounded-2xl border border-white/10 bg-[#162040] p-6">
                 <OrderSummary
                   cartItems={cartItems}
                   discountAmount={discountAmount}
@@ -179,6 +184,7 @@ export default function CheckoutPage() {
           </div>
         </div>
       </main>
+      <Footer simple />
     </div>
   );
 }

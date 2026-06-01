@@ -6,8 +6,18 @@ import {
 } from "react";
 import {
   findTrackByProductId,
+  findAlbumByProductId,
+  findTrackById,
   findArtistById,
 } from "../data/helpers";
+
+const getFirstTrack = (product) => {
+  if (product.type === "album") {
+    const album = findAlbumByProductId(product._id);
+    return album?.track_ids?.[0] ? findTrackById(album.track_ids[0]) : null;
+  }
+  return findTrackByProductId(product._id);
+};
 
 const AudioPlayerContext = createContext(null);
 
@@ -39,7 +49,7 @@ export function AudioPlayerProvider({ children }) {
   const playAtIndex = (q, idx) => {
     if (!q || q.length === 0 || idx < 0 || idx >= q.length) return;
     const product = q[idx];
-    const track = findTrackByProductId(product._id);
+    const track = getFirstTrack(product);
     if (!track || !track.audio_file_url) return;
 
     setCurrentProduct(product);
@@ -121,13 +131,13 @@ export function AudioPlayerProvider({ children }) {
    */
   const playProduct = (product, contextQueue = null) => {
     if (!product) return;
-    const track = findTrackByProductId(product._id);
+    const track = getFirstTrack(product);
     if (!track || !track.audio_file_url) return;
 
     let playableQueue;
     let idx;
     if (contextQueue && Array.isArray(contextQueue)) {
-      playableQueue = contextQueue.filter((p) => findTrackByProductId(p._id));
+      playableQueue = contextQueue.filter((p) => getFirstTrack(p));
       idx = playableQueue.findIndex((p) => p._id === product._id);
       if (idx < 0) {
         playableQueue = [product];

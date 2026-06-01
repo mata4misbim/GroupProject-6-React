@@ -56,8 +56,8 @@ export const calculateOrderTotal = (subtotal, discountAmount = 0) => {
  * @param {string} currency - Currency code (default 'USD')
  * @returns {string} Formatted currency string
  */
-export const formatCurrency = (amount, currency = 'USD') => {
-  return new Intl.NumberFormat('en-US', {
+export const formatCurrency = (amount, currency = 'THB') => {
+  return new Intl.NumberFormat('th-TH', {
     style: 'currency',
     currency,
   }).format(amount);

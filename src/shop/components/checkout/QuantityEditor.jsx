@@ -41,18 +41,18 @@ export default function QuantityEditor({
     <div className="flex items-center border border-gray-300 rounded-md">
       <button
         onClick={handleDecrement}
-        className="px-3 py-2 text-gray-600 hover:bg-gray-100 transition-colors"
+        className="px-3 py-2 text-white/60 hover:bg-white/10 transition-colors"
         aria-label={`Decrease quantity for ${itemName}`}
         title="Decrease quantity"
       >
         −
       </button>
-      <span className="px-4 py-2 text-center min-w-12 text-gray-900 font-medium">
+      <span className="px-4 py-2 text-center min-w-12 text-white font-medium">
         {currentQuantity}
       </span>
       <button
         onClick={handleIncrement}
-        className="px-3 py-2 text-gray-600 hover:bg-gray-100 transition-colors"
+        className="px-3 py-2 text-white/60 hover:bg-white/10 transition-colors"
         aria-label={`Increase quantity for ${itemName}`}
         title="Increase quantity"
       >

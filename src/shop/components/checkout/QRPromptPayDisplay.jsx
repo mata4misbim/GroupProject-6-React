@@ -15,8 +15,8 @@ export default function QRPromptPayDisplay({ isVisible, qrCodeImage, instruction
   }
 
   return (
-    <div className="qr-promptpay-display mt-6 p-6 border-2 border-gray-200 rounded-lg bg-gray-50">
-      <h3 className="text-lg font-semibold mb-4 text-gray-900">
+    <div className="qr-promptpay-display mt-4 pt-4 border-t border-white/8">
+      <h3 className="text-lg font-semibold mb-4 text-white">
         QR PromptPay Payment
       </h3>
 
@@ -33,10 +33,10 @@ export default function QRPromptPayDisplay({ isVisible, qrCodeImage, instruction
           </div>
         ) : (
           <div
-            className="w-48 h-48 bg-gray-300 border-2 border-gray-400 rounded-lg flex items-center justify-center mb-4"
+            className="w-48 h-48 bg-white/5 border border-white/15 rounded-xl flex items-center justify-center mb-4"
             data-testid="qr-code-placeholder"
           >
-            <span className="text-gray-600 text-center px-4">
+            <span className="text-white/40 text-center px-4">
               QR Code will be displayed here
             </span>
           </div>
@@ -44,19 +44,19 @@ export default function QRPromptPayDisplay({ isVisible, qrCodeImage, instruction
       </div>
 
       {/* Instructions Section */}
-      <div className="instructions-section bg-white p-4 rounded-lg border-l-4 border-blue-500">
-        <h4 className="font-semibold text-gray-900 mb-3">
+      <div className="instructions-section bg-white/4 p-4 rounded-xl border-l-4 border-white/20">
+        <h4 className="font-semibold text-white mb-3">
           How to pay with PromptPay:
         </h4>
         {instructions != null ? (
           <div
-            className="text-sm text-gray-700 whitespace-pre-wrap"
+            className="text-sm text-white/70 whitespace-pre-wrap"
             data-testid="payment-instructions"
           >
             {instructions}
           </div>
         ) : (
-          <ol className="text-sm text-gray-700 space-y-2 list-decimal list-inside">
+          <ol className="text-sm text-white/70 space-y-2 list-decimal list-inside">
             <li>Open your bank's mobile app or PromptPay app</li>
             <li>Select "Scan QR Code" or "Pay by QR"</li>
             <li>Scan the QR code displayed above</li>
@@ -67,7 +67,7 @@ export default function QRPromptPayDisplay({ isVisible, qrCodeImage, instruction
       </div>
 
       {/* Additional Info */}
-      <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded text-sm text-gray-700">
+      <div className="mt-4 p-3 bg-white/5 border border-white/10 rounded text-sm text-white/70">
         <p>
           <strong>Note:</strong> PromptPay is available 24/7. Your payment will be
           confirmed immediately after scanning and confirming in your bank app.

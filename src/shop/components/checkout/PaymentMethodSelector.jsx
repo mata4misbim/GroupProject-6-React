@@ -37,46 +37,29 @@ export default function PaymentMethodSelector({ onMethodSelect, selectedMethod }
   ];
 
   return (
-    <div className="payment-method-selector">
-      <fieldset className="border-0 p-0 m-0">
-        <legend className="text-lg font-semibold mb-4 text-gray-900">
-          Select Payment Method
-        </legend>
-
-        <div className="space-y-3">
-          {paymentMethods.map((method) => (
-            <label
-              key={method.id}
-              onClick={() => handleMethodChange(method.id)}
-              className={`
-                flex items-start p-4 border-2 rounded-lg cursor-pointer transition-all
-                ${
-                  localSelected === method.id
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
-                }
-              `}
-            >
-              <input
-                type="radio"
-                name="payment-method"
-                value={method.id}
-                checked={localSelected === method.id}
-                onChange={() => {}}
-                className="mt-1 w-4 h-4 text-blue-600 cursor-pointer"
-                aria-label={`Select ${method.label}`}
-              />
-              <div className="ml-3 flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-xl">{method.icon}</span>
-                  <span className="font-medium text-gray-900">{method.label}</span>
-                </div>
-                <p className="text-sm text-gray-600 mt-1">{method.description}</p>
-              </div>
-            </label>
-          ))}
-        </div>
-      </fieldset>
+    <div className="space-y-2 mb-6">
+      {paymentMethods.map((method) => (
+        <label
+          key={method.id}
+          onClick={() => handleMethodChange(method.id)}
+          className={`flex items-center gap-4 px-4 py-3.5 rounded-xl cursor-pointer transition-all border ${
+            localSelected === method.id
+              ? 'border-white/30 bg-white/8'
+              : 'border-white/8 bg-white/3 hover:bg-white/6'
+          }`}
+        >
+          <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
+            localSelected === method.id ? 'border-white' : 'border-white/30'
+          }`}>
+            {localSelected === method.id && <div className="w-2 h-2 rounded-full bg-white" />}
+          </div>
+          <span className="text-lg">{method.icon}</span>
+          <div className="min-w-0">
+            <p className="text-sm font-semibold text-white">{method.label}</p>
+            <p className="text-xs text-white/40 mt-0.5">{method.description}</p>
+          </div>
+        </label>
+      ))}
     </div>
   );
 }

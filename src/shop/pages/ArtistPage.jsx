@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import Footer from "../../components/common/Footer";
 import ProductCard from "../components/product/ProductCard";
 import FollowButton from "../components/FollowButton";
 import {
@@ -29,7 +30,7 @@ export default function ArtistPage() {
   const artistGenres = getArtistGenres(artist._id);
 
   return (
-    <div className="min-h-screen bg-bg">
+    <div className="min-h-screen bg-bg font-['Plus_Jakarta_Sans',sans-serif]">
       {/* Banner */}
       <div
         className="relative h-[300px] bg-cover bg-center"
@@ -105,6 +106,7 @@ export default function ArtistPage() {
           </div>
         )}
       </div>
+      <Footer simple />
     </div>
   );
 }

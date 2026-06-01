@@ -117,6 +117,52 @@ export const albums = [
     ],
     created_at: new Date("2026-04-01"),
   },
+
+  // ═══════════════════════════════════════════════════════════════
+  // MISSING ALBUMS — added for preview support
+  // ═══════════════════════════════════════════════════════════════
+  {
+    _id: "album_009",
+    product_id: "product_002", // Midnight Echoes (Old World Vultures)
+    track_ids: ["track_001"],
+    created_at: new Date("2025-10-15"),
+  },
+  {
+    _id: "album_010",
+    product_id: "product_027", // Loud Hours (Static Era)
+    track_ids: ["track_015", "track_016"],
+    created_at: new Date("2026-01-10"),
+  },
+  {
+    _id: "album_011",
+    product_id: "product_035", // Bone Dust (Old World Vultures)
+    track_ids: ["track_001"],
+    created_at: new Date("2026-01-10"),
+  },
+  {
+    _id: "album_012",
+    product_id: "product_040", // Neon Grids (Crystal Mall)
+    track_ids: ["track_017", "track_018", "track_019"],
+    created_at: new Date("2025-11-01"),
+  },
+  {
+    _id: "album_013",
+    product_id: "product_044", // No Reception (Static Era)
+    track_ids: ["track_015", "track_016"],
+    created_at: new Date("2026-01-10"),
+  },
+  {
+    _id: "album_014",
+    product_id: "product_049", // Ghost Frequency (Bangkok Phantom)
+    track_ids: ["track_013", "track_020", "track_021"],
+    created_at: new Date("2025-12-15"),
+  },
+  {
+    _id: "album_015",
+    product_id: "product_053", // Wooden Floors (Mira Sol)
+    track_ids: ["track_014", "track_022", "track_023"],
+    created_at: new Date("2026-02-01"),
+  },
 ];
 
 /*

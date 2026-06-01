@@ -155,13 +155,13 @@ export default function OrderSubmissionProcessor({
   // Success state
   if (orderComplete) {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-        <div className="text-green-600 text-4xl mb-4">✓</div>
+      <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-6 text-center">
+        <div className="text-green-400 text-4xl mb-4">✓</div>
         <h3 className="text-xl font-bold text-green-800 mb-2">
           {SUCCESS_MESSAGES.ORDER_SUBMITTED}
         </h3>
-        <p className="text-green-700 mb-2">Order ID: <strong>{orderId}</strong></p>
-        <p className="text-sm text-green-600">
+        <p className="text-green-300 mb-2">Order ID: <strong>{orderId}</strong></p>
+        <p className="text-sm text-green-400">
           You will receive a confirmation email shortly.
         </p>
       </div>
@@ -172,11 +172,11 @@ export default function OrderSubmissionProcessor({
     <div className="space-y-4">
       {/* Missing fields message */}
       {!isFormComplete && missingFields.length > 0 && (
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-          <p className="text-sm font-medium text-yellow-800 mb-2">
+        <div className="bg-yellow-500/10 border border-yellow-200 rounded-lg p-4">
+          <p className="text-sm font-medium text-yellow-300 mb-2">
             Please complete the following to place your order:
           </p>
-          <ul className="text-sm text-yellow-700 list-disc list-inside space-y-1">
+          <ul className="text-sm text-white/60 list-disc list-inside space-y-1">
             {missingFields.map((field, index) => (
               <li key={index}>{field}</li>
             ))}
@@ -186,8 +186,8 @@ export default function OrderSubmissionProcessor({
 
       {/* Error message */}
       {submitError && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4" role="alert">
-          <p className="text-sm text-red-700">
+        <div className="bg-red-500/10 border border-red-200 rounded-lg p-4" role="alert">
+          <p className="text-sm text-red-300">
             <strong>Error:</strong> {submitError}
           </p>
         </div>
@@ -199,8 +199,8 @@ export default function OrderSubmissionProcessor({
         disabled={!isFormComplete || isSubmitting}
         className={`w-full font-semibold py-3 px-6 rounded-lg transition-colors min-h-[44px] ${
           isFormComplete && !isSubmitting
-            ? 'bg-green-600 text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 cursor-pointer'
-            : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            ? 'bg-accent text-white hover:bg-accent-hover focus:outline-none focus:ring-2 focus:ring-accent/30 focus:ring-offset-2 cursor-pointer'
+            : 'bg-white/20 text-white/40 cursor-not-allowed'
         }`}
         aria-label={isSubmitting ? 'Submitting order...' : 'Place order'}
       >

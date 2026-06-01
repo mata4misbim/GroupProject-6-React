@@ -18,7 +18,7 @@ export default function Nav() {
       <ul className="flex list-none items-center gap-0">
         {navItems.map((item) => (
           <li
-            className="font-['Montserrat',sans-serif] text-sm font-medium tracking-[0.04em]"
+            className="font-['Plus_Jakarta_Sans',sans-serif] text-sm font-medium tracking-[0.04em]"
             key={item.label}
           >
             <Link

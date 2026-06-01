@@ -52,7 +52,7 @@ export default function ProfilePageAdmin() {
   };
 
   return (
-    <div className="min-h-screen bg-bg">
+    <div className="min-h-screen bg-bg font-['Plus_Jakarta_Sans',sans-serif]">
       <div
         className="relative h-75 bg-cover bg-center bg-white/5 cursor-pointer group"
         style={bannerUrl ? { backgroundImage: `url(${bannerUrl})` } : {}}

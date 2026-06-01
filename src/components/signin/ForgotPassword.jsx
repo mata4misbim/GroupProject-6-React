@@ -1,84 +1,99 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import logoB from "../../assets/landing-page/logob.png";
 
 export default function ForgotPassword({ onGoLogIn }) {
-  // "request" = email form  |  "sent" = confirmation screen
   const [step, setStep] = useState("request");
 
   return (
-    <div className="ka-root">
-      {/* Logo */}
-      <div className="ka-logo">
-        <div className="ka-logo__icon">A</div>
-        <span className="ka-logo__text">Audtlist</span>
+    <div className="relative min-h-screen bg-[#03030f] flex items-center justify-center px-4 font-['Plus_Jakarta_Sans',sans-serif]">
+
+      {/* Subtle bg glow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#0d0d6b]/20 blur-3xl" />
       </div>
 
-      <div className="ka-card">
-        {/* Step 1 — Enter email */}
-        {step === "request" && (
-          <>
-            <p className="ka-title">Forgot password?</p>
-            <p className="ka-subtitle">
-              Enter your email and we'll send you a reset link.
-            </p>
+      {/* Card */}
+      <div className="relative z-10 w-full max-w-110">
 
-            <div className="ka-field">
-              <label className="ka-label" htmlFor="reset-email">
-                Email
-              </label>
-              <input
-                id="reset-email"
-                className="ka-input"
-                type="email"
-                name="email"
-                placeholder="you@mail.com"
-                pattern={"[^\\s@]+@[^\\s@]+\\.[^\\s@]+"}
-                title="Enter a valid email address, like you@mail.com."
-                autoComplete="email"
-                required
-              />
-            </div>
+        <div className="mt-0 rounded-2xl border border-white/8 bg-white/3 px-10 py-10 backdrop-blur-sm">
 
-            <button
-              className="ka-btn"
-              style={{ marginTop: 8 }}
-              onClick={() => setStep("sent")}
-            >
-              Send reset link
-            </button>
+          {/* Logo — links to home */}
+          <div className="flex justify-center mb-6 ml-[-2%]">
+            <Link to="/">
+              <img src={logoB} alt="AUDTLIST" className="h-28.75 w-auto object-contain brightness-0 invert hover:opacity-80 transition-opacity cursor-pointer" />
+            </Link>
+          </div>
 
-            <div className="ka-footer">
-              <a onClick={onGoLogIn}>Back to log in</a>
-            </div>
-          </>
-        )}
-
-        {/* Step 2 — Confirmation */}
-        {step === "sent" && (
-          <>
-            <p className="ka-title">Check your inbox</p>
-            <p className="ka-subtitle" style={{ marginBottom: 20 }}>
-              We've sent a password reset link to your email.
-            </p>
-
-            <div className="ka-success">
-              <div className="ka-success__icon">OK</div>
-              <p className="ka-success__title">Reset link sent!</p>
-              <p className="ka-success__text">
-                Check your inbox (and spam folder) for the reset email. The link
-                expires in 30 minutes.
+          {step === "request" && (
+            <>
+              <h1 className="text-[30px] font-bold text-white leading-tight">
+                Forgot password?
+              </h1>
+              <p className="text-[14px] text-white/45 mt-1.5 mb-7 leading-relaxed tracking-wide">
+                Enter your email and we'll send you a reset link.
               </p>
-            </div>
 
-            <button className="ka-btn" onClick={onGoLogIn}>
-              Back to log in
-            </button>
+              <div className="mb-5">
+                <label className="block text-[13px] font-semibold uppercase tracking-[0.08em] text-white/40 mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  placeholder="you@mail.com"
+                  autoComplete="email"
+                  required
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-[15px] text-white placeholder:text-white/25 outline-none focus:border-white/30 focus:bg-white/8 transition-all"
+                />
+              </div>
 
-            <div className="ka-footer">
-              Didn't receive it?{" "}
-              <a onClick={() => setStep("request")}>Resend email</a>
-            </div>
-          </>
-        )}
+              <button
+                onClick={() => setStep("sent")}
+                className="w-full py-3.5 rounded-xl bg-white text-[#03030f] text-[16px] font-bold tracking-wide hover:bg-white/90 transition-all shadow-[0_4px_20px_rgba(255,255,255,0.1)]"
+              >
+                Send reset link
+              </button>
+
+              <div className="mt-5 text-center text-[14px] text-white/35">
+                <button onClick={onGoLogIn} className="text-white/60 hover:text-white transition-colors">
+                  ← Back to log in
+                </button>
+              </div>
+            </>
+          )}
+
+          {step === "sent" && (
+            <>
+              <div className="w-12 h-12 rounded-full bg-white/8 border border-white/10 flex items-center justify-center mb-6">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+
+              <h1 className="text-[28px] font-bold text-white leading-tight mb-2">
+                Check your inbox
+              </h1>
+              <p className="text-[15px] text-white/50 mb-8 leading-relaxed">
+                We've sent a password reset link to your email. Check your spam folder too — the link expires in 30 minutes.
+              </p>
+
+              <button
+                onClick={onGoLogIn}
+                className="w-full py-3.5 rounded-xl bg-white text-[#03030f] text-[16px] font-bold tracking-wide hover:bg-white/90 transition-all shadow-[0_4px_20px_rgba(255,255,255,0.1)]"
+              >
+                Back to log in
+              </button>
+
+              <div className="mt-5 text-center text-[14px] text-white/35">
+                Didn't receive it?{" "}
+                <button onClick={() => setStep("request")} className="text-white/60 hover:text-white transition-colors underline-offset-2 hover:underline">
+                  Resend email
+                </button>
+              </div>
+            </>
+          )}
+
+        </div>
       </div>
     </div>
   );

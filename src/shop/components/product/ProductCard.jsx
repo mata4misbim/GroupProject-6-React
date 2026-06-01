@@ -8,6 +8,8 @@ import {
   formatPrice,
   findMerchByProductId,
   findTrackByProductId,
+  findAlbumByProductId,
+  findTrackById,
   getArtistGenres,
 } from "../../data/helpers";
 
@@ -26,8 +28,10 @@ export default function ProductCard({ product, contextQueue }) {
   const isPlaying = isProductPlaying(product._id);
   const genres = product.artist ? getArtistGenres(product.artist._id) : [];
 
-  // เล่นได้เฉพาะ product ที่มี track (single / album track) — merch ไม่มี
-  const track = findTrackByProductId(product._id);
+  // เล่นได้เฉพาะ single และ album — merch ไม่มี
+  const track = product.type === "album"
+    ? (() => { const album = findAlbumByProductId(product._id); return album?.track_ids?.[0] ? findTrackById(album.track_ids[0]) : null; })()
+    : findTrackByProductId(product._id);
   const canPlay = !!(track && track.audio_file_url);
 
   // Badge label + icon
@@ -128,7 +132,7 @@ export default function ProductCard({ product, contextQueue }) {
               <button
                 onClick={handleWishlist}
                 className={`flex items-center justify-center px-3 py-2.5 transition-all ${
-                  wishlisted ? "text-[#fc3c44]" : "text-white/70 hover:text-[#fc3c44]"
+                  wishlisted ? "text-accent" : "text-white/70 hover:text-accent"
                 }`}
                 aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
               >
@@ -157,11 +161,11 @@ export default function ProductCard({ product, contextQueue }) {
             </>
           ) : (
             <>
-              {/* merch — 2 ปุ่มเท่ากัน มีข้อความครบ (ไม่มี Preview) */}
+              {/* merch — wishlist + add to cart */}
               <button
                 onClick={handleWishlist}
                 className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-[11px] font-medium transition-all ${
-                  wishlisted ? "text-[#fc3c44]" : "text-white/70 hover:text-[#fc3c44]"
+                  wishlisted ? "text-accent" : "text-white/70 hover:text-accent"
                 }`}
               >
                 <HeartIcon filled={wishlisted} />

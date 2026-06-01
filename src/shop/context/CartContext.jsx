@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 import { findArtistById } from "../data/helpers";
 import { FIXED_SHIPPING_THB } from "../data/constants";
 
-const CartContext = createContext(null);
+export const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
   const [items, setItems] = useState([]);

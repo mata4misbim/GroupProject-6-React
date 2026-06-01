@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import logoB from "../../assets/landing-page/logob.png";
 
 const IconUser = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -65,10 +66,9 @@ export default function LogIn({ onGoFan, onGoArtist, onGoForgot, onLogIn }) {
           <div className="ka-login-card__hero-overlay" />
         </div>
 
-        <Link to="/" className="ka-back-btn ka-back-btn--card">← Back to home</Link>
-
-        {/* Right: Form */}
+{/* Right: Form */}
         <div className="ka-login-card__side">
+          <Link to="/"><img src={logoB} alt="AUDTLIST" className="h-29 w-auto object-contain object-left mb-4 ml-[-8%] hover:opacity-80 transition-opacity" /></Link>
           <div className="ka-login-card__greeting">
             <p className="ka-login-card__hi">Hello,</p>
             <p className="ka-login-card__greet-sub">Music Lover</p>
