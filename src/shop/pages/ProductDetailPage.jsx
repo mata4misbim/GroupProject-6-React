@@ -48,11 +48,19 @@ export default function ProductDetailPage() {
 
   const finalPrice = product.name_your_price ? customPrice : product.price;
 
+  // Stock checks for merch
+  const merchVariants = product.type === "merch" ? (product.detail?.variants || []) : [];
+  const totalStock = merchVariants.reduce((s, v) => s + (v.stock_quantity || 0), 0);
+  const isMerchSoldOut = product.type === "merch" && totalStock === 0;
+  const isSelectedVariantOutOfStock = product.type === "merch" && selectedVariant?.stock_quantity === 0;
+  const addToCartDisabled = !!priceError || isMerchSoldOut || isSelectedVariantOutOfStock;
+
   const handleAddToCart = () => {
     if (product.name_your_price && customPrice < product.min_price) {
       setPriceError(`Minimum ${formatPrice(product.min_price)}`);
       return;
     }
+    if (addToCartDisabled) return;
 
     addToCart(product, {
       quantity: qty,
@@ -133,6 +141,11 @@ export default function ProductDetailPage() {
             {product.name_your_price && (
               <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-widest bg-brand-purple text-white">
                 Pay what you want
+              </span>
+            )}
+            {isMerchSoldOut && (
+              <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-widest bg-white/20 text-white/80 backdrop-blur-sm border border-white/20">
+                Sold Out
               </span>
             )}
           </div>
@@ -231,17 +244,17 @@ export default function ProductDetailPage() {
             </div>
           )}
 
-          {/* Merch: variants — hidden */}
-          {false && product.type === "merch" && product.detail?.variants && product.detail?.merch_type !== "tshirt" && (
+          {/* Merch: variants */}
+          {product.type === "merch" && merchVariants.length > 0 && (
             <div>
               <p className="text-[11px] uppercase tracking-widest text-white/35 mb-2">
                 Choose option
               </p>
               <div className="flex flex-wrap gap-2">
-                {product.detail.variants.map((v) => (
+                {merchVariants.map((v) => (
                   <button
                     key={v.variant_id}
-                    onClick={() => setSelectedVariant(v)}
+                    onClick={() => v.stock_quantity > 0 && setSelectedVariant(v)}
                     disabled={v.stock_quantity === 0}
                     className={`px-4 py-2 rounded-lg border text-[13px] font-medium transition-all ${
                       selectedVariant?.variant_id === v.variant_id
@@ -260,6 +273,9 @@ export default function ProductDetailPage() {
                   </button>
                 ))}
               </div>
+              {isSelectedVariantOutOfStock && (
+                <p className="text-[11px] text-accent mt-2">This variant is out of stock — please choose another</p>
+              )}
             </div>
           )}
 
@@ -330,17 +346,21 @@ export default function ProductDetailPage() {
 
           <button
             onClick={handleAddToCart}
-            disabled={!!priceError}
+            disabled={addToCartDisabled}
             className={`flex items-center justify-center gap-3 px-8 py-3.5 rounded-full font-semibold text-[15px] transition-all active:scale-95 w-full md:w-fit ${
               added
                 ? "bg-white/[0.07] border border-white/15 text-white/60 cursor-default"
-                : priceError
-                  ? "bg-white/5 text-white/25 cursor-not-allowed"
-                  : "bg-accent hover:bg-accent-hover text-white"
+                : isMerchSoldOut
+                  ? "bg-white/5 text-white/30 cursor-not-allowed"
+                  : addToCartDisabled
+                    ? "bg-white/5 text-white/25 cursor-not-allowed"
+                    : "bg-accent hover:bg-accent-hover text-white"
             }`}
           >
             {added ? (
               <>✓ Added to cart</>
+            ) : isMerchSoldOut ? (
+              <>Sold Out</>
             ) : (
               <>
                 <svg
