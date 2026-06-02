@@ -6,6 +6,7 @@ import { useCollection } from "../context/CollectionContext";
 import { PAYMENT_METHODS } from "../components/checkout/constants.js";
 import { calculateDiscountAmount, roundToTwoDecimals } from "../components/checkout/calculations.js";
 import { FIXED_SHIPPING_THB } from "../data/constants.js";
+import { findMerchByProductId } from "../data/helpers.js";
 import CartDisplay from "../components/checkout/CartDisplay.jsx";
 import ShippingForm from "../components/checkout/ShippingForm.jsx";
 import PaymentMethodSelector from "../components/checkout/PaymentMethodSelector.jsx";
@@ -22,16 +23,31 @@ export default function CheckoutPage() {
 
   // แปลง cart items จาก CartContext format → checkout format
   const [cartItems, setCartItems] = useState(() =>
-    items.map((item) => ({
-      id: item.key,
-      productId: item.product_id,
-      name: item.title_snapshot,
-      artist: item.artist_name_snapshot,
-      image: item.cover_url || `https://via.placeholder.com/200x200/1a1a1a/ffffff?text=${encodeURIComponent(item.title_snapshot)}`,
-      unitPrice: item.unit_price,
-      quantity: item.quantity,
-      type: item.type === "merch" ? "merchandise" : "digital",
-    }))
+    items.map((item) => {
+      let isOutOfStock = false;
+      if (item.type === "merch") {
+        const merchDetail = findMerchByProductId(item.product_id);
+        if (merchDetail) {
+          if (item.variant_id) {
+            const v = merchDetail.variants.find((v) => v.variant_id === item.variant_id);
+            isOutOfStock = !v || v.stock_quantity === 0;
+          } else {
+            isOutOfStock = merchDetail.variants.every((v) => v.stock_quantity === 0);
+          }
+        }
+      }
+      return {
+        id: item.key,
+        productId: item.product_id,
+        name: item.title_snapshot,
+        artist: item.artist_name_snapshot,
+        image: item.cover_url || `https://via.placeholder.com/200x200/1a1a1a/ffffff?text=${encodeURIComponent(item.title_snapshot)}`,
+        unitPrice: item.unit_price,
+        quantity: item.quantity,
+        type: item.type === "merch" ? "merchandise" : "digital",
+        isOutOfStock,
+      };
+    })
   );
 
   const [shippingInfo, setShippingInfo] = useState(null);
@@ -47,6 +63,8 @@ export default function CheckoutPage() {
   const discountAmount = discountType
     ? roundToTwoDecimals(calculateDiscountAmount(cartSubtotal, discountType, discountValue))
     : 0;
+  const hasMerch = cartItems.some((item) => item.type === "merchandise");
+  const shippingFee = hasMerch ? FIXED_SHIPPING_THB : 0;
 
   const handleQuantityChange = useCallback((itemId, newQuantity) => {
     setCartItems((prev) =>
@@ -78,8 +96,6 @@ export default function CheckoutPage() {
     if (submittedOrder?.items) {
       addToCollection(submittedOrder.items.map((i) => i.productId));
     }
-    const hasPhysicalItems = submittedOrder.items.some((item) => item.type === "merchandise");
-    const shipping = hasPhysicalItems ? FIXED_SHIPPING_THB : 0;
     const createdAt = new Date(submittedOrder.createdAt);
     const orderData = {
       orderId: submittedOrder.id,
@@ -96,14 +112,14 @@ export default function CheckoutPage() {
       shippingAddress: submittedOrder.shipping,
       subtotal: submittedOrder.subtotal,
       discountAmount: submittedOrder.discountAmount,
-      shipping,
+      shipping: shippingFee,
       tax: 0,
-      total: roundToTwoDecimals(submittedOrder.total + shipping),
+      total: submittedOrder.total,
       confirmationEmail: submittedOrder.shipping?.email,
     };
     clearCart();
     navigate("/order-confirmed", { state: { orderData } });
-  }, [clearCart, navigate, addToCollection, selectedPaymentMethod]);
+  }, [clearCart, navigate, addToCollection, selectedPaymentMethod, shippingFee]);
 
   const paymentDetails =
     selectedPaymentMethod === PAYMENT_METHODS.CREDIT_CARD
@@ -167,6 +183,7 @@ export default function CheckoutPage() {
                   cartItems={cartItems}
                   discountAmount={discountAmount}
                   selectedPaymentMethod={selectedPaymentMethod}
+                  shippingFee={shippingFee}
                 />
               </section>
 
@@ -177,6 +194,7 @@ export default function CheckoutPage() {
                   paymentDetails={paymentDetails}
                   discountCode={appliedDiscountCode}
                   discountAmount={discountAmount}
+                  shippingFee={shippingFee}
                   onSubmitSuccess={handleOrderSuccess}
                 />
               </section>

@@ -100,6 +100,14 @@ function CartItem({ item, onQuantityChange, onRemoveItem }) {
           </div>
         </div>
 
+        {/* Out of stock warning */}
+        {item.isOutOfStock && (
+          <div className="mt-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-accent/10 border border-accent/30">
+            <span className="text-[11px] font-semibold text-accent">Out of stock</span>
+            <span className="text-[11px] text-white/50">— remove this item to continue</span>
+          </div>
+        )}
+
         {/* Quantity and remove controls */}
         <div className="flex items-center gap-3 mt-4 md:mt-3">
           <QuantityEditor

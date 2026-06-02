@@ -17,6 +17,7 @@ export default function OrderSummary({
   cartItems = [],
   discountAmount = 0,
   selectedPaymentMethod = null,
+  shippingFee = 0,
 }) {
   // Calculate subtotal from cart items
   const subtotal = roundToTwoDecimals(calculateCartSubtotal(cartItems));
@@ -24,8 +25,8 @@ export default function OrderSummary({
   // Ensure discount amount is valid
   const validDiscountAmount = roundToTwoDecimals(Math.max(0, discountAmount));
 
-  // Calculate final total
-  const total = roundToTwoDecimals(calculateOrderTotal(subtotal, validDiscountAmount));
+  // Calculate final total (including shipping)
+  const total = roundToTwoDecimals(calculateOrderTotal(subtotal, validDiscountAmount) + shippingFee);
 
   // Format payment method display text
   const getPaymentMethodLabel = () => {
@@ -57,6 +58,18 @@ export default function OrderSummary({
             <span className="text-white/55">Discount</span>
             <span className="text-green-400 font-medium" data-testid="discount-amount">
               -{formatCurrency(validDiscountAmount)}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* Shipping Section - Only show if there are merch items */}
+      {shippingFee > 0 && (
+        <div className="border-b border-white/10 pb-4 mb-4">
+          <div className="flex justify-between items-center">
+            <span className="text-white/55">Shipping</span>
+            <span className="text-white font-medium" data-testid="shipping-fee">
+              {formatCurrency(shippingFee)}
             </span>
           </div>
         </div>
@@ -115,4 +128,5 @@ OrderSummary.propTypes = {
     'qr_promptpay',
     null,
   ]),
+  shippingFee: PropTypes.number,
 };

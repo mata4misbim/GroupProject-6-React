@@ -19,6 +19,7 @@ export default function OrderSubmissionProcessor({
   paymentDetails,
   discountCode,
   discountAmount,
+  shippingFee = 0,
   onSubmitSuccess,
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,6 +36,12 @@ export default function OrderSubmissionProcessor({
     // Check cart
     if (!cartItems || cartItems.length === 0) {
       missing.push('Cart is empty');
+    }
+
+    // Check out-of-stock items
+    const outOfStockItems = cartItems?.filter((item) => item.isOutOfStock) || [];
+    if (outOfStockItems.length > 0) {
+      missing.push(`Remove out-of-stock item${outOfStockItems.length > 1 ? 's' : ''}: ${outOfStockItems.map((i) => i.name).join(', ')}`);
     }
 
     // Check shipping
@@ -114,7 +121,7 @@ export default function OrderSubmissionProcessor({
     try {
       // Calculate order totals
       const subtotal = roundToTwoDecimals(calculateCartSubtotal(cartItems));
-      const total = roundToTwoDecimals(calculateOrderTotal(subtotal, discountAmount));
+      const total = roundToTwoDecimals(calculateOrderTotal(subtotal, discountAmount) + shippingFee);
 
       // Build order object
       const order = {
@@ -150,7 +157,7 @@ export default function OrderSubmissionProcessor({
       setSubmitError(ERROR_MESSAGES.ORDER_SUBMISSION_ERROR);
       setIsSubmitting(false);
     }
-  }, [cartItems, shippingInformation, paymentDetails, discountCode, discountAmount, validateAll, onSubmitSuccess]);
+  }, [cartItems, shippingInformation, paymentDetails, discountCode, discountAmount, shippingFee, validateAll, onSubmitSuccess]);
 
   // Success state
   if (orderComplete) {
@@ -238,6 +245,7 @@ OrderSubmissionProcessor.propTypes = {
   paymentDetails: PropTypes.object,
   discountCode: PropTypes.string,
   discountAmount: PropTypes.number,
+  shippingFee: PropTypes.number,
   onSubmitSuccess: PropTypes.func,
 };
 
@@ -246,5 +254,6 @@ OrderSubmissionProcessor.defaultProps = {
   paymentDetails: null,
   discountCode: '',
   discountAmount: 0,
+  shippingFee: 0,
   onSubmitSuccess: null,
 };
