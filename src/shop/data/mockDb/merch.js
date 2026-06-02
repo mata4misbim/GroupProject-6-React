@@ -190,7 +190,7 @@ export const merch = [
       {
         variant_id: "var_014",
         color: "purple",
-        stock_quantity: 40,
+        stock_quantity: 0,
         sku: "CM-CASS-MAH-PUR",
       },
     ],

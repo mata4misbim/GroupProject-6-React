@@ -6,6 +6,7 @@ import { useCollection } from "../context/CollectionContext";
 import { PAYMENT_METHODS } from "../components/checkout/constants.js";
 import { calculateDiscountAmount, roundToTwoDecimals } from "../components/checkout/calculations.js";
 import { FIXED_SHIPPING_THB } from "../data/constants.js";
+import { findMerchByProductId } from "../data/helpers.js";
 import CartDisplay from "../components/checkout/CartDisplay.jsx";
 import ShippingForm from "../components/checkout/ShippingForm.jsx";
 import PaymentMethodSelector from "../components/checkout/PaymentMethodSelector.jsx";
@@ -22,16 +23,31 @@ export default function CheckoutPage() {
 
   // แปลง cart items จาก CartContext format → checkout format
   const [cartItems, setCartItems] = useState(() =>
-    items.map((item) => ({
-      id: item.key,
-      productId: item.product_id,
-      name: item.title_snapshot,
-      artist: item.artist_name_snapshot,
-      image: item.cover_url || `https://via.placeholder.com/200x200/1a1a1a/ffffff?text=${encodeURIComponent(item.title_snapshot)}`,
-      unitPrice: item.unit_price,
-      quantity: item.quantity,
-      type: item.type === "merch" ? "merchandise" : "digital",
-    }))
+    items.map((item) => {
+      let isOutOfStock = false;
+      if (item.type === "merch") {
+        const merchDetail = findMerchByProductId(item.product_id);
+        if (merchDetail) {
+          if (item.variant_id) {
+            const v = merchDetail.variants.find((v) => v.variant_id === item.variant_id);
+            isOutOfStock = !v || v.stock_quantity === 0;
+          } else {
+            isOutOfStock = merchDetail.variants.every((v) => v.stock_quantity === 0);
+          }
+        }
+      }
+      return {
+        id: item.key,
+        productId: item.product_id,
+        name: item.title_snapshot,
+        artist: item.artist_name_snapshot,
+        image: item.cover_url || `https://via.placeholder.com/200x200/1a1a1a/ffffff?text=${encodeURIComponent(item.title_snapshot)}`,
+        unitPrice: item.unit_price,
+        quantity: item.quantity,
+        type: item.type === "merch" ? "merchandise" : "digital",
+        isOutOfStock,
+      };
+    })
   );
 
   const [shippingInfo, setShippingInfo] = useState(null);

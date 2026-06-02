@@ -38,6 +38,12 @@ export default function OrderSubmissionProcessor({
       missing.push('Cart is empty');
     }
 
+    // Check out-of-stock items
+    const outOfStockItems = cartItems?.filter((item) => item.isOutOfStock) || [];
+    if (outOfStockItems.length > 0) {
+      missing.push(`Remove out-of-stock item${outOfStockItems.length > 1 ? 's' : ''}: ${outOfStockItems.map((i) => i.name).join(', ')}`);
+    }
+
     // Check shipping
     if (!shippingInformation) {
       missing.push('Shipping information');
