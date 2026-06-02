@@ -3,6 +3,8 @@ import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { artists, orders, users } from "../data/mockDb";
 import { getProductsByArtist } from "../data/helpers";
+import UploadModal from "../../components/UploadModal";
+import UploadSingleForm from "../../components/UploadSingleForm";
 
 export default function ProfilePageArtist() {
   const { user, isLoggedIn } = useAuth();
@@ -10,6 +12,7 @@ export default function ProfilePageArtist() {
     artists.find((artist) => artist.user_id === user?._id) || artists[0];
   const artistProducts = getProductsByArtist(currentArtist?._id);
   const [activeTab, setActiveTab] = useState("overview");
+  const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [bannerUrl, setBannerUrl] = useState(
     () =>
       localStorage.getItem("artistBannerUrl") ||
@@ -138,7 +141,7 @@ export default function ProfilePageArtist() {
           <button
             type="button"
             className="mt-1 rounded-full bg-accent px-5 py-3 text-[13px] font-semibold text-white transition-colors hover:bg-accent/85"
-            onClick={() => window.alert("Add product form coming soon.")}
+            onClick={() => setIsUploadOpen(true)}
           >
             + Add product
           </button>
@@ -182,6 +185,18 @@ export default function ProfilePageArtist() {
           )}
         </div>
       </div>
+
+      <UploadModal
+        isOpen={isUploadOpen}
+        onClose={() => setIsUploadOpen(false)}
+        title="Upload Single"
+        icon="♪"
+      >
+        <UploadSingleForm
+          onCancel={() => setIsUploadOpen(false)}
+          onSuccess={() => setIsUploadOpen(false)}
+        />
+      </UploadModal>
     </div>
   );
 }
