@@ -47,6 +47,8 @@ export default function CheckoutPage() {
   const discountAmount = discountType
     ? roundToTwoDecimals(calculateDiscountAmount(cartSubtotal, discountType, discountValue))
     : 0;
+  const hasMerch = cartItems.some((item) => item.type === "merchandise");
+  const shippingFee = hasMerch ? FIXED_SHIPPING_THB : 0;
 
   const handleQuantityChange = useCallback((itemId, newQuantity) => {
     setCartItems((prev) =>
@@ -78,8 +80,6 @@ export default function CheckoutPage() {
     if (submittedOrder?.items) {
       addToCollection(submittedOrder.items.map((i) => i.productId));
     }
-    const hasPhysicalItems = submittedOrder.items.some((item) => item.type === "merchandise");
-    const shipping = hasPhysicalItems ? FIXED_SHIPPING_THB : 0;
     const createdAt = new Date(submittedOrder.createdAt);
     const orderData = {
       orderId: submittedOrder.id,
@@ -96,14 +96,14 @@ export default function CheckoutPage() {
       shippingAddress: submittedOrder.shipping,
       subtotal: submittedOrder.subtotal,
       discountAmount: submittedOrder.discountAmount,
-      shipping,
+      shipping: shippingFee,
       tax: 0,
-      total: roundToTwoDecimals(submittedOrder.total + shipping),
+      total: submittedOrder.total,
       confirmationEmail: submittedOrder.shipping?.email,
     };
     clearCart();
     navigate("/order-confirmed", { state: { orderData } });
-  }, [clearCart, navigate, addToCollection, selectedPaymentMethod]);
+  }, [clearCart, navigate, addToCollection, selectedPaymentMethod, shippingFee]);
 
   const paymentDetails =
     selectedPaymentMethod === PAYMENT_METHODS.CREDIT_CARD
@@ -167,6 +167,7 @@ export default function CheckoutPage() {
                   cartItems={cartItems}
                   discountAmount={discountAmount}
                   selectedPaymentMethod={selectedPaymentMethod}
+                  shippingFee={shippingFee}
                 />
               </section>
 
@@ -177,6 +178,7 @@ export default function CheckoutPage() {
                   paymentDetails={paymentDetails}
                   discountCode={appliedDiscountCode}
                   discountAmount={discountAmount}
+                  shippingFee={shippingFee}
                   onSubmitSuccess={handleOrderSuccess}
                 />
               </section>
