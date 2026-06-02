@@ -1,9 +1,17 @@
 import { Link } from "react-router-dom";
 import Footer from "../components/common/Footer";
+import aboutusImg from "../assets/aboutus3.png";
+import thaweeratchImg from "../assets/Thaweeratch.jpg";
+import mataImg from "../assets/O.png";
+import kohImg from "../assets/koh.png";
+import winnerImg from "../assets/winner.png";
+import ongImg from "../assets/ong.png";
+import myImg from "../assets/my.png";
+import aboutus2Img from "../assets/aboutus2.png";
 
 const stats = [
   { value: "1,200+", label: "Independent Artists" },
-  { value: "48,000+", label: "Albums & Tracks" },
+  { value: "5,000+", label: "Albums & Tracks" },
   { value: "120+", label: "Countries Reached" },
   { value: "82%", label: "Revenue to Artists" },
 ];
@@ -13,37 +21,38 @@ const team = [
     name: "Akkarawin Suchaichit",
     role: "Tech leader & Co-Founder",
     bio: "ใครก็ไม่รู้ที่เดินผ่านทางมา.",
-    avatar: "https://scontent.fkkc3-1.fna.fbcdn.net/v/t39.30808-6/689829239_953654557377465_7521679864309062780_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_ohc=tDUzHRvKoYIQ7kNvwGPoIir&_nc_oc=AdrxrswvO68BE4pa8lh9YSlrgYPyMA9BcjNPHkECGh6VoWqnq5e87794-aPNbx87wL588dnuk3KbFLgLGs1Le8cX&_nc_zt=23&_nc_ht=scontent.fkkc3-1.fna&_nc_gid=UOyG1dGINHSEgy0QyuVzYA&_nc_ss=7b2a8&oh=00_Af4kEfj2eWGCPQYbpOslMzgQp_gGXd3RBWW3nq4csZ18qg&oe=6A150100",
+    avatar: winnerImg,
   },
   {
     name: "Jinvaramas Piklunklin",
     role: "Product lead & Co-Founder",
     bio: "Full-stack engineer obsessed with audio. Built the first version of the player in a weekend, hasn't slept properly since.",
-    avatar: "https://placehold.co/120x120/2c2c2e/fc3c44?text=JP",
+    avatar: myImg,
+    zoom: true,
   },
   {
     name: "Kasidate Sae-eaw",
     role: "Tech agile coach",
     bio: "Worked with independent labels across Southeast Asia for a decade. Knows every artist personally — or almost.",
-    avatar: "https://placehold.co/120x120/2c2c2e/fc3c44?text=KS",
+    avatar: ongImg,
   },
   {
     name: "Thaweeratch Khongrachata",
     role: "Product designer",
     bio: "Obsessed with dark UIs and good typography. Thinks the best interface is the one that gets out of the music's way.",
-    avatar: "https://placehold.co/120x120/2c2c2e/fc3c44?text=TK",
+    avatar: thaweeratchImg,
   },
   {
     name: "Mata Chobmee",
     role: "Backend engineer",
     bio: "Keeps the servers running and the money flowing. If you see a smooth checkout, you can thank him.",
-    avatar: "https://placehold.co/120x120/2c2c2e/fc3c44?text=MC",
+    avatar: mataImg,
   },
   {
     name: "Piyawat Kamton",
     role: "Team coordinator",
     bio: "Immensely organized and somehow keeps us all on track. If you email support, there's a good chance you'll hear back from him.",
-    avatar: "https://placehold.co/120x120/2c2c2e/fc3c44?text=PK",
+    avatar: kohImg,
   },
 ];
 
@@ -80,69 +89,67 @@ export default function AboutPage() {
 
       {/* Hero */}
       <section className="relative overflow-hidden px-[10%] pt-24 pb-20">
-        <div
-          className="absolute inset-0 opacity-[0.06]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 30% 40%, #fc3c44 0%, transparent 60%), radial-gradient(circle at 70% 70%, #fc3c44 0%, transparent 50%)",
-          }}
-        />
-        <div className="relative max-w-3xl">
-          <p className="text-accent text-[13px] font-semibold tracking-[0.12em] uppercase mb-4">
-            Our story
-          </p>
-          <h1 className="text-white text-[48px] font-bold leading-[1.1] tracking-tight mb-6">
-            Built for artists.
-            <br />
-            <span className="text-white/40">Loved by listeners.</span>
-          </h1>
-          <p className="text-white/60 text-[17px] leading-relaxed max-w-xl">
-            Audtlist started as a simple frustration — independent musicians
-            were spending years making music only to hand the majority of every
-            sale to a platform that didn't know their name. We built something
-            different.
-          </p>
+        <div className="grid md:grid-cols-[1fr_1.4fr] gap-16 items-center">
+          <div className="relative">
+            <p className="text-accent text-[13px] font-semibold tracking-[0.12em] uppercase mb-5">
+              Our story
+            </p>
+            <h1 className="text-white text-[56px] font-bold leading-[1.05] tracking-tight mb-8">
+              Built for artists.
+              <br />
+              <span className="text-white/35">Loved by listeners.</span>
+            </h1>
+            <p className="text-white/55 text-[16px] leading-[1.8] max-w-md">
+              Audtlist started as a simple frustration — independent musicians
+              were spending years making music only to hand the majority of every
+              sale to a platform that didn't know their name. We built something
+              different.
+            </p>
+          </div>
+          <div className="rounded-3xl overflow-hidden shadow-[0_24px_60px_rgba(0,0,0,0.5)]">
+            <img
+              src={aboutusImg}
+              alt="Built for artists"
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
       </section>
 
       {/* Stats */}
-      <section className="px-[10%] py-16 border-y border-white/8 bg-[#141414]">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-[1200px]">
+      <section className="px-[10%] py-14 border-y border-white/8">
+        <div className="flex flex-wrap gap-x-16 gap-y-8">
           {stats.map((s) => (
-            <div key={s.label}>
-              <p className="text-white text-accent text-[36px] font-bold leading-none mb-1">
-                {s.value}
-              </p>
-              <p className="text-white/45 text-[13px]">{s.label}</p>
+            <div key={s.label} className="flex items-baseline gap-3">
+              <span className="text-accent text-[42px] font-extrabold leading-none">{s.value}</span>
+              <span className="text-white/40 text-[13px] uppercase tracking-widest">{s.label}</span>
             </div>
           ))}
         </div>
       </section>
 
       {/* Mission */}
-      <section className="px-[10%] py-20 max-w-[1200px]">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+      <section className="px-[10%] py-24">
+        <div className="grid md:grid-cols-2 gap-20 items-center">
           <div>
-            <p className="text-accent text-[13px] font-semibold tracking-[0.12em] uppercase mb-4">
-              Mission
-            </p>
-            <h2 className="text-white text-[32px] font-bold leading-tight mb-5">
-              Music should sustain the people who make it.
+            <h2 className="text-white text-[38px] font-bold leading-[1.15] mb-8">
+              Music should sustain<br />
+              <em className="not-italic text-white/40">the people who make it.</em>
             </h2>
-            <p className="text-white/55 text-[15px] leading-relaxed mb-4">
+            <div className="w-12 h-px bg-accent mb-8" />
+            <p className="text-white/55 text-[15px] leading-[1.9] mb-5">
               Streaming pays fractions of a cent per play. We offer a
               marketplace where fans buy directly — downloads, vinyl, merch —
               and artists keep 82% of every transaction.
             </p>
-            <p className="text-white/55 text-[15px] leading-relaxed">
+            <p className="text-white/40 text-[14px] leading-[1.9]">
               No algorithms deciding who gets heard. No label gatekeeping. Just
-              music, money back to creators, and a community that actually
-              cares.
+              music, money back to creators, and a community that actually cares.
             </p>
           </div>
-          <div className="rounded-2xl overflow-hidden border border-white/10">
+          <div className="rounded-2xl overflow-hidden">
             <img
-              src="https://placehold.co/600x400/1c1c1e/fc3c44?text=Music+for+Everyone"
+              src={aboutus2Img}
               alt="Audtlist mission"
               className="w-full h-full object-cover"
             />
@@ -151,63 +158,47 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="px-[10%] py-20 bg-[#141414] border-y border-white/8">
-        <div className="max-w-[1200px]">
-          <p className="text-accent text-[13px] font-semibold tracking-[0.12em] uppercase mb-4">
-            What we believe
-          </p>
-          <h2 className="text-white text-[32px] font-bold mb-12">Our values</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((v) => (
-              <div
-                key={v.title}
-                className="relative rounded-2xl p-6 border border-white/8 hover:border-white/15 transition-colors overflow-hidden"
-                style={{
-                  backgroundColor: "#2c2c2e",
-                  ...(v.bg && {
-                    backgroundImage: `url(${v.bg})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }),
-                }}
-              >
-                {v.bg && (
-                  <div className="absolute inset-0 bg-black/60 rounded-2xl" />
-                )}
-                <div className="relative z-10">
-                  <span className="text-3xl block mb-4">{v.icon}</span>
-                  <h3 className="text-white font-semibold text-[16px] mb-2">
-                    {v.title}
-                  </h3>
-                  <p className="text-white/50 text-[13px] leading-relaxed">
-                    {v.body}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+      <section className="px-[10%] py-20 bg-bg-dark border-y border-white/8">
+        <p className="text-accent text-[13px] font-semibold tracking-[0.12em] uppercase mb-4">
+          What we believe
+        </p>
+        <h2 className="text-white text-[32px] font-bold mb-16">Our values</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-0 divide-x divide-white/8">
+          {values.map((v, i) => (
+            <div key={v.title} className="px-8 first:pl-0 last:pr-0 group">
+              <p className="text-white/20 text-[48px] font-bold leading-none mb-6 group-hover:text-accent/40 transition-colors">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h3 className="text-white font-semibold text-[16px] mb-3">
+                {v.title}
+              </h3>
+              <p className="text-white/45 text-[13px] leading-relaxed">
+                {v.body}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* Team */}
-      <section className="px-[10%] py-20 max-w-[1200px]">
+      <section className="px-[10%] py-20">
         <p className="text-accent text-[13px] font-semibold tracking-[0.12em] uppercase mb-4">
           The team
         </p>
-        <h2 className="text-white text-[32px] font-bold mb-12">
+        <h2 className="text-white text-[32px] font-bold mb-[20%]">
           People behind the music
         </h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-3 lg:grid-cols-6 gap-4">
           {team.map((member) => (
             <div
               key={member.name}
-              className="bg-[#2c2c2e] rounded-2xl p-6 border border-white/8"
+              className="bg-bg-card rounded-2xl p-6 border border-white/8"
             >
-              <div className="w-20 h-20 rounded-full mb-4 overflow-hidden ring-2 ring-accent/40 ring-offset-2 ring-offset-[#2c2c2e]">
+              <div className="w-20 h-20 rounded-full mb-4 overflow-hidden ring-2 ring-accent/40 ring-offset-2 ring-offset-bg-card mx-auto">
                 <img
                   src={member.avatar}
                   alt={member.name}
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-transform ${member.zoom ? "scale-110" : ""}`}
                 />
               </div>
               <h3 className="text-white font-semibold text-[15px] mb-0.5">
@@ -225,25 +216,26 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="px-[10%] py-20 bg-[#141414] border-t border-white/8">
-        <div className="max-w-2xl">
-          <h2 className="text-white text-[32px] font-bold mb-4">
-            Ready to explore?
-          </h2>
-          <p className="text-white/50 text-[15px] mb-8">
-            Browse thousands of independent releases — or list yours. Every
-            purchase goes directly to the artist.
-          </p>
-          <div className="flex flex-wrap gap-3">
+      <section className="mx-[10%] my-16 rounded-2xl bg-[#141420] border border-white/8 px-12 py-14">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+          <div>
+            <h2 className="text-white text-[36px] font-bold leading-tight mb-3">
+              Ready to explore?
+            </h2>
+            <p className="text-white/45 text-[14px] max-w-sm leading-relaxed">
+              Every purchase goes directly to the artist. No label, no middleman.
+            </p>
+          </div>
+          <div className="flex gap-3 shrink-0">
             <Link
               to="/shop"
-              className="px-6 py-3 rounded-full bg-accent text-white font-semibold text-[15px] hover:bg-[#e8333b] shadow-[0_4px_16px_rgba(252,60,68,0.35)] transition-all no-underline"
+              className="px-7 py-3.5 rounded-full bg-accent text-white font-semibold text-[14px] hover:bg-accent-hover transition-all no-underline shadow-[0_4px_20px_rgba(252,60,68,0.3)]"
             >
               Browse Music
             </Link>
             <a
               href="mailto:hello@audtlist.com"
-              className="px-6 py-3 rounded-full border border-white/25 text-white/80 font-semibold text-[15px] hover:border-white/50 hover:bg-white/8 transition-all no-underline"
+              className="px-7 py-3.5 rounded-full border border-white/20 text-white/70 font-semibold text-[14px] hover:border-white/40 hover:text-white transition-all no-underline"
             >
               Contact Us
             </a>

@@ -93,37 +93,37 @@ export default function HelpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white font-['Plus_Jakarta_Sans',sans-serif]">
-      {/* Header with Teal Background */}
-      <div className="bg-linear-to-r from-teal-400 to-teal-500 text-white py-14 px-4">
+    <div className="min-h-screen bg-[#f7f8fc] font-['Plus_Jakarta_Sans',sans-serif]">
+      {/* Header */}
+      <div className="py-14 px-4" style={{ background: "linear-gradient(135deg, #f0f1fb 0%, #eef0fb 100%)" }}>
         <div className="max-w-2xl mx-auto text-center">
           {/* Logo */}
           <Link to="/" className="inline-flex items-center gap-2 mb-8 opacity-90 hover:opacity-100 transition-opacity">
-            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-              <span className="text-teal-500 font-bold text-base">A</span>
+            <div className="w-8 h-8 bg-[#1a1a40] rounded-full flex items-center justify-center">
+              <span className="text-white font-bold text-base">A</span>
             </div>
-            <span className="text-base font-semibold">Audtlist Help</span>
+            <span className="text-base font-semibold text-[#1a1a2e]">Audtlist Help</span>
           </Link>
 
-          <h1 className="text-4xl font-bold mb-2">How can we help you?</h1>
-          <p className="text-teal-50 mb-10 text-sm">Find answers to your questions about Audtlist</p>
+          <h1 className="text-4xl font-bold mb-2 text-[#1a1a2e]">How can we help you?</h1>
+          <p className="mb-10 text-sm text-[#5a5a7a]">Find answers to your questions about Audtlist</p>
 
           {/* Search Bar */}
           <form onSubmit={handleSearch} className="mt-6">
-            <div className="flex bg-white rounded-2xl shadow-lg overflow-hidden p-1.5 gap-1.5">
+            <div className="flex bg-white rounded-2xl shadow-sm overflow-hidden p-1.5 gap-1.5 border border-[#e4e4ef]">
               <div className="flex items-center flex-1 gap-2 px-3">
-                <Search className="w-4 h-4 text-gray-400 shrink-0" />
+                <Search className="w-4 h-4 text-[#8585a8] shrink-0" />
                 <input
                   type="text"
                   placeholder="Search for help..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 py-2 text-gray-800 text-sm placeholder:text-gray-400 focus:outline-none"
+                  className="flex-1 py-2 text-[#1a1a2e] text-sm placeholder:text-[#8585a8] focus:outline-none"
                 />
               </div>
               <button
                 type="submit"
-                className="px-5 py-2.5 bg-teal-500 text-white font-semibold rounded-xl hover:bg-teal-600 transition-colors text-sm shrink-0"
+                className="px-5 py-2.5 bg-[#1a1a40] text-white font-semibold rounded-xl hover:bg-[#0a0a1a] transition-colors text-sm shrink-0"
               >
                 Search
               </button>
@@ -136,9 +136,9 @@ export default function HelpPage() {
       <div className="px-4 pt-6">
         <Link
           to="/"
-          style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#fff", textDecoration: "none", fontSize: "13px", fontWeight: 600, background: "#14b8a6", borderRadius: "8px", padding: "8px 18px", letterSpacing: "0.03em", boxShadow: "0 2px 8px rgba(20,184,166,0.3)", transition: "all 0.2s" }}
-          onMouseEnter={e => { e.currentTarget.style.background = "#0d9488"; }}
-          onMouseLeave={e => { e.currentTarget.style.background = "#14b8a6"; }}
+          style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#fff", textDecoration: "none", fontSize: "13px", fontWeight: 600, background: "#1a1a40", borderRadius: "8px", padding: "8px 18px", letterSpacing: "0.03em", boxShadow: "0 2px 8px rgba(26,26,64,0.2)", transition: "all 0.2s" }}
+          onMouseEnter={e => { e.currentTarget.style.background = "#0a0a1a"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "#1a1a40"; }}
         >
           ← Back to home
         </Link>
@@ -151,13 +151,13 @@ export default function HelpPage() {
           <div className="mb-12">
             {searchResults.length > 0 ? (
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                <h2 className="text-2xl font-bold text-[#1a1a2e] mb-6">
                   Search Results ({searchResults.reduce((sum, r) => sum + r.articles.length, 0)})
                 </h2>
                 <div className="space-y-8">
                   {searchResults.map((result) => (
                     <div key={result.category}>
-                      <h3 className="text-lg font-semibold text-gray-700 mb-4">
+                      <h3 className="text-lg font-semibold text-[#5a5a7a] mb-4">
                         {result.category}
                       </h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -165,13 +165,13 @@ export default function HelpPage() {
                           <Link
                             key={article.slug}
                             to={`/help/${article.slug}`}
-                            className="p-4 border border-gray-200 rounded-lg hover:border-teal-400 hover:bg-teal-50 transition-colors group"
+                            className="p-4 border border-[#e4e4ef] rounded-lg hover:border-[#c8c8ef] hover:bg-[#f0f1fb] transition-colors group"
                           >
                             <div className="flex items-start justify-between">
-                              <h4 className="font-medium text-gray-900 group-hover:text-teal-600">
+                              <h4 className="font-medium text-[#1a1a2e] group-hover:text-[#4a47c4]">
                                 {article.title}
                               </h4>
-                              <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-teal-600 shrink-0" />
+                              <ChevronRight className="w-5 h-5 text-[#8585a8] group-hover:text-[#4a47c4] shrink-0" />
                             </div>
                           </Link>
                         ))}
@@ -182,7 +182,7 @@ export default function HelpPage() {
               </div>
             ) : (
               <div className="text-center py-12">
-                <p className="text-gray-600 text-lg mb-4">
+                <p className="text-[#5a5a7a] text-lg mb-4">
                   No results found for "{searchQuery}"
                 </p>
                 <button
@@ -191,7 +191,7 @@ export default function HelpPage() {
                     setHasSearched(false);
                     setSearchResults([]);
                   }}
-                  className="text-teal-600 hover:text-teal-700 font-medium"
+                  className="text-[#1a1a40] hover:text-[#4a47c4] font-medium"
                 >
                   Clear search
                 </button>
@@ -203,25 +203,25 @@ export default function HelpPage() {
         {/* Categories Grid */}
         {!hasSearched && (
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">General Help</h2>
+            <h2 className="text-2xl font-bold text-[#1a1a2e] mb-8">General Help</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {helpCategories.map((category) => {
                 const IconComponent = category.icon;
                 return (
                   <div
                     key={category.id}
-                    className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
+                    className="border border-[#e4e4ef] rounded-lg p-6 hover:shadow-lg transition-shadow bg-white"
                   >
                     {/* Category Header */}
                     <div className="flex items-start gap-4 mb-4">
-                      <div className="p-3 bg-teal-50 rounded-lg">
-                        <IconComponent className="w-6 h-6 text-teal-600" />
+                      <div className="p-3 bg-[#f0f1fb] rounded-lg">
+                        <IconComponent className="w-6 h-6 text-[#1a1a40]" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold text-gray-900">
+                        <h3 className="text-lg font-bold text-[#1a1a2e]">
                           {category.title}
                         </h3>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-[#5a5a7a]">
                           {category.description}
                         </p>
                       </div>
@@ -233,12 +233,12 @@ export default function HelpPage() {
                         <Link
                           key={article.slug}
                           to={`/help/${article.slug}`}
-                          className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 group transition-colors"
+                          className="flex items-center justify-between p-3 rounded-lg hover:bg-[#f0f1fb] group transition-colors"
                         >
-                          <span className="text-gray-700 group-hover:text-teal-600 font-medium">
+                          <span className="text-[#5a5a7a] group-hover:text-[#1a1a2e] font-medium">
                             {article.title}
                           </span>
-                          <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-teal-600" />
+                          <ChevronRight className="w-4 h-4 text-[#8585a8] group-hover:text-[#4a47c4]" />
                         </Link>
                       ))}
                     </div>
@@ -246,7 +246,7 @@ export default function HelpPage() {
                     {/* View All Link */}
                     <Link
                       to={`/help/category/${category.id}`}
-                      className="mt-4 inline-flex items-center gap-2 text-teal-600 hover:text-teal-700 font-medium text-sm"
+                      className="mt-4 inline-flex items-center gap-2 text-[#1a1a40] hover:text-[#4a47c4] font-medium text-sm"
                     >
                       View all articles
                       <ChevronRight className="w-4 h-4" />
@@ -259,23 +259,23 @@ export default function HelpPage() {
         )}
 
         {/* Contact Support Section */}
-        <div className="mt-16 bg-linear-to-r from-teal-400 to-teal-500 rounded-2xl p-10 text-center shadow-sm">
-          <h3 className="text-2xl font-bold text-white mb-3">
+        <div className="mt-16 rounded-2xl p-10 text-center" style={{ background: "#f0f1fb", border: "1px solid #d0d2f0" }}>
+          <h3 className="text-2xl font-bold text-[#1a1a2e] mb-3">
             Can't find what you're looking for?
           </h3>
-          <p className="text-teal-50 text-sm leading-relaxed text-center">
+          <p className="text-sm leading-relaxed text-center text-[#5a5a7a]">
             Our support team is here to help. Get in touch with us and we'll be happy to assist you.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-10">
             <Link
               to="/contact"
-              className="px-6 py-3 bg-white text-teal-600 font-semibold rounded-xl hover:bg-teal-50 transition-colors text-sm"
+              className="px-6 py-3 bg-[#1a1a40] text-white font-semibold rounded-xl hover:bg-[#0a0a1a] transition-colors text-sm"
             >
               Contact Support
             </Link>
             <a
               href="mailto:support@audtlist.com"
-              className="px-6 py-3 border border-white/40 text-white font-semibold rounded-xl hover:bg-white/10 transition-colors text-sm"
+              className="px-6 py-3 border border-[#c8c8ef] text-[#1a1a2e] font-semibold rounded-xl hover:bg-[#e4e4ef] transition-colors text-sm"
             >
               Email Us
             </a>
@@ -284,91 +284,91 @@ export default function HelpPage() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-100 border-t border-gray-200 mt-16">
+      <footer className="bg-[#f3f3fb] border-t border-[#e4e4ef] mt-16">
         <div className="max-w-6xl mx-auto px-4 py-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h4 className="font-bold text-gray-900 mb-4">Audtlist</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <h4 className="font-bold text-[#1a1a2e] mb-4">Audtlist</h4>
+              <ul className="space-y-2 text-sm text-[#5a5a7a]">
                 <li>
-                  <Link to="/" className="hover:text-teal-600">
+                  <Link to="/" className="hover:text-[#1a1a40]">
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link to="/shop" className="hover:text-teal-600">
+                  <Link to="/shop" className="hover:text-[#1a1a40]">
                     Shop
                   </Link>
                 </li>
                 <li>
-                  <Link to="/about" className="hover:text-teal-600">
+                  <Link to="/about" className="hover:text-[#1a1a40]">
                     About
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold text-gray-900 mb-4">For Artists</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <h4 className="font-bold text-[#1a1a2e] mb-4">For Artists</h4>
+              <ul className="space-y-2 text-sm text-[#5a5a7a]">
                 <li>
-                  <Link to="/register/artist" className="hover:text-teal-600">
+                  <Link to="/register/artist" className="hover:text-[#1a1a40]">
                     Register as Artist
                   </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-teal-600">
+                  <a href="#" className="hover:text-[#1a1a40]">
                     Artist Resources
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-teal-600">
+                  <a href="#" className="hover:text-[#1a1a40]">
                     Pricing
                   </a>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold text-gray-900 mb-4">Community</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <h4 className="font-bold text-[#1a1a2e] mb-4">Community</h4>
+              <ul className="space-y-2 text-sm text-[#5a5a7a]">
                 <li>
-                  <a href="#" className="hover:text-teal-600">
+                  <a href="#" className="hover:text-[#1a1a40]">
                     Blog
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-teal-600">
+                  <a href="#" className="hover:text-[#1a1a40]">
                     Forum
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-teal-600">
+                  <a href="#" className="hover:text-[#1a1a40]">
                     Social Media
                   </a>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold text-gray-900 mb-4">Legal</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <h4 className="font-bold text-[#1a1a2e] mb-4">Legal</h4>
+              <ul className="space-y-2 text-sm text-[#5a5a7a]">
                 <li>
-                  <a href="#" className="hover:text-teal-600">
+                  <a href="#" className="hover:text-[#1a1a40]">
                     Privacy Policy
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-teal-600">
+                  <a href="#" className="hover:text-[#1a1a40]">
                     Terms of Service
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-teal-600">
+                  <a href="#" className="hover:text-[#1a1a40]">
                     Cookie Policy
                   </a>
                 </li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-300 pt-8 text-center text-sm text-gray-600">
+          <div className="border-t border-[#e4e4ef] pt-8 text-center text-sm text-[#5a5a7a]">
             <p>&copy; 2026 Audtlist. All rights reserved.</p>
           </div>
         </div>
