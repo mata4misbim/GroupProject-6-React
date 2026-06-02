@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import { artists, merch, products, tracks, users } from "../data/mockDb";
+import { ORDER_STATUS_LABELS } from "../data/constants";
+import { artists, merch, orders, products, tracks, users } from "../data/mockDb";
 import { getAllProductsWithArtist } from "../data/helpers";
 
 export default function ProfilePageAdmin() {
@@ -27,7 +28,7 @@ export default function ProfilePageAdmin() {
   const tabs = [
     { key: "overview", label: "Overview" },
     { key: "revenue", label: "Revenue" },
-    { key: "refunds", label: "Refunds", count: 7 },
+    { key: "orders", label: "Orders", count: orders.length },
     { key: "users", label: "Users", count: users.length },
     { key: "artists", label: "Artists", count: artists.length },
     { key: "products", label: "Products", count: publishedProducts.length },
@@ -142,7 +143,7 @@ export default function ProfilePageAdmin() {
             <AdminOverview timeRange={timeRange} onTimeRangeChange={setTimeRange} />
           )}
           {activeTab === "revenue" && <RevenueDashboard />}
-          {activeTab === "refunds" && <RefundsDashboard />}
+          {activeTab === "orders" && <OrdersDashboard />}
           {activeTab === "users" && <UserGrid />}
           {activeTab === "artists" && <ArtistGrid />}
           {activeTab === "products" && <ProductGrid />}
@@ -191,7 +192,7 @@ function AdminOverview({ timeRange, onTimeRangeChange }) {
     },
   ];
   const attentionItems = [
-    ["Refunds pending", 7],
+    ["Active orders", orders.length],
     ["Artists pending approval", 12],
     ["Merch low stock", 4],
   ];
@@ -465,52 +466,88 @@ function RevenueDashboard() {
   );
 }
 
-function RefundsDashboard() {
-  const rows = [
-    ["order_1042", "Duplicate purchase", "฿428", "Pending"],
-    ["order_1037", "Wrong size", "฿750", "Review"],
-    ["order_1029", "Payment issue", "฿250", "Pending"],
-  ];
+function OrdersDashboard() {
+  const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
+  const platformFees = orders.reduce((sum, order) => sum + order.platform_fee, 0);
+  const activeOrders = orders.filter((order) =>
+    ["pending_payment", "paid", "partially_shipped"].includes(order.status),
+  ).length;
+  const rows = orders.map((order) => {
+    const itemCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
+    const productPreview = order.items
+      .map((item) => item.title_snapshot)
+      .slice(0, 2)
+      .join(", ");
+
+    return {
+      id: order._id,
+      products:
+        order.items.length > 2
+          ? `${productPreview} +${order.items.length - 2}`
+          : productPreview,
+      items: itemCount,
+      total: order.total,
+      status: ORDER_STATUS_LABELS[order.status] || order.status,
+      date: new Intl.DateTimeFormat("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }).format(order.created_at),
+    };
+  });
 
   return (
     <section className="rounded-[10px] border border-white/10 bg-[#141416] p-5 text-white">
       <div className="mb-5 flex items-center justify-between">
         <div>
-          <p className="text-[12px] uppercase text-white/45">Support queue</p>
-          <h2 className="text-[24px] font-extrabold">Refunds</h2>
+          <p className="text-[12px] uppercase text-white/45">Order management</p>
+          <h2 className="text-[24px] font-extrabold">Orders</h2>
         </div>
         <span className="rounded-full border border-[#ffd700]/30 bg-[#ffd700]/10 px-3 py-1 text-[12px] font-bold text-[#ffd700]">
-          7 open
+          {activeOrders} active
         </span>
       </div>
       <div className="grid grid-cols-3 gap-3">
-        <AdminPanelCard label="Pending refunds" value="7" detail="Needs review" />
-        <AdminPanelCard label="Avg response" value="2.4h" detail="-18%" />
-        <AdminPanelCard label="Resolved today" value="11" detail="+5" />
+        <AdminPanelCard label="Total orders" value={orders.length} detail="All time" />
+        <AdminPanelCard
+          label="Gross sales"
+          value={`THB ${totalRevenue.toLocaleString()}`}
+          detail="Customer paid"
+        />
+        <AdminPanelCard
+          label="Platform fees"
+          value={`THB ${platformFees.toLocaleString()}`}
+          detail="15% fee"
+        />
       </div>
-      <div className="mt-4 rounded-[8px] border border-white/10 bg-[#1c1c1e] p-4">
-        <div className="grid grid-cols-[120px_1fr_100px_100px] gap-3 border-b border-white/10 pb-2 text-[11px] uppercase text-white/45">
-          <span>Order</span>
-          <span>Reason</span>
-          <span>Amount</span>
-          <span className="text-right">Status</span>
-        </div>
-        {rows.map(([order, reason, amount, status]) => (
-          <div
-            key={order}
-            className="grid grid-cols-[120px_1fr_100px_100px] gap-3 border-b border-white/10 py-3 text-[13px] text-white/75 last:border-b-0"
-          >
-            <span className="font-bold text-white">{order}</span>
-            <span>{reason}</span>
-            <span>{amount}</span>
-            <span className="text-right font-bold text-[#9d6dff]">{status}</span>
+      <div className="mt-4 rounded-[8px] border border-white/10 bg-[#1c1c1e] p-4 overflow-x-auto">
+        <div className="min-w-[720px]">
+          <div className="grid grid-cols-[120px_1fr_70px_100px_130px_90px] gap-3 border-b border-white/10 pb-2 text-[11px] uppercase text-white/45">
+            <span>Order</span>
+            <span>Products</span>
+            <span>Items</span>
+            <span>Total</span>
+            <span>Status</span>
+            <span className="text-right">Date</span>
           </div>
-        ))}
+          {rows.map((order) => (
+            <div
+              key={order.id}
+              className="grid grid-cols-[120px_1fr_70px_100px_130px_90px] gap-3 border-b border-white/10 py-3 text-[13px] text-white/75 last:border-b-0"
+            >
+              <span className="font-bold text-white">{order.id}</span>
+              <span className="truncate">{order.products}</span>
+              <span>{order.items}</span>
+              <span>THB {order.total.toLocaleString()}</span>
+              <span className="font-bold text-[#9d6dff]">{order.status}</span>
+              <span className="text-right">{order.date}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
-
 function AdminPanelCard({ label, value, detail }) {
   return (
     <div className="rounded-[8px] border border-white/10 bg-[#1c1c1e] p-4">
