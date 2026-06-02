@@ -5,6 +5,8 @@ import { artists, orders, users } from "../data/mockDb";
 import { getProductsByArtist } from "../data/helpers";
 import UploadModal from "../../components/UploadModal";
 import UploadSingleForm from "../../components/UploadSingleForm";
+import UploadAlbumForm from "../../components/UploadAlbumForm";
+import UploadMerchForm from "../../components/UploadMerchForm";
 
 export default function ProfilePageArtist() {
   const { user, isLoggedIn } = useAuth();
@@ -12,7 +14,10 @@ export default function ProfilePageArtist() {
     artists.find((artist) => artist.user_id === user?._id) || artists[0];
   const artistProducts = getProductsByArtist(currentArtist?._id);
   const [activeTab, setActiveTab] = useState("overview");
-  const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const [isSingleOpen, setIsSingleOpen] = useState(false);
+  const [isAlbumOpen, setIsAlbumOpen] = useState(false);
+  const [isMerchOpen, setIsMerchOpen] = useState(false);
+  const [showUploadMenu, setShowUploadMenu] = useState(false);
   const [bannerUrl, setBannerUrl] = useState(
     () =>
       localStorage.getItem("artistBannerUrl") ||
@@ -138,13 +143,46 @@ export default function ProfilePageArtist() {
             </p>
           </div>
 
-          <button
-            type="button"
-            className="mt-1 rounded-full bg-accent px-5 py-3 text-[13px] font-semibold text-white transition-colors hover:bg-accent/85"
-            onClick={() => setIsUploadOpen(true)}
-          >
-            + Add product
-          </button>
+          <div className="relative mt-1">
+            <button
+              type="button"
+              className="rounded-full bg-accent px-5 py-3 text-[13px] font-semibold text-white transition-colors hover:bg-accent/85 inline-flex items-center gap-2"
+              onClick={() => setShowUploadMenu((v) => !v)}
+            >
+              + Upload
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            {showUploadMenu && (
+              <>
+                <div className="fixed inset-0 z-10" onClick={() => setShowUploadMenu(false)} />
+                <div className="absolute right-0 top-full mt-2 z-20 w-[180px] bg-[#1a1a1a] border border-white/[0.1] rounded-xl shadow-2xl overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => { setShowUploadMenu(false); setIsSingleOpen(true); }}
+                    className="w-full text-left px-4 py-3 text-[13px] text-white/85 hover:bg-white/[0.05] transition-colors flex items-center gap-2.5"
+                  >
+                    <span className="text-[16px] leading-none">♪</span> Single
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setShowUploadMenu(false); setIsAlbumOpen(true); }}
+                    className="w-full text-left px-4 py-3 text-[13px] text-white/85 hover:bg-white/[0.05] transition-colors border-t border-white/[0.04] flex items-center gap-2.5"
+                  >
+                    <span className="text-[16px] leading-none">◐</span> Album
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setShowUploadMenu(false); setIsMerchOpen(true); }}
+                    className="w-full text-left px-4 py-3 text-[13px] text-white/85 hover:bg-white/[0.05] transition-colors border-t border-white/[0.04] flex items-center gap-2.5"
+                  >
+                    <span className="text-[16px] leading-none">✦</span> Merch
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
 
@@ -187,14 +225,40 @@ export default function ProfilePageArtist() {
       </div>
 
       <UploadModal
-        isOpen={isUploadOpen}
-        onClose={() => setIsUploadOpen(false)}
+        isOpen={isSingleOpen}
+        onClose={() => setIsSingleOpen(false)}
         title="Upload Single"
         icon="♪"
       >
         <UploadSingleForm
-          onCancel={() => setIsUploadOpen(false)}
-          onSuccess={() => setIsUploadOpen(false)}
+          onCancel={() => setIsSingleOpen(false)}
+          onSuccess={() => setIsSingleOpen(false)}
+        />
+      </UploadModal>
+
+      <UploadModal
+        isOpen={isAlbumOpen}
+        onClose={() => setIsAlbumOpen(false)}
+        title="Upload Album"
+        icon="◐"
+        width={640}
+      >
+        <UploadAlbumForm
+          onCancel={() => setIsAlbumOpen(false)}
+          onSuccess={() => setIsAlbumOpen(false)}
+        />
+      </UploadModal>
+
+      <UploadModal
+        isOpen={isMerchOpen}
+        onClose={() => setIsMerchOpen(false)}
+        title="Upload Merch"
+        icon="✦"
+        width={680}
+      >
+        <UploadMerchForm
+          onCancel={() => setIsMerchOpen(false)}
+          onSuccess={() => setIsMerchOpen(false)}
         />
       </UploadModal>
     </div>

@@ -37,7 +37,7 @@ export const merch = [
         variant_id: "var_001",
         size: "M",
         color: "black",
-        stock_quantity: 24, // 25 - 1 (มาลีซื้อไป)
+        stock_quantity: 0, // 25 - 1 (มาลีซื้อไป)
         sku: "OWV-SHIRT-M-BLK",
       },
       {
