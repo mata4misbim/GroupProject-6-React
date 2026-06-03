@@ -19,6 +19,8 @@ export default function LiveChat({ liveId }) {
   useEffect(() => {
     if (!liveId) return;
 
+    socket.disconnect();
+
     if (!socket.connected) {
       socket.connect();
     }
@@ -41,7 +43,7 @@ export default function LiveChat({ liveId }) {
       socket.off("receive_live_message", handleMessage);
       socket.off("chat_error", handleChatError);
     };
-  }, [liveId]);
+  }, [liveId, user?._id]);
 
   useEffect(() => {
     if (containerRef.current) {
