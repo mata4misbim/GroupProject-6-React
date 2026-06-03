@@ -26,7 +26,7 @@ const team = [
   {
     name: "Jinvaramas Piklunklin",
     role: "Product lead & Co-Founder",
-    bio: "Full-stack engineer obsessed with audio. Built the first version of the player in a weekend, hasn't slept properly since.",
+    bio: "Full-stack engineer obsessed with audio. Built the first version of the player in a weekend, hasn't slept properly since love.",
     avatar: myImg,
     zoom: true,
   },
@@ -86,7 +86,6 @@ const values = [
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#0a0a1a] font-['Plus_Jakarta_Sans',sans-serif]">
-
       {/* Hero */}
       <section className="relative overflow-hidden px-[10%] pt-24 pb-20">
         <div className="grid md:grid-cols-[1fr_1.4fr] gap-16 items-center">
@@ -101,9 +100,9 @@ export default function AboutPage() {
             </h1>
             <p className="text-white/55 text-[16px] leading-[1.8] max-w-md">
               Audtlist started as a simple frustration — independent musicians
-              were spending years making music only to hand the majority of every
-              sale to a platform that didn't know their name. We built something
-              different.
+              were spending years making music only to hand the majority of
+              every sale to a platform that didn't know their name. We built
+              something different.
             </p>
           </div>
           <div className="rounded-3xl overflow-hidden shadow-[0_24px_60px_rgba(0,0,0,0.5)]">
@@ -121,8 +120,12 @@ export default function AboutPage() {
         <div className="flex flex-wrap gap-x-16 gap-y-8">
           {stats.map((s) => (
             <div key={s.label} className="flex items-baseline gap-3">
-              <span className="text-accent text-[42px] font-extrabold leading-none">{s.value}</span>
-              <span className="text-white/40 text-[13px] uppercase tracking-widest">{s.label}</span>
+              <span className="text-accent text-[42px] font-extrabold leading-none">
+                {s.value}
+              </span>
+              <span className="text-white/40 text-[13px] uppercase tracking-widest">
+                {s.label}
+              </span>
             </div>
           ))}
         </div>
@@ -133,8 +136,11 @@ export default function AboutPage() {
         <div className="grid md:grid-cols-2 gap-20 items-center">
           <div>
             <h2 className="text-white text-[38px] font-bold leading-[1.15] mb-8">
-              Music should sustain<br />
-              <em className="not-italic text-white/40">the people who make it.</em>
+              Music should sustain
+              <br />
+              <em className="not-italic text-white/40">
+                the people who make it.
+              </em>
             </h2>
             <div className="w-12 h-px bg-accent mb-8" />
             <p className="text-white/55 text-[15px] leading-[1.9] mb-5">
@@ -144,7 +150,8 @@ export default function AboutPage() {
             </p>
             <p className="text-white/40 text-[14px] leading-[1.9]">
               No algorithms deciding who gets heard. No label gatekeeping. Just
-              music, money back to creators, and a community that actually cares.
+              music, money back to creators, and a community that actually
+              cares.
             </p>
           </div>
           <div className="rounded-2xl overflow-hidden">
@@ -223,7 +230,8 @@ export default function AboutPage() {
               Ready to explore?
             </h2>
             <p className="text-white/45 text-[14px] max-w-sm leading-relaxed">
-              Every purchase goes directly to the artist. No label, no middleman.
+              Every purchase goes directly to the artist. No label, no
+              middleman.
             </p>
           </div>
           <div className="flex gap-3 shrink-0">
