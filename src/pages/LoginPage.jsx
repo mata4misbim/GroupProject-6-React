@@ -6,8 +6,9 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  const handleLogIn = (userData) => {
-    login(userData || { email: "user@example.com" });
+  const handleLogIn = async (credentials) => {
+    await login(credentials);
+
     const redirectTo = sessionStorage.getItem("redirectAfterLogin") || "/";
     sessionStorage.removeItem("redirectAfterLogin");
     navigate(redirectTo, { replace: true });

@@ -48,9 +48,9 @@ export default function LogIn({ onGoFan, onGoArtist, onGoForgot, onLogIn }) {
     setErrors({});
     setIsLoading(true);
     try {
-      onLogIn({ email: email.trim() });
-    } catch {
-      setErrors({ form: "Something went wrong. Please try again." });
+      await onLogIn({ email: email.trim(), password });
+    } catch (error) {
+      setErrors({ form: error.message || "Something went wrong. Please try again." });
     } finally {
       setIsLoading(false);
     }
