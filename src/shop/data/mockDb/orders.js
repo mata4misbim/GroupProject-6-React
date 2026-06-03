@@ -48,7 +48,7 @@ export const orders = [
         fulfillment_status: "digital_delivered",
         tracking_number: null,
         shipped_at: null,
-        delivered_at: new Date("2026-04-15T10:00:00"),
+        delivered_at: new Date("2026-05-09T10:00:00"),
       },
       {
         product_id: "product_002", // Midnight Echoes (album)
@@ -60,7 +60,7 @@ export const orders = [
         fulfillment_status: "digital_delivered",
         tracking_number: null,
         shipped_at: null,
-        delivered_at: new Date("2026-04-15T10:00:00"),
+        delivered_at: new Date("2026-05-09T10:00:00"),
       },
       {
         product_id: "product_003", // Cadaver Shirt (merch)
@@ -71,7 +71,7 @@ export const orders = [
         variant_id: "var_001", // size M black
         fulfillment_status: "shipped",
         tracking_number: "TH1234567890",
-        shipped_at: new Date("2026-04-16T09:00:00"),
+        shipped_at: new Date("2026-05-10T09:00:00"),
         delivered_at: null, // ยังไม่ถึงมือลูกค้า
       },
     ],
@@ -90,8 +90,8 @@ export const orders = [
       country: "TH",
       phone: "0867891234",
     },
-    created_at: new Date("2026-04-15T10:00:00"),
-    updated_at: new Date("2026-04-16T09:00:00"),
+    created_at: new Date("2026-05-09T10:00:00"),
+    updated_at: new Date("2026-05-10T09:00:00"),
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -112,7 +112,7 @@ export const orders = [
         fulfillment_status: "digital_delivered",
         tracking_number: null,
         shipped_at: null,
-        delivered_at: new Date("2026-04-25T14:30:00"),
+        delivered_at: new Date("2026-05-29T14:30:00"),
       },
       {
         product_id: "product_014", // Dark Romantics (album)
@@ -124,7 +124,7 @@ export const orders = [
         fulfillment_status: "digital_delivered",
         tracking_number: null,
         shipped_at: null,
-        delivered_at: new Date("2026-04-25T14:30:00"),
+        delivered_at: new Date("2026-05-29T14:30:00"),
       },
     ],
     subtotal: 175,
@@ -140,8 +140,8 @@ export const orders = [
       postal_code: "-",
       country: "TH",
     },
-    created_at: new Date("2026-04-25T14:30:00"),
-    updated_at: new Date("2026-04-25T14:30:00"),
+    created_at: new Date("2026-05-29T14:30:00"),
+    updated_at: new Date("2026-05-29T14:30:00"),
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -163,7 +163,7 @@ export const orders = [
         fulfillment_status: "digital_delivered",
         tracking_number: null,
         shipped_at: null,
-        delivered_at: new Date("2026-05-02T11:00:00"),
+        delivered_at: new Date("2026-06-02T11:00:00"),
       },
     ],
     subtotal: 200,
@@ -179,8 +179,8 @@ export const orders = [
       postal_code: "-",
       country: "TH",
     },
-    created_at: new Date("2026-05-02T11:00:00"),
-    updated_at: new Date("2026-05-02T11:00:00"),
+    created_at: new Date("2026-06-02T11:00:00"),
+    updated_at: new Date("2026-06-02T11:00:00"),
   },
 ];
 

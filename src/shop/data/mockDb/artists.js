@@ -18,7 +18,7 @@ export const artists = [
     name: "Old World Vultures",
     bio: "Post-rock instrumental band from Bangkok. We let the guitars speak.",
     location: "Bangkok, Thailand",
-    banner_url: "https://placehold.co/1200x400/1c1c1e/fc3c44?text=Old+World+Vultures",
+    banner_url: "/covers/art4.jpg",
     genre_ids: ["genre_001", "genre_005"], // Rock + Indie
     shipping_address: {
       line1: "123 ซ.ลาดพร้าว 71",
@@ -34,7 +34,7 @@ export const artists = [
         email: "owv@mail.com",
       },
     },
-    payout_balance: 1071,
+    payout_balance: 1134,
     created_at: new Date("2025-08-15"),
     updated_at: new Date("2025-08-15"),
   },
