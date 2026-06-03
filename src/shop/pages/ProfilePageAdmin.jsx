@@ -2,7 +2,14 @@ import { useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { ORDER_STATUS_LABELS } from "../data/constants";
-import { artists, merch, orders, products, tracks, users } from "../data/mockDb";
+import {
+  artists,
+  merch,
+  orders,
+  products,
+  tracks,
+  users,
+} from "../data/mockDb";
 import { getAllProductsWithArtist } from "../data/helpers";
 
 export default function ProfilePageAdmin() {
@@ -140,7 +147,11 @@ export default function ProfilePageAdmin() {
 
         <div className="py-8">
           {activeTab === "overview" && (
-            <AdminOverview timeRange={timeRange} onTimeRangeChange={setTimeRange} />
+            <AdminOverview
+              timeRange={timeRange}
+              onTimeRangeChange={setTimeRange}
+              onViewOrders={() => setActiveTab("orders")}
+            />
           )}
           {activeTab === "revenue" && <RevenueDashboard />}
           {activeTab === "orders" && <OrdersDashboard />}
@@ -153,7 +164,7 @@ export default function ProfilePageAdmin() {
   );
 }
 
-function AdminOverview({ timeRange, onTimeRangeChange }) {
+function AdminOverview({ timeRange, onTimeRangeChange, onViewOrders }) {
   const revenuePoints = [
     64, 64, 70, 69, 78, 75, 68, 68, 55, 54, 38, 34, 36, 44, 48, 53, 58, 65, 72,
     66, 77, 74, 79, 75, 68,
@@ -169,7 +180,7 @@ function AdminOverview({ timeRange, onTimeRangeChange }) {
     {
       name: "BABYMONSTER",
       sales: 213,
-      revenue: "B48,210",
+      revenue: "48,210",
       change: "+22%",
       image: artists[0]?.banner_url,
       positive: true,
@@ -177,7 +188,7 @@ function AdminOverview({ timeRange, onTimeRangeChange }) {
     {
       name: "Anyma",
       sales: 178,
-      revenue: "B41,880",
+      revenue: "41,880",
       change: "+11%",
       image: artists[1]?.banner_url,
       positive: true,
@@ -185,27 +196,22 @@ function AdminOverview({ timeRange, onTimeRangeChange }) {
     {
       name: "aespa",
       sales: 156,
-      revenue: "B33,940",
+      revenue: "33,940",
       change: "-4%",
       image: artists[2]?.banner_url,
       positive: false,
     },
   ];
-  const attentionItems = [
-    ["Active orders", orders.length],
-    ["Artists pending approval", 12],
-    ["Merch low stock", 4],
-  ];
+  const latestOrders = getOrderRows()
+    .sort((a, b) => b.createdAt - a.createdAt)
+    .slice(0, 3);
 
   return (
     <section className="rounded-[10px] border border-white/10 bg-[#141416] text-white font-['Noto_Sans_Thai','TikTok_Sans',sans-serif] p-4 -mx-2">
       <div className="flex items-start justify-between gap-4 mb-3">
         <div>
-          <p className="text-[12px] uppercase tracking-[0] text-white/50 font-semibold">
-            ภาพรวมทั้งระบบ · OVERVIEW
-          </p>
           <h2 className="text-[22px] leading-tight font-extrabold text-white">
-            สวัสดีตอนเช้าครับ ผู้ดูแล
+            WELCOME BACK
           </h2>
         </div>
         <select
@@ -364,21 +370,40 @@ function AdminOverview({ timeRange, onTimeRangeChange }) {
 
         <div className="rounded-[8px] border border-white/10 bg-[#1c1c1e] p-4">
           <h3 className="text-[18px] font-extrabold text-white mb-3">
-            Needs attention
+            Latest Orders
           </h3>
-          <div className="border-t border-dashed border-white/15">
-            {attentionItems.map(([label, value]) => (
+          <div className="grid grid-cols-[90px_1fr_86px] gap-3 border-b border-dashed border-white/15 pb-2 text-[8px] font-bold uppercase text-white/45">
+            <span>Order</span>
+            <span>Products</span>
+            <span className="text-right">Total</span>
+          </div>
+          <div>
+            {latestOrders.map((order) => (
               <div
-                key={label}
-                className="flex items-center justify-between border-b border-dashed border-white/15 py-3 text-[11px] text-white/75"
+                key={order.id}
+                className="grid grid-cols-[90px_1fr_86px] items-center gap-3 border-b border-dashed border-white/15 py-3 text-[11px] text-white/75 last:border-b-0"
               >
-                <span>{label}</span>
-                <span className="font-extrabold text-white">{value}</span>
+                <span className="font-extrabold text-white">{order.id}</span>
+                <div className="min-w-0">
+                  <p className="truncate font-bold text-white/85">
+                    {order.products}
+                  </p>
+                  <p className="mt-0.5 truncate text-[10px] text-white/40">
+                    {order.status} · {order.date}
+                  </p>
+                </div>
+                <span className="text-right font-extrabold text-white">
+                  THB {order.total.toLocaleString()}
+                </span>
               </div>
             ))}
           </div>
-          <button className="mt-4 mx-auto block h-8 w-[168px] rounded-[8px] bg-white text-[#080817] text-[12px] font-extrabold cursor-pointer transition hover:bg-brand-cyan hover:text-[#080817]">
-            Review all alerts
+          <button
+            type="button"
+            onClick={onViewOrders}
+            className="mt-4 mx-auto block h-8 w-[168px] rounded-[8px] bg-white text-[#080817] text-[12px] font-extrabold cursor-pointer transition hover:bg-brand-cyan hover:text-[#080817]"
+          >
+            View all orders
           </button>
         </div>
       </div>
@@ -390,15 +415,17 @@ function OverviewMetric({ label, value, detail, active = false }) {
   return (
     <div
       className={`min-h-[102px] rounded-[8px] border p-4 ${
-        active
-          ? "border-white/10 bg-[#789199]"
-          : "border-white/10 bg-[#1c1c1e]"
+        active ? "border-white/10 bg-[#789199]" : "border-white/10 bg-[#1c1c1e]"
       }`}
     >
-      <p className={`text-[12px] uppercase tracking-[0] ${active ? "text-[#111827]/75" : "text-white/55"}`}>
+      <p
+        className={`text-[12px] uppercase tracking-[0] ${active ? "text-[#111827]/75" : "text-white/55"}`}
+      >
         {label}
       </p>
-      <p className={`mt-1 text-[26px] leading-tight font-extrabold ${active ? "text-[#080817]" : "text-white"}`}>
+      <p
+        className={`mt-1 text-[26px] leading-tight font-extrabold ${active ? "text-[#080817]" : "text-white"}`}
+      >
         {value}
       </p>
       <p className="mt-1 text-[12px] font-semibold text-[#00956e]">{detail}</p>
@@ -439,9 +466,17 @@ function RevenueDashboard() {
         </button>
       </div>
       <div className="grid grid-cols-3 gap-3">
-        <AdminPanelCard label="Gross revenue" value="฿842,310" detail="+12.4%" />
+        <AdminPanelCard
+          label="Gross revenue"
+          value="฿842,310"
+          detail="+12.4%"
+        />
         <AdminPanelCard label="Platform fees" value="฿84,231" detail="10.0%" />
-        <AdminPanelCard label="Artist payout" value="฿758,079" detail="Queued" />
+        <AdminPanelCard
+          label="Artist payout"
+          value="฿758,079"
+          detail="Queued"
+        />
       </div>
       <div className="mt-4 rounded-[8px] border border-white/10 bg-[#1c1c1e] p-4">
         <div className="grid grid-cols-[1fr_130px_120px_80px] gap-3 border-b border-white/10 pb-2 text-[11px] uppercase text-white/45">
@@ -466,13 +501,8 @@ function RevenueDashboard() {
   );
 }
 
-function OrdersDashboard() {
-  const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
-  const platformFees = orders.reduce((sum, order) => sum + order.platform_fee, 0);
-  const activeOrders = orders.filter((order) =>
-    ["pending_payment", "paid", "partially_shipped"].includes(order.status),
-  ).length;
-  const rows = orders.map((order) => {
+function getOrderRows() {
+  return orders.map((order) => {
     const itemCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
     const productPreview = order.items
       .map((item) => item.title_snapshot)
@@ -493,14 +523,29 @@ function OrdersDashboard() {
         month: "short",
         year: "numeric",
       }).format(order.created_at),
+      createdAt: new Date(order.created_at),
     };
   });
+}
+
+function OrdersDashboard() {
+  const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
+  const platformFees = orders.reduce(
+    (sum, order) => sum + order.platform_fee,
+    0,
+  );
+  const activeOrders = orders.filter((order) =>
+    ["pending_payment", "paid", "partially_shipped"].includes(order.status),
+  ).length;
+  const rows = getOrderRows();
 
   return (
     <section className="rounded-[10px] border border-white/10 bg-[#141416] p-5 text-white">
       <div className="mb-5 flex items-center justify-between">
         <div>
-          <p className="text-[12px] uppercase text-white/45">Order management</p>
+          <p className="text-[12px] uppercase text-white/45">
+            Order management
+          </p>
           <h2 className="text-[24px] font-extrabold">Orders</h2>
         </div>
         <span className="rounded-full border border-[#ffd700]/30 bg-[#ffd700]/10 px-3 py-1 text-[12px] font-bold text-[#ffd700]">
@@ -508,7 +553,11 @@ function OrdersDashboard() {
         </span>
       </div>
       <div className="grid grid-cols-3 gap-3">
-        <AdminPanelCard label="Total orders" value={orders.length} detail="All time" />
+        <AdminPanelCard
+          label="Total orders"
+          value={orders.length}
+          detail="All time"
+        />
         <AdminPanelCard
           label="Gross sales"
           value={`THB ${totalRevenue.toLocaleString()}`}
@@ -615,8 +664,12 @@ function ArtistGrid() {
 function ProductGrid() {
   const [productTab, setProductTab] = useState("tracks");
   const productList = getAllProductsWithArtist();
-  const trackProducts = productList.filter((product) => product.type !== "merch");
-  const merchProducts = productList.filter((product) => product.type === "merch");
+  const trackProducts = productList.filter(
+    (product) => product.type !== "merch",
+  );
+  const merchProducts = productList.filter(
+    (product) => product.type === "merch",
+  );
   const moderationProducts = productList.filter(
     (product) => product.status !== "published" || product.deleted_at,
   );
@@ -629,7 +682,11 @@ function ProductGrid() {
   const productTabs = [
     { key: "tracks", label: "Tracks", count: tracks.length },
     { key: "merch", label: "Merch", count: merch.length },
-    { key: "moderation", label: "Moderation", count: moderationProducts.length },
+    {
+      key: "moderation",
+      label: "Moderation",
+      count: moderationProducts.length,
+    },
   ];
 
   return (
@@ -651,7 +708,11 @@ function ProductGrid() {
               }`}
             >
               {tab.label}{" "}
-              <span className={productTab === tab.key ? "text-[#080817]/60" : "text-white/35"}>
+              <span
+                className={
+                  productTab === tab.key ? "text-[#080817]/60" : "text-white/35"
+                }
+              >
                 {tab.count}
               </span>
             </button>
@@ -661,7 +722,9 @@ function ProductGrid() {
 
       {productTab === "moderation" && visibleProducts.length === 0 ? (
         <div className="rounded-[8px] border border-white/10 bg-[#1c1c1e] p-8 text-center">
-          <p className="text-[18px] font-extrabold text-white">Moderation queue is clear</p>
+          <p className="text-[18px] font-extrabold text-white">
+            Moderation queue is clear
+          </p>
           <p className="mt-2 text-[13px] text-white/45">
             Drafts, hidden items, and deleted products will appear here.
           </p>
