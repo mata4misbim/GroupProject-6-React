@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AuthContext, readStoredSession } from "./AuthContext";
 import { apiGet, apiPost } from "../lib/api";
+import { socket } from "../lib/socket";
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(readStoredSession);
@@ -44,6 +45,8 @@ export function AuthProvider({ children }) {
     localStorage.setItem("session", JSON.stringify(session));
     setUser(session);
 
+    socket.disconnect();
+
     return session;
   };
 
@@ -56,6 +59,7 @@ export function AuthProvider({ children }) {
 
     localStorage.removeItem("session");
     setUser(null);
+    socket.disconnect();
   };  
 
   return (

@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useFulfillment } from "../../contexts/FulfillmentContext";
 import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { ORDER_STATUS_LABELS } from "../data/constants";
@@ -11,6 +12,8 @@ import {
   users,
 } from "../data/mockDb";
 import { getAllProductsWithArtist } from "../data/helpers";
+
+const PLATFORM_FEE_RATE = 0.10;
 
 export default function ProfilePageAdmin() {
   const { user, isLoggedIn } = useAuth();
@@ -35,10 +38,11 @@ export default function ProfilePageAdmin() {
   const tabs = [
     { key: "overview", label: "Overview" },
     { key: "revenue", label: "Revenue" },
-    { key: "orders", label: "Orders", count: orders.length },
-    { key: "users", label: "Users", count: users.length },
-    { key: "artists", label: "Artists", count: artists.length },
-    { key: "products", label: "Products", count: publishedProducts.length },
+    { key: "orders", label: "Orders" },
+    { key: "payouts", label: "Payouts" },
+    { key: "users", label: "Users" },
+    { key: "artists", label: "Artists" },
+    { key: "products", label: "Products" },
   ];
 
   const handleImageChange = (e, type) => {
@@ -60,87 +64,68 @@ export default function ProfilePageAdmin() {
 
   return (
     <div className="min-h-screen bg-bg font-['Plus_Jakarta_Sans',sans-serif]">
+      {/* ── Banner ── */}
       <div
-        className="relative h-75 bg-cover bg-center bg-white/5 cursor-pointer group"
-        style={bannerUrl ? { backgroundImage: `url(${bannerUrl})` } : {}}
+        className="relative h-80 bg-cover bg-center cursor-pointer group overflow-hidden"
+        style={bannerUrl ? { backgroundImage: `url(${bannerUrl})` } : { background: "#141414" }}
         onClick={() => bannerInputRef.current?.click()}
       >
-        <div className="absolute inset-0 bg-linear-to-t from-bg via-bg/40 to-transparent" />
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-          <span className="bg-black/55 text-white text-[13px] px-4 py-2 rounded-full backdrop-blur-sm border border-white/20">
+        <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-transparent" />
+        <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+          <span className="bg-black/50 backdrop-blur-sm text-white/80 text-[12px] px-3 py-1.5 rounded-full border border-white/15">
             Change banner
           </span>
         </div>
-        <input
-          ref={bannerInputRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={(e) => handleImageChange(e, "banner")}
-        />
+        <input ref={bannerInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => handleImageChange(e, "banner")} />
       </div>
 
+      {/* ── Profile header ── */}
       <div className="px-[10%] -mt-20 relative z-10">
-        <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex gap-6 items-end">
           <div
-            className="relative w-32 h-32 rounded-2xl overflow-hidden bg-bg-card border-4 border-bg shadow-xl shrink-0 cursor-pointer group"
+            className="relative w-36 h-36 shrink-0 rounded-full overflow-hidden bg-bg-card ring-4 ring-bg shadow-2xl cursor-pointer group"
             onClick={() => avatarInputRef.current?.click()}
           >
             {avatarUrl ? (
-              <img
-                src={avatarUrl}
-                alt="avatar"
-                className="w-full h-full object-cover"
-              />
+              <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-white/10 text-white text-[2.5rem] font-bold">
                 {(user?.display_name || user?.email || "A")[0]?.toUpperCase()}
               </div>
             )}
-            <div className="absolute inset-0 bg-black/45 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-              <span className="text-white text-[12px] font-semibold">Edit</span>
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-full">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
             </div>
-            <input
-              ref={avatarInputRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={(e) => handleImageChange(e, "avatar")}
-            />
+            <input ref={avatarInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => handleImageChange(e, "avatar")} />
           </div>
 
-          <div className="flex-1 pt-2">
-            <h1 className="text-white text-[2rem] font-bold tracking-tight truncate max-w-xl">
+          <div className="flex-1 pb-1 min-w-0">
+            <span className="inline-flex items-center gap-1.5 bg-accent/10 border border-accent/20 text-accent text-[11px] font-semibold px-2.5 py-1 rounded-full mb-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
+              Admin
+            </span>
+            <h1 className="text-white text-[2.2rem] font-bold tracking-tight leading-none truncate">
               {user?.display_name || user?.email}
             </h1>
-            <p className="text-white/40 text-[14px] mt-1">Admin account</p>
+            <p className="text-white/40 text-[13px] mt-1.5">Platform administrator</p>
           </div>
         </div>
       </div>
 
-      <div className="px-[10%] mt-10">
-        <div className="flex flex-wrap items-center gap-1 border-b border-white/10">
+      {/* ── Tabs ── */}
+      <div className="px-[10%] mt-8">
+        <div className="flex items-center gap-0.5 border-b border-white/10">
           {tabs.map((tab) => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`px-4 py-3 text-[14px] font-medium transition-colors border-b-2 -mb-px ${
+              className={`px-5 py-3 text-[13px] font-medium transition-colors border-b-2 -mb-px ${
                 activeTab === tab.key
-                  ? "border-white text-white"
-                  : "border-transparent text-white/45 hover:text-white/70"
+                  ? "border-accent text-white"
+                  : "border-transparent text-white/40 hover:text-white/65"
               }`}
             >
               {tab.label}
-              {tab.count !== undefined && (
-                <span
-                  className={
-                    activeTab === tab.key ? "text-white/60" : "text-white/30"
-                  }
-                >
-                  {" "}
-                  {tab.count}
-                </span>
-              )}
             </button>
           ))}
         </div>
@@ -151,10 +136,12 @@ export default function ProfilePageAdmin() {
               timeRange={timeRange}
               onTimeRangeChange={setTimeRange}
               onViewOrders={() => setActiveTab("orders")}
+              onViewPayouts={() => setActiveTab("payouts")}
             />
           )}
           {activeTab === "revenue" && <RevenueDashboard />}
           {activeTab === "orders" && <OrdersDashboard />}
+          {activeTab === "payouts" && <PayoutsDashboard />}
           {activeTab === "users" && <UserGrid />}
           {activeTab === "artists" && <ArtistGrid />}
           {activeTab === "products" && <ProductGrid />}
@@ -164,60 +151,115 @@ export default function ProfilePageAdmin() {
   );
 }
 
-function AdminOverview({ timeRange, onTimeRangeChange, onViewOrders }) {
-  const revenuePoints = [
-    64, 64, 70, 69, 78, 75, 68, 68, 55, 54, 38, 34, 36, 44, 48, 53, 58, 65, 72,
-    66, 77, 74, 79, 75, 68,
-  ];
+function AdminOverview({ timeRange, onTimeRangeChange, onViewOrders, onViewPayouts }) {
+  const { getStatus } = useFulfillment();
+
+  const nowDate = new Date();
+  const cutoff = new Date(nowDate.getTime() - Number(timeRange) * 24 * 60 * 60 * 1000);
+
+  // Filter orders by selected time range
+  const filteredOrders = orders.filter((o) => new Date(o.created_at) >= cutoff);
+
+  const totalRevenue = filteredOrders.reduce((s, o) => s + o.total, 0);
+  const avgOrderValue = filteredOrders.length ? Math.round(totalRevenue / filteredOrders.length) : 0;
+  const ordersCount = filteredOrders.length;
+
+  // Artist revenue map (filtered)
+  const artistRevMap = {};
+  filteredOrders.forEach((order) => {
+    order.items.forEach((item) => {
+      if (!artistRevMap[item.artist_id]) artistRevMap[item.artist_id] = { sales: 0, revenue: 0 };
+      artistRevMap[item.artist_id].sales += item.quantity || 1;
+      artistRevMap[item.artist_id].revenue += item.unit_price * (item.quantity || 1);
+    });
+  });
+  const activeArtistCount = Object.keys(artistRevMap).length;
+
+  const topArtists = artists
+    .map((a) => ({
+      name: a.name,
+      image: a.banner_url,
+      sales: artistRevMap[a._id]?.sales ?? 0,
+      revenueNum: artistRevMap[a._id]?.revenue ?? 0,
+      positive: (artistRevMap[a._id]?.revenue ?? 0) > 0,
+    }))
+    .filter((a) => a.sales > 0)
+    .sort((a, b) => b.revenueNum - a.revenueNum)
+    .slice(0, 3);
+
+  // Order mix (filtered)
+  let digitalRev = 0, merchRev = 0, bundleRev = 0;
+  filteredOrders.forEach((order) => {
+    order.items.forEach((item) => {
+      const p = products.find((p) => p._id === item.product_id);
+      const rev = item.unit_price * (item.quantity || 1);
+      if (p?.type === "merch") merchRev += rev;
+      else if (p?.type === "single" || p?.type === "album") digitalRev += rev;
+      else bundleRev += rev;
+    });
+  });
+  const totalMix = digitalRev + merchRev + bundleRev || 1;
+  const digitalPct = Math.round((digitalRev / totalMix) * 100);
+  const merchPct = Math.round((merchRev / totalMix) * 100);
+  const bundlePct = 100 - digitalPct - merchPct;
+
+  // Revenue chart (filtered, bucketed by time range)
+  const chartLength = 25;
+  const rangeMs = nowDate - cutoff || 1;
+  const windowMs = rangeMs / chartLength;
+  const revenuePoints = Array.from({ length: chartLength }, (_, i) => {
+    const t = i / (chartLength - 1);
+    const pointDate = new Date(cutoff.getTime() + t * rangeMs);
+    return filteredOrders
+      .filter((o) => Math.abs(new Date(o.created_at) - pointDate) < windowMs)
+      .reduce((s, o) => s + o.total, 0);
+  });
+  const maxRev = Math.max(...revenuePoints, 1);
   const chartPoints = revenuePoints
-    .map(
-      (value, index) =>
-        `${(index / (revenuePoints.length - 1)) * 100},${100 - value}`,
-    )
+    .map((v, i) => `${(i / (chartLength - 1)) * 100},${100 - Math.round((v / maxRev) * 72 + 8)}`)
     .join(" ");
   const chartArea = `0,100 ${chartPoints} 100,100`;
-  const topArtists = [
-    {
-      name: "BABYMONSTER",
-      sales: 213,
-      revenue: "48,210",
-      change: "+22%",
-      image: artists[0]?.banner_url,
-      positive: true,
-    },
-    {
-      name: "Anyma",
-      sales: 178,
-      revenue: "41,880",
-      change: "+11%",
-      image: artists[1]?.banner_url,
-      positive: true,
-    },
-    {
-      name: "aespa",
-      sales: 156,
-      revenue: "33,940",
-      change: "-4%",
-      image: artists[2]?.banner_url,
-      positive: false,
-    },
-  ];
-  const latestOrders = getOrderRows()
+
+  // Platform-specific metrics
+  const platformFeeEarned = Math.round(totalRevenue * PLATFORM_FEE_RATE);
+  const totalPendingPayout = artists.reduce((s, a) => s + (a.payout_balance ?? 0), 0);
+  const getDerivedStatus = (order) => {
+    const statuses = order.items.map((item) =>
+      getStatus(order._id, item.product_id, item.fulfillment_status)
+    );
+    const allDone = statuses.every((s) => s === "delivered" || s === "digital_delivered");
+    const anyShipped = statuses.some((s) => s === "shipped" || s === "delivered" || s === "digital_delivered");
+    const allPending = statuses.every((s) => s === "pending" || s === "processing");
+    if (allDone) return "completed";
+    if (allPending) return "pending";
+    if (anyShipped) return "partially_shipped";
+    return "pending";
+  };
+
+  const completedOrders = filteredOrders.filter((o) => getDerivedStatus(o) === "completed").length;
+  const partialOrders = filteredOrders.filter((o) => getDerivedStatus(o) === "partially_shipped").length;
+  const fulfillmentRate = filteredOrders.length ? Math.round((completedOrders / filteredOrders.length) * 100) : 0;
+
+  // Payout queue — artists with pending balance
+  const payoutQueue = artists
+    .filter((a) => (a.payout_balance ?? 0) > 0)
+    .sort((a, b) => b.payout_balance - a.payout_balance);
+
+  const latestOrders = getOrderRows(filteredOrders)
     .sort((a, b) => b.createdAt - a.createdAt)
     .slice(0, 3);
 
   return (
-    <section className="rounded-[10px] border border-white/10 bg-[#141416] text-white font-['Noto_Sans_Thai','TikTok_Sans',sans-serif] p-4 -mx-2">
-      <div className="flex items-start justify-between gap-4 mb-3">
+    <section className="text-white space-y-3">
+      <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-[22px] leading-tight font-extrabold text-white">
-            WELCOME BACK
-          </h2>
+          <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Platform</p>
+          <h2 className="text-[20px] font-bold text-white mt-0.5">Overview</h2>
         </div>
         <select
           value={timeRange}
           onChange={(e) => onTimeRangeChange(e.target.value)}
-          className="h-9 rounded-[6px] border border-white/10 bg-[#1f1f23] px-3 text-[13px] font-medium text-white/70 outline-none cursor-pointer hover:border-white/25 focus:border-brand-purple"
+          className="h-9 rounded-full border border-white/10 bg-bg-card px-4 text-[13px] font-medium text-white/60 outline-none cursor-pointer hover:border-white/20 transition-colors"
         >
           <option value="1">Last 1 day</option>
           <option value="7">Last 7 days</option>
@@ -225,275 +267,240 @@ function AdminOverview({ timeRange, onTimeRangeChange, onViewOrders }) {
         </select>
       </div>
 
-      <div className="grid grid-cols-4 gap-2 mb-3">
-        <OverviewMetric
-          active
-          label="TOTAL REVENUE"
-          value="฿842,310"
-          detail="+12.4%"
-        />
-        <OverviewMetric label="AVG ORDER VALUE" value="฿428" detail="+3.1%" />
-        <OverviewMetric label="ORDERS" value="1,968" detail="+8.0%" />
-        <OverviewMetric label="ACTIVE ARTISTS" value="142" detail="+6 new" />
+      {/* ── Platform metric cards ── */}
+      <div className="grid grid-cols-4 gap-3">
+        <div className="rounded-xl border border-t-2 border-t-accent border-white/10 bg-bg-card px-4 py-4">
+          <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Platform GMV</p>
+          <p className="text-[24px] font-bold leading-none tracking-tight text-white mt-2.5">฿{totalRevenue.toLocaleString()}</p>
+          <p className="mt-1.5 text-[11px] text-white/25">gross merchandise value</p>
+        </div>
+        <div className="rounded-xl border border-white/10 bg-bg-card px-4 py-4">
+          <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Fees Earned</p>
+          <p className="text-[24px] font-bold leading-none tracking-tight text-[#4ade80] mt-2.5">฿{platformFeeEarned.toLocaleString()}</p>
+          <p className="mt-1.5 text-[11px] text-white/25">10% of GMV</p>
+        </div>
+        <div
+          onClick={onViewPayouts}
+          className="rounded-xl border border-white/10 bg-bg-card px-4 py-4 cursor-pointer hover:border-white/20 transition-colors"
+        >
+          <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Pending Payouts</p>
+          <p className="text-[24px] font-bold leading-none tracking-tight text-brand-gold mt-2.5">฿{totalPendingPayout.toLocaleString()}</p>
+          <p className="mt-1.5 text-[11px] text-accent">manage payouts →</p>
+        </div>
+        <div className="rounded-xl border border-white/10 bg-bg-card px-4 py-4">
+          <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Fulfillment Rate</p>
+          <p className="text-[24px] font-bold leading-none tracking-tight text-white mt-2.5">{fulfillmentRate}%</p>
+          <p className="mt-1.5 text-[11px] text-white/25">{completedOrders}/{filteredOrders.length} completed</p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-[1.5fr_1fr] gap-3 mb-3">
-        <div className="rounded-[8px] border border-white/10 bg-[#1c1c1e] p-5">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-[18px] font-extrabold text-white">
-              Revenue · {timeRange} {timeRange === "1" ? "day" : "days"}
-            </h3>
-            <span className="text-[16px] font-medium text-white/60">THB</span>
-          </div>
-          <div className="relative h-[150px]">
-            <div className="absolute inset-0 flex flex-col justify-between text-[9px] text-white/25">
-              <span>85</span>
-              <span>63</span>
-              <span>41</span>
-              <span>19</span>
+      {/* ── GMV Chart + Order status ── */}
+      <div className="grid grid-cols-[1.6fr_1fr] gap-3">
+        <div className="rounded-2xl border border-white/10 bg-bg-card p-5">
+          <div className="flex items-center justify-between mb-5">
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Platform GMV</p>
+              <h3 className="text-[15px] font-semibold text-white mt-0.5">Last {timeRange} {timeRange === "1" ? "day" : "days"} — all artists</h3>
             </div>
-            <svg
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
-              className="absolute inset-x-4 inset-y-0 h-full w-[calc(100%-1rem)]"
-              aria-hidden="true"
-            >
+            <span className="text-[11px] font-medium text-white/25 bg-white/[0.05] border border-white/10 px-2.5 py-1 rounded-full">THB</span>
+          </div>
+          <div className="relative h-[130px]">
+            <div className="absolute inset-y-0 left-0 flex flex-col justify-between text-[9px] text-white/20 pointer-events-none w-8">
+              <span>{Math.ceil(Math.max(...revenuePoints, 1))}</span>
+              <span>{Math.ceil(Math.max(...revenuePoints, 1) * 0.5)}</span>
+              <span>0</span>
+            </div>
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-y-0 left-8 right-0 h-full w-[calc(100%-2rem)]" aria-hidden="true">
               <defs>
-                <linearGradient
-                  id="adminRevenueFill"
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2="1"
-                >
-                  <stop offset="0%" stopColor="#00d9ff" stopOpacity="0.34" />
-                  <stop offset="100%" stopColor="#9d6dff" stopOpacity="0.08" />
+                <linearGradient id="adminRevFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#fc3c44" stopOpacity="0.25" />
+                  <stop offset="100%" stopColor="#fc3c44" stopOpacity="0" />
                 </linearGradient>
               </defs>
-              <line
-                x1="0"
-                x2="100"
-                y1="38"
-                y2="38"
-                stroke="rgba(255,255,255,0.18)"
-                strokeDasharray="1.4 1.4"
-              />
-              <line
-                x1="0"
-                x2="100"
-                y1="65"
-                y2="65"
-                stroke="rgba(255,255,255,0.13)"
-                strokeDasharray="1.4 1.4"
-              />
-              <line
-                x1="0"
-                x2="100"
-                y1="92"
-                y2="92"
-                stroke="rgba(255,255,255,0.1)"
-                strokeDasharray="1.4 1.4"
-              />
-              <polygon points={chartArea} fill="url(#adminRevenueFill)" />
-              <polyline
-                points={chartPoints}
-                fill="none"
-                stroke="#00d9ff"
-                strokeWidth="1.7"
-                vectorEffect="non-scaling-stroke"
-              />
+              {[25, 50, 75].map((y) => (
+                <line key={y} x1="0" x2="100" y1={y} y2={y} stroke="rgba(255,255,255,0.05)" strokeDasharray="2 3" />
+              ))}
+              <polygon points={chartArea} fill="url(#adminRevFill)" />
+              <polyline points={chartPoints} fill="none" stroke="#fc3c44" strokeWidth="2" vectorEffect="non-scaling-stroke" strokeLinejoin="round" strokeLinecap="round" />
             </svg>
           </div>
         </div>
 
-        <div className="rounded-[8px] border border-white/10 bg-[#1c1c1e] p-5">
-          <h3 className="text-[18px] font-extrabold text-white mb-4">
-            Order mix
-          </h3>
-          <div className="flex items-center justify-center gap-8">
-            <div className="h-[118px] w-[118px] rounded-full bg-[conic-gradient(#00d9ff_0_58%,#9d6dff_58%_90%,#ffd700_90%_100%)] grid place-items-center">
-              <div className="h-[58px] w-[58px] rounded-full bg-[#1c1c1e]" />
+        <div className="rounded-2xl border border-white/10 bg-bg-card p-5">
+          <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Fulfillment</p>
+          <h3 className="text-[15px] font-semibold text-white mt-0.5 mb-5">Order status</h3>
+          {filteredOrders.length === 0 ? (
+            <p className="text-[13px] text-white/25 mt-4">No orders in this period.</p>
+          ) : (
+            <div className="space-y-3">
+              {[
+                { label: "Completed", count: completedOrders, color: "#4ade80" },
+                { label: "Partial / Shipped", count: partialOrders, color: "#00d9ff" },
+                { label: "Other", count: filteredOrders.length - completedOrders - partialOrders, color: "#ffd700" },
+              ].map((s) => (
+                <div key={s.label}>
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center gap-1.5">
+                      <span className="h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: s.color }} />
+                      <span className="text-[11px] text-white/45">{s.label}</span>
+                    </div>
+                    <span className="text-[11px] font-semibold text-white">{s.count}</span>
+                  </div>
+                  <div className="h-[3px] rounded-full bg-white/[0.06] overflow-hidden">
+                    <div className="h-full rounded-full" style={{ width: `${Math.round((s.count / filteredOrders.length) * 100)}%`, backgroundColor: s.color }} />
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="space-y-2 text-[12px] text-white/75">
-              <OrderLegend color="#00d9ff" label="Digital" value="58%" />
-              <OrderLegend color="#9d6dff" label="Merch" value="32%" />
-              <OrderLegend color="#ffd700" label="Bundle" value="10%" />
-            </div>
-          </div>
+          )}
         </div>
       </div>
 
+      {/* ── Artist leaderboard + Payout queue ── */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="rounded-[8px] border border-white/10 bg-[#1c1c1e] p-4">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-[18px] font-extrabold text-white">
-              Top artists
-            </h3>
-            <Link
-              to="/artist"
-              className="text-[11px] font-bold text-white/70 no-underline hover:text-white"
-            >
-              View all →
-            </Link>
-          </div>
-          <div className="grid grid-cols-[1fr_56px_76px_48px] gap-3 border-b border-dashed border-white/15 pb-2 text-[8px] font-bold uppercase text-white/45">
-            <span>Artist</span>
-            <span>Sales</span>
-            <span>Revenue</span>
-            <span className="text-right">%</span>
-          </div>
-          {topArtists.map((artist) => (
-            <div
-              key={artist.name}
-              className="grid grid-cols-[1fr_56px_76px_48px] items-center gap-3 border-b border-dashed border-white/10 py-3 text-[11px] text-white/75 last:border-b-0"
-            >
-              <div className="flex items-center gap-2 min-w-0">
-                <img
-                  src={artist.image}
-                  alt=""
-                  className="h-6 w-6 rounded-full object-cover bg-white/10"
-                />
-                <span className="truncate font-extrabold text-white">
-                  {artist.name}
-                </span>
-              </div>
-              <span>{artist.sales}</span>
-              <span>{artist.revenue}</span>
-              <span
-                className={`text-right font-bold ${artist.positive ? "text-[#00956e]" : "text-[#ff3b57]"}`}
-              >
-                {artist.change}
-              </span>
+        <div className="rounded-2xl border border-white/10 bg-bg-card p-5">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Leaderboard</p>
+              <h3 className="text-[15px] font-semibold text-white mt-0.5">Top artists</h3>
             </div>
-          ))}
+            <Link to="/artist" className="text-[11px] text-white/30 no-underline hover:text-white/65 transition-colors">View all →</Link>
+          </div>
+          {topArtists.length === 0 ? (
+            <p className="text-[13px] text-white/25">No sales in this period.</p>
+          ) : (
+            <div className="divide-y divide-white/[0.05]">
+              {topArtists.map((artist, i) => (
+                <div key={artist.name} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
+                  <span className={`text-[10px] w-3 shrink-0 font-bold ${i === 0 ? "text-brand-gold" : "text-white/20"}`}>{i + 1}</span>
+                  <img src={artist.image} alt="" className={`h-8 w-8 rounded-full object-cover shrink-0 ${i === 0 ? "ring-1 ring-brand-gold/40" : ""}`} />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[13px] font-medium text-white/80 truncate">{artist.name}</p>
+                    <p className="text-[10px] text-white/30">{artist.sales} item{artist.sales !== 1 ? "s" : ""} sold</p>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <p className="text-[13px] font-semibold text-white tabular-nums">฿{artist.revenueNum.toLocaleString()}</p>
+                    <p className="text-[10px] text-[#4ade80]">+฿{Math.round(artist.revenueNum * PLATFORM_FEE_RATE).toLocaleString()} fee</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
-        <div className="rounded-[8px] border border-white/10 bg-[#1c1c1e] p-4">
-          <h3 className="text-[18px] font-extrabold text-white mb-3">
-            Latest Orders
-          </h3>
-          <div className="grid grid-cols-[90px_1fr_86px] gap-3 border-b border-dashed border-white/15 pb-2 text-[8px] font-bold uppercase text-white/45">
-            <span>Order</span>
-            <span>Products</span>
-            <span className="text-right">Total</span>
+        <div className="rounded-2xl border border-white/10 bg-bg-card p-5">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Finance</p>
+              <h3 className="text-[15px] font-semibold text-white mt-0.5">Payout queue</h3>
+            </div>
+            <button type="button" onClick={onViewPayouts} className="text-[11px] text-white/30 hover:text-white/65 transition-colors">Manage →</button>
           </div>
-          <div>
-            {latestOrders.map((order) => (
-              <div
-                key={order.id}
-                className="grid grid-cols-[90px_1fr_86px] items-center gap-3 border-b border-dashed border-white/15 py-3 text-[11px] text-white/75 last:border-b-0"
-              >
-                <span className="font-extrabold text-white">{order.id}</span>
-                <div className="min-w-0">
-                  <p className="truncate font-bold text-white/85">
-                    {order.products}
-                  </p>
-                  <p className="mt-0.5 truncate text-[10px] text-white/40">
-                    {order.status} · {order.date}
-                  </p>
+          {payoutQueue.length === 0 ? (
+            <div className="py-6 text-center">
+              <p className="text-[13px] text-white/25">All payouts cleared</p>
+              <p className="text-[11px] text-[#4ade80] mt-1">No pending balances</p>
+            </div>
+          ) : (
+            <div className="divide-y divide-white/[0.05]">
+              {payoutQueue.map((a) => (
+                <div key={a._id} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
+                  <img src={a.banner_url} alt="" className="h-8 w-8 rounded-full object-cover shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[13px] font-medium text-white/80 truncate">{a.name}</p>
+                    <p className="text-[10px] text-white/30 capitalize">{a.payout_method?.type ?? "—"} · {a.payout_method?.account_info?.email ?? ""}</p>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <p className="text-[13px] font-bold text-brand-gold tabular-nums">฿{a.payout_balance.toLocaleString()}</p>
+                    <p className="text-[10px] text-white/30">pending</p>
+                  </div>
                 </div>
-                <span className="text-right font-extrabold text-white">
-                  THB {order.total.toLocaleString()}
-                </span>
-              </div>
-            ))}
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── Latest orders ── */}
+      <div className="rounded-2xl border border-white/10 bg-bg-card p-5">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Activity</p>
+            <h3 className="text-[15px] font-semibold text-white mt-0.5">Latest orders</h3>
           </div>
-          <button
-            type="button"
-            onClick={onViewOrders}
-            className="mt-4 mx-auto block h-8 w-[168px] rounded-[8px] bg-white text-[#080817] text-[12px] font-extrabold cursor-pointer transition hover:bg-brand-cyan hover:text-[#080817]"
-          >
-            View all orders
-          </button>
+          <button type="button" onClick={onViewOrders} className="text-[11px] text-white/30 hover:text-white/65 transition-colors">See all →</button>
+        </div>
+        <div className="space-y-1">
+          {latestOrders.length === 0 ? (
+            <p className="text-[13px] text-white/25">No orders in this period.</p>
+          ) : latestOrders.map((order) => (
+            <div key={order.id} className="flex items-center justify-between py-2.5 px-3 rounded-xl hover:bg-white/[0.03] transition-colors">
+              <div className="min-w-0 mr-4">
+                <p className="text-[12px] font-medium text-white/75 truncate">{order.products}</p>
+                <p className="text-[10px] text-white/30 mt-0.5">{order.id} · {order.date}</p>
+              </div>
+              <p className="text-[13px] font-semibold text-white tabular-nums shrink-0">฿{order.total.toLocaleString()}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-function OverviewMetric({ label, value, detail, active = false }) {
-  return (
-    <div
-      className={`min-h-[102px] rounded-[8px] border p-4 ${
-        active ? "border-white/10 bg-[#789199]" : "border-white/10 bg-[#1c1c1e]"
-      }`}
-    >
-      <p
-        className={`text-[12px] uppercase tracking-[0] ${active ? "text-[#111827]/75" : "text-white/55"}`}
-      >
-        {label}
-      </p>
-      <p
-        className={`mt-1 text-[26px] leading-tight font-extrabold ${active ? "text-[#080817]" : "text-white"}`}
-      >
-        {value}
-      </p>
-      <p className="mt-1 text-[12px] font-semibold text-[#00956e]">{detail}</p>
-    </div>
-  );
-}
-
-function OrderLegend({ color, label, value }) {
-  return (
-    <div className="flex items-center gap-1.5">
-      <span
-        className="h-2.5 w-2.5 rounded-full"
-        style={{ backgroundColor: color }}
-      />
-      <span>
-        {label} <b>{value}</b>
-      </span>
-    </div>
-  );
-}
-
 function RevenueDashboard() {
+
+  const grossRevenue = orders.reduce((s, o) => s + o.total, 0);
+  const platformFees = Math.round(grossRevenue * PLATFORM_FEE_RATE);
+  const artistPayout = grossRevenue - platformFees;
+
+  let digitalOrders = new Set(), digitalRevenue = 0;
+  let merchOrders = new Set(), merchRevenue = 0;
+  let bundleOrders = new Set(), bundleRevenue = 0;
+  orders.forEach((order) => {
+    order.items.forEach((item) => {
+      const p = products.find((p) => p._id === item.product_id);
+      const rev = item.unit_price * (item.quantity || 1);
+      if (p?.type === "merch") { merchRevenue += rev; merchOrders.add(order._id); }
+      else if (p?.type === "single" || p?.type === "album") { digitalRevenue += rev; digitalOrders.add(order._id); }
+      else { bundleRevenue += rev; bundleOrders.add(order._id); }
+    });
+  });
+
   const rows = [
-    ["Digital downloads", "1,142 orders", "฿489,620", "+14.2%"],
-    ["Merchandise", "612 orders", "฿269,540", "+9.8%"],
-    ["Bundles", "214 orders", "฿83,150", "+4.1%"],
+    ["Digital downloads", `${digitalOrders.size} orders`, `฿${digitalRevenue.toLocaleString()}`, digitalRevenue > 0 ? "✓" : "—"],
+    ["Merchandise", `${merchOrders.size} orders`, `฿${merchRevenue.toLocaleString()}`, merchRevenue > 0 ? "✓" : "—"],
+    ...(bundleRevenue > 0 ? [["Bundles", `${bundleOrders.size} orders`, `฿${bundleRevenue.toLocaleString()}`, "✓"]] : []),
   ];
 
   return (
-    <section className="rounded-[10px] border border-white/10 bg-[#141416] p-5 text-white">
-      <div className="mb-5 flex items-center justify-between">
+    <section className="text-white space-y-3">
+      <div className="flex items-center justify-between">
         <div>
-          <p className="text-[12px] uppercase text-white/45">Finance</p>
-          <h2 className="text-[24px] font-extrabold">Revenue</h2>
+          <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Finance</p>
+          <h2 className="text-[20px] font-bold text-white mt-0.5">Revenue</h2>
         </div>
-        <button className="h-9 rounded-[7px] border border-white/10 bg-white/5 px-4 text-[13px] font-bold text-white/75 cursor-pointer hover:bg-white/10">
+        <button className="rounded-full border border-white/10 bg-bg-card px-4 py-2 text-[13px] font-medium text-white/60 hover:bg-white/[0.05] transition-colors">
           Export report
         </button>
       </div>
       <div className="grid grid-cols-3 gap-3">
-        <AdminPanelCard
-          label="Gross revenue"
-          value="฿842,310"
-          detail="+12.4%"
-        />
-        <AdminPanelCard label="Platform fees" value="฿84,231" detail="10.0%" />
-        <AdminPanelCard
-          label="Artist payout"
-          value="฿758,079"
-          detail="Queued"
-        />
+        <AdminPanelCard label="Gross revenue" value={`฿${grossRevenue.toLocaleString()}`} detail="customer paid" />
+        <AdminPanelCard label="Platform fees" value={`฿${platformFees.toLocaleString()}`} detail="10% rate" />
+        <AdminPanelCard label="Artist payout" value={`฿${artistPayout.toLocaleString()}`} detail="net to artists" />
       </div>
-      <div className="mt-4 rounded-[8px] border border-white/10 bg-[#1c1c1e] p-4">
-        <div className="grid grid-cols-[1fr_130px_120px_80px] gap-3 border-b border-white/10 pb-2 text-[11px] uppercase text-white/45">
-          <span>Channel</span>
-          <span>Volume</span>
-          <span>Revenue</span>
-          <span className="text-right">Trend</span>
+      <div className="rounded-2xl border border-white/10 bg-bg-card p-5">
+        <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold mb-1">Breakdown</p>
+        <h3 className="text-[15px] font-semibold text-white mb-4">By channel</h3>
+        <div className="grid grid-cols-[1fr_130px_120px_60px] gap-3 pb-3 border-b border-white/[0.06] text-[10px] uppercase tracking-widest text-white/35 font-semibold">
+          <span>Channel</span><span>Volume</span><span>Revenue</span><span className="text-right">Status</span>
         </div>
         {rows.map(([channel, volume, revenue, trend]) => (
-          <div
-            key={channel}
-            className="grid grid-cols-[1fr_130px_120px_80px] gap-3 border-b border-white/10 py-3 text-[13px] text-white/75 last:border-b-0"
-          >
-            <span className="font-bold text-white">{channel}</span>
+          <div key={channel} className="grid grid-cols-[1fr_130px_120px_60px] gap-3 border-b border-white/[0.05] py-3 text-[13px] text-white/70 last:border-b-0">
+            <span className="font-semibold text-white">{channel}</span>
             <span>{volume}</span>
             <span>{revenue}</span>
-            <span className="text-right font-bold text-[#00d9ff]">{trend}</span>
+            <span className="text-right font-semibold text-[#4ade80]">{trend}</span>
           </div>
         ))}
       </div>
@@ -501,8 +508,8 @@ function RevenueDashboard() {
   );
 }
 
-function getOrderRows() {
-  return orders.map((order) => {
+function getOrderRows(orderList = orders) {
+  return orderList.map((order) => {
     const itemCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
     const productPreview = order.items
       .map((item) => item.title_snapshot)
@@ -528,102 +535,284 @@ function getOrderRows() {
   });
 }
 
+const ITEM_STATUS_STYLE = {
+  digital_delivered: { label: "Delivered",  color: "#4ade80" },
+  delivered:         { label: "Delivered",  color: "#4ade80" },
+  shipped:           { label: "Shipped",    color: "#00d9ff" },
+  pending:           { label: "Pending",    color: "#ffd700" },
+  processing:        { label: "Processing", color: "#fb923c" },
+  cancelled:         { label: "Cancelled",  color: "#fc3c44" },
+};
+
 function OrdersDashboard() {
-  const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
-  const platformFees = orders.reduce(
-    (sum, order) => sum + order.platform_fee,
-    0,
-  );
-  const activeOrders = orders.filter((order) =>
-    ["pending_payment", "paid", "partially_shipped"].includes(order.status),
+  const { getStatus } = useFulfillment();
+
+  const deriveOrderStatus = (order) => {
+    const statuses = order.items.map((item) =>
+      getStatus(order._id, item.product_id, item.fulfillment_status)
+    );
+    const allDone = statuses.every((s) => s === "delivered" || s === "digital_delivered");
+    const anyShipped = statuses.some((s) => s === "shipped" || s === "delivered" || s === "digital_delivered");
+    const allPending = statuses.every((s) => s === "pending" || s === "processing");
+    if (allDone) return "completed";
+    if (allPending) return "pending";
+    if (anyShipped) return "partially_shipped";
+    return "pending";
+  };
+  const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0);
+  const platformFees = Math.round(totalRevenue * 0.10);
+  const activeOrders = orders.filter((o) =>
+    ["pending", "partially_shipped"].includes(deriveOrderStatus(o)),
   ).length;
-  const rows = getOrderRows();
 
   return (
-    <section className="rounded-[10px] border border-white/10 bg-[#141416] p-5 text-white">
-      <div className="mb-5 flex items-center justify-between">
+    <section className="text-white space-y-3">
+      <div className="flex items-center justify-between">
         <div>
-          <p className="text-[12px] uppercase text-white/45">
-            Order management
-          </p>
-          <h2 className="text-[24px] font-extrabold">Orders</h2>
+          <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Order management</p>
+          <h2 className="text-[20px] font-bold text-white mt-0.5">Orders</h2>
         </div>
-        <span className="rounded-full border border-[#ffd700]/30 bg-[#ffd700]/10 px-3 py-1 text-[12px] font-bold text-[#ffd700]">
-          {activeOrders} active
-        </span>
+        {activeOrders > 0 && (
+          <span className="rounded-full border border-brand-gold/30 bg-brand-gold/10 px-3 py-1 text-[12px] font-semibold text-brand-gold">
+            {activeOrders} active
+          </span>
+        )}
       </div>
       <div className="grid grid-cols-3 gap-3">
-        <AdminPanelCard
-          label="Total orders"
-          value={orders.length}
-          detail="All time"
-        />
-        <AdminPanelCard
-          label="Gross sales"
-          value={`THB ${totalRevenue.toLocaleString()}`}
-          detail="Customer paid"
-        />
-        <AdminPanelCard
-          label="Platform fees"
-          value={`THB ${platformFees.toLocaleString()}`}
-          detail="15% fee"
-        />
+        <AdminPanelCard label="Total orders" value={orders.length} detail="All time" />
+        <AdminPanelCard label="Gross sales" value={`฿${totalRevenue.toLocaleString()}`} detail="Customer paid" />
+        <AdminPanelCard label="Platform fees" value={`฿${platformFees.toLocaleString()}`} detail="10% fee" />
       </div>
-      <div className="mt-4 rounded-[8px] border border-white/10 bg-[#1c1c1e] p-4 overflow-x-auto">
-        <div className="min-w-[720px]">
-          <div className="grid grid-cols-[120px_1fr_70px_100px_130px_90px] gap-3 border-b border-white/10 pb-2 text-[11px] uppercase text-white/45">
-            <span>Order</span>
-            <span>Products</span>
-            <span>Items</span>
-            <span>Total</span>
-            <span>Status</span>
-            <span className="text-right">Date</span>
-          </div>
-          {rows.map((order) => (
-            <div
-              key={order.id}
-              className="grid grid-cols-[120px_1fr_70px_100px_130px_90px] gap-3 border-b border-white/10 py-3 text-[13px] text-white/75 last:border-b-0"
-            >
-              <span className="font-bold text-white">{order.id}</span>
-              <span className="truncate">{order.products}</span>
-              <span>{order.items}</span>
-              <span>THB {order.total.toLocaleString()}</span>
-              <span className="font-bold text-[#9d6dff]">{order.status}</span>
-              <span className="text-right">{order.date}</span>
-            </div>
-          ))}
+
+      <div className="rounded-2xl border border-white/10 bg-bg-card p-5">
+        <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold mb-1">Records</p>
+        <h3 className="text-[15px] font-semibold text-white mb-4">All orders</h3>
+        <div className="space-y-3">
+          {orders
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+            .map((order) => {
+              const buyer = users.find((u) => u._id === order.user_id);
+              const buyerName = buyer?.display_name || buyer?.username || order.user_id;
+              const date = new Date(order.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+              const hasUpdate = order.items.some((item) => getStatus(order._id, item.product_id, null) !== null);
+              const derivedStatus = deriveOrderStatus(order);
+              const statusColors = {
+                completed: { label: "Completed", color: "#4ade80" },
+                partially_shipped: { label: "Partially shipped", color: "#00d9ff" },
+                pending: { label: "Pending", color: "#ffd700" },
+              };
+              const orderStatusStyle = statusColors[derivedStatus] ?? statusColors.pending;
+
+              return (
+                <div key={order._id} className="rounded-xl border border-white/[0.07] bg-bg overflow-hidden">
+                  {/* Order header */}
+                  <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-full bg-white/[0.07] border border-white/10 flex items-center justify-center text-[11px] font-semibold text-white/45 shrink-0">
+                        {buyerName[0].toUpperCase()}
+                      </div>
+                      <div>
+                        <p className="text-[13px] font-semibold text-white">{buyerName}</p>
+                        <p className="text-[11px] text-white/30">{order._id} · {date}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span
+                        className="text-[11px] font-semibold px-2.5 py-1 rounded-full"
+                        style={{ color: orderStatusStyle.color, backgroundColor: `${orderStatusStyle.color}15` }}
+                      >
+                        {orderStatusStyle.label}
+                      </span>
+                      {hasUpdate && (
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#00d9ff]/10 border border-[#00d9ff]/30 text-[#00d9ff]">
+                          Artist updated
+                        </span>
+                      )}
+                      <p className="text-[14px] font-bold text-white tabular-nums">฿{order.total.toLocaleString()}</p>
+                    </div>
+                  </div>
+                  {/* Items */}
+                  <div className="divide-y divide-white/[0.04]">
+                    {order.items.map((item) => {
+                      const effectiveStatus = getStatus(order._id, item.product_id, item.fulfillment_status);
+                      const style = ITEM_STATUS_STYLE[effectiveStatus] ?? { label: effectiveStatus, color: "#fff" };
+                      const isUpdated = getStatus(order._id, item.product_id, null) !== null;
+                      const p = products.find((p) => p._id === item.product_id);
+                      return (
+                        <div key={item.product_id} className="flex items-center justify-between px-4 py-2.5">
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            {p?.cover_url && <img src={p.cover_url} alt="" className="w-7 h-7 rounded object-cover shrink-0" />}
+                            <div className="min-w-0">
+                              <p className="text-[12px] text-white/70 truncate">{item.title_snapshot}</p>
+                              <p className="text-[10px] text-white/30 capitalize">{p?.type ?? "—"}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3 shrink-0 ml-3">
+                            <span
+                              className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${isUpdated ? "ring-1" : ""}`}
+                              style={{ color: style.color, backgroundColor: `${style.color}15`, ringColor: style.color }}
+                            >
+                              {style.label}
+                            </span>
+                            <p className="text-[12px] font-semibold text-white/60 tabular-nums w-14 text-right">
+                              ฿{(item.unit_price * (item.quantity || 1)).toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
     </section>
   );
 }
+function PayoutsDashboard() {
+
+  const [paid, setPaid] = useState([]);
+
+  const payoutQueue = artists
+    .map((a) => {
+      const artistOrders = orders.filter((o) =>
+        o.items.some((i) => i.artist_id === a._id)
+      );
+      const grossRevenue = artistOrders.reduce((s, o) =>
+        s + o.items.filter((i) => i.artist_id === a._id)
+          .reduce((si, i) => si + i.unit_price * (i.quantity || 1), 0), 0);
+      return {
+        ...a,
+        grossRevenue,
+        feeDeducted: Math.round(grossRevenue * PLATFORM_FEE_RATE),
+        netEarned: Math.round(grossRevenue * (1 - PLATFORM_FEE_RATE)),
+        orderCount: artistOrders.length,
+      };
+    })
+    .filter((a) => a.orderCount > 0)
+    .sort((a, b) => b.payout_balance - a.payout_balance);
+
+  const totalPending = payoutQueue.reduce((s, a) => s + (a.payout_balance ?? 0), 0);
+  const totalPaid = paid.reduce((s, id) => {
+    const a = payoutQueue.find((x) => x._id === id);
+    return s + (a?.payout_balance ?? 0);
+  }, 0);
+
+  return (
+    <section className="text-white space-y-4">
+      <div>
+        <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Finance</p>
+        <h2 className="text-[20px] font-bold text-white mt-0.5">Artist Payouts</h2>
+      </div>
+
+      <div className="grid grid-cols-3 gap-3">
+        <AdminPanelCard label="Total Pending" value={`฿${totalPending.toLocaleString()}`} detail="awaiting disbursement" />
+        <AdminPanelCard label="Artists with Balance" value={payoutQueue.filter(a => (a.payout_balance ?? 0) > 0).length} detail={`of ${payoutQueue.length} active`} />
+        <AdminPanelCard label="Platform Rate" value="10%" detail="fee per transaction" />
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-bg-card overflow-hidden">
+        <div className="grid grid-cols-[1fr_100px_100px_100px_110px_120px] gap-4 px-5 py-3 border-b border-white/[0.06] text-[10px] uppercase tracking-widest text-white/35 font-semibold">
+          <span>Artist</span>
+          <span className="text-right">Gross</span>
+          <span className="text-right">Fee (10%)</span>
+          <span className="text-right">Net</span>
+          <span className="text-right">Balance</span>
+          <span className="text-right">Action</span>
+        </div>
+
+        {payoutQueue.length === 0 ? (
+          <div className="px-5 py-10 text-center">
+            <p className="text-[14px] text-white/30">No artist payouts to process.</p>
+          </div>
+        ) : payoutQueue.map((a) => {
+          const isPaid = paid.includes(a._id);
+          const hasPending = (a.payout_balance ?? 0) > 0;
+          return (
+            <div key={a._id} className="grid grid-cols-[1fr_100px_100px_100px_110px_120px] gap-4 items-center px-5 py-4 border-b border-white/[0.04] last:border-b-0 hover:bg-white/[0.02] transition-colors">
+              <div className="flex items-center gap-3 min-w-0">
+                <img src={a.banner_url} alt="" className="h-8 w-8 rounded-full object-cover shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-[13px] font-medium text-white/80 truncate">{a.name}</p>
+                  <p className="text-[10px] text-white/30">{a.orderCount} order{a.orderCount !== 1 ? "s" : ""} · {a.payout_method?.type ?? "—"}</p>
+                </div>
+              </div>
+              <p className="text-[13px] text-white/60 tabular-nums text-right">฿{a.grossRevenue.toLocaleString()}</p>
+              <p className="text-[13px] text-[#4ade80] tabular-nums text-right">฿{a.feeDeducted.toLocaleString()}</p>
+              <p className="text-[13px] text-white tabular-nums text-right font-semibold">฿{a.netEarned.toLocaleString()}</p>
+              <p className={`text-[13px] tabular-nums text-right font-bold ${hasPending ? "text-brand-gold" : "text-white/25"}`}>
+                ฿{(a.payout_balance ?? 0).toLocaleString()}
+              </p>
+              <div className="flex justify-end">
+                {isPaid ? (
+                  <span className="text-[11px] font-semibold text-[#4ade80] flex items-center gap-1">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    Paid
+                  </span>
+                ) : hasPending ? (
+                  <button
+                    type="button"
+                    onClick={() => setPaid((p) => [...p, a._id])}
+                    className="rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold px-3 py-1.5 text-[11px] font-semibold hover:bg-brand-gold/20 transition-colors"
+                  >
+                    Pay ฿{(a.payout_balance ?? 0).toLocaleString()}
+                  </button>
+                ) : (
+                  <span className="text-[11px] text-white/25">No balance</span>
+                )}
+              </div>
+            </div>
+          );
+        })}
+
+        {totalPending > 0 && (
+          <div className="px-5 py-4 border-t border-white/10 flex items-center justify-between bg-white/[0.02]">
+            <p className="text-[13px] text-white/50">
+              {payoutQueue.filter(a => (a.payout_balance ?? 0) > 0 && !paid.includes(a._id)).length} artists pending · ฿{(totalPending - totalPaid).toLocaleString()} remaining
+            </p>
+            <button
+              type="button"
+              onClick={() => setPaid(payoutQueue.filter(a => (a.payout_balance ?? 0) > 0).map(a => a._id))}
+              className="rounded-full bg-brand-gold px-5 py-2 text-[13px] font-bold text-[#080817] hover:bg-yellow-300 transition-colors"
+            >
+              Pay all artists
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 function AdminPanelCard({ label, value, detail }) {
   return (
-    <div className="rounded-[8px] border border-white/10 bg-[#1c1c1e] p-4">
-      <p className="text-[12px] uppercase text-white/45">{label}</p>
-      <p className="mt-1 text-[24px] font-extrabold text-white">{value}</p>
-      <p className="mt-1 text-[12px] font-bold text-[#00d9ff]">{detail}</p>
+    <div className="rounded-xl border border-white/10 bg-bg-card px-4 py-4">
+      <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">{label}</p>
+      <p className="mt-2.5 text-[24px] font-bold leading-none tracking-tight text-white">{value}</p>
+      <p className="mt-1.5 text-[11px] text-white/25">{detail}</p>
     </div>
   );
 }
 
 function UserGrid() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="space-y-2">
       {users.map((item) => (
-        <div
-          key={item._id}
-          className="rounded-lg bg-bg-card border border-white/10 p-4"
-        >
-          <p className="text-white/85 text-[14px] font-semibold truncate">
-            {item.display_name || item.username}
-          </p>
-          <p className="text-white/40 text-[12px] truncate mt-1">
-            {item.email}
-          </p>
-          <p className="text-white/35 text-[11px] uppercase tracking-[0.08em] mt-3">
-            {item.user_type} · {item.status}
-          </p>
+        <div key={item._id} className="rounded-xl bg-bg-card border border-white/10 px-5 py-4 flex items-center justify-between hover:border-white/20 transition-colors">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-9 h-9 rounded-full bg-white/[0.07] border border-white/10 flex items-center justify-center text-[13px] font-semibold text-white/50 shrink-0">
+              {(item.display_name || item.username || "?")[0].toUpperCase()}
+            </div>
+            <div className="min-w-0">
+              <p className="text-[14px] font-medium text-white truncate">{item.display_name || item.username}</p>
+              <p className="text-[12px] text-white/35 truncate">{item.email}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 shrink-0 ml-4">
+            <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/10 text-white/50 capitalize">{item.user_type}</span>
+            <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${item.status === "active" ? "bg-[#4ade80]/10 border border-[#4ade80]/20 text-[#4ade80]" : "bg-white/[0.05] border border-white/10 text-white/35"}`}>{item.status}</span>
+          </div>
         </div>
       ))}
     </div>
@@ -690,44 +879,33 @@ function ProductGrid() {
   ];
 
   return (
-    <section className="rounded-[10px] border border-white/10 bg-[#141416] p-5">
-      <div className="mb-5 flex items-center justify-between gap-4">
+    <section className="text-white space-y-4">
+      <div className="flex items-center justify-between">
         <div>
-          <p className="text-[12px] uppercase text-white/45">Catalog admin</p>
-          <h2 className="text-[24px] font-extrabold text-white">Products</h2>
+          <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Catalog admin</p>
+          <h2 className="text-[20px] font-bold text-white mt-0.5">Products</h2>
         </div>
-        <div className="flex rounded-[8px] border border-white/10 bg-black/20 p-1">
+        <div className="flex gap-1 p-1 bg-white/[0.04] rounded-xl border border-white/[0.06]">
           {productTabs.map((tab) => (
             <button
               key={tab.key}
               onClick={() => setProductTab(tab.key)}
-              className={`h-9 rounded-[6px] px-4 text-[13px] font-bold cursor-pointer transition ${
+              className={`px-4 py-2 text-[13px] font-medium rounded-lg transition-all ${
                 productTab === tab.key
-                  ? "bg-white text-[#080817]"
-                  : "text-white/55 hover:bg-white/10 hover:text-white"
+                  ? "bg-white/10 text-white border border-white/[0.08]"
+                  : "text-white/40 hover:text-white/65"
               }`}
             >
-              {tab.label}{" "}
-              <span
-                className={
-                  productTab === tab.key ? "text-[#080817]/60" : "text-white/35"
-                }
-              >
-                {tab.count}
-              </span>
+              {tab.label} <span className="text-white/30">{tab.count}</span>
             </button>
           ))}
         </div>
       </div>
 
       {productTab === "moderation" && visibleProducts.length === 0 ? (
-        <div className="rounded-[8px] border border-white/10 bg-[#1c1c1e] p-8 text-center">
-          <p className="text-[18px] font-extrabold text-white">
-            Moderation queue is clear
-          </p>
-          <p className="mt-2 text-[13px] text-white/45">
-            Drafts, hidden items, and deleted products will appear here.
-          </p>
+        <div className="rounded-xl border border-white/10 bg-bg-card p-8 text-center">
+          <p className="text-[16px] font-semibold text-white">Moderation queue is clear</p>
+          <p className="mt-2 text-[13px] text-white/40">Drafts, hidden items, and deleted products will appear here.</p>
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-6">
