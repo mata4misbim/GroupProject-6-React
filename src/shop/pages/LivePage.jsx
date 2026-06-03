@@ -38,15 +38,28 @@ export default function LivePage() {
   const handleVolumeChange = (e) => {
     const val = Number(e.target.value);
     setVolume(val);
-    if (videoRef.current) videoRef.current.volume = val;
-    if (val > 0) setMuted(false);
+
+    if (val === 0) {
+      setMuted(true);
+    } else {
+      setMuted(false);
+    }
   };
 
   const toggleMute = () => {
-    const next = !muted;
-    setMuted(next);
-    if (videoRef.current) videoRef.current.muted = next;
+    if (muted && volume === 0) {
+      setVolume(0.8);
+    }
+
+    setMuted((current) => !current);
   };
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+
+    videoRef.current.volume = volume;
+    videoRef.current.muted = muted;
+  }, [muted, volume]);
 
   // ── ตั้งค่าวิดีโอเมื่อโหลดเสร็จ ──
   useEffect(() => {
@@ -140,7 +153,7 @@ export default function LivePage() {
               ref={videoRef}
               src={live.video_url}
               autoPlay
-              muted
+              muted={muted}
               playsInline
               loop
               className="w-full h-full object-cover"
