@@ -4,6 +4,7 @@ import logoB from "../../assets/landing-page/logob.png";
 
 const initialForm = {
   email: "",
+  username: "",
   firstName: "",
   lastName: "",
   password: "",
@@ -11,10 +12,10 @@ const initialForm = {
   acceptedTerms: false,
 };
 
-export default function FanRegister({ onGoLogIn, onGoArtist, onRegisterSuccess }) {
+export default function FanRegister({ onGoLogIn, onGoArtist, onRegister }) {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const updateField = (field, value) => {
     setForm((current) => ({ ...current, [field]: value }));
@@ -26,11 +27,17 @@ export default function FanRegister({ onGoLogIn, onGoArtist, onRegisterSuccess }
   const validate = () => {
     const nextErrors = {};
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const usernamePattern = /^[a-zA-Z0-9_]{3,20}$/;
 
     if (!form.email.trim()) {
       nextErrors.email = "Email is required.";
     } else if (!emailPattern.test(form.email.trim())) {
       nextErrors.email = "Enter a valid email address.";
+    }
+    if (!form.username.trim()) {
+      nextErrors.username = "Username is required.";
+    } else if (!usernamePattern.test(form.username.trim())) {
+      nextErrors.username = "Use 3-20 letters, numbers, or underscores only.";
     }
     if (!form.firstName.trim()) {
       nextErrors.firstName = "First name is required.";
@@ -55,17 +62,28 @@ export default function FanRegister({ onGoLogIn, onGoArtist, onRegisterSuccess }
     return nextErrors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const nextErrors = validate();
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
-      setIsSubmitted(false);
       return;
     }
     setErrors({});
-    setIsSubmitted(true);
-    if (onRegisterSuccess) setTimeout(onRegisterSuccess, 1200);
+    setIsLoading(true);
+    try {
+      await onRegister({
+        email: form.email.trim(),
+        username: form.username.trim(),
+        firstName: form.firstName.trim(),
+        lastName: form.lastName.trim(),
+        password: form.password,
+      });
+    } catch (err) {
+      setErrors({ server: err.message || "Registration failed. Please try again." });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -82,7 +100,7 @@ export default function FanRegister({ onGoLogIn, onGoArtist, onRegisterSuccess }
           <Link to="/"><img src={logoB} alt="AUDTLIST" className="h-29 w-auto object-contain object-left mb-4 ml-[-5%] hover:opacity-80 transition-opacity" /></Link>
           <form onSubmit={handleSubmit} noValidate>
             <p className="ka-title">Create account</p>
-            <p className="ka-subtitle">Sign up for a Kamui fan account</p>
+            <p className="ka-subtitle">Sign up for an AUDTLIST fan account</p>
 
             <div className="ka-tabs" role="tablist" aria-label="Account type">
               <button className="ka-tab ka-tab--active" type="button">
@@ -93,10 +111,8 @@ export default function FanRegister({ onGoLogIn, onGoArtist, onRegisterSuccess }
               </button>
             </div>
 
-            {isSubmitted && (
-              <p className="ka-hint ka-hint--success" role="status">
-                Account details look good. You can now log in.
-              </p>
+            {errors.server && (
+              <p className="ka-hint ka-hint--error" role="alert">{errors.server}</p>
             )}
 
             <div className="ka-field">
@@ -116,6 +132,28 @@ export default function FanRegister({ onGoLogIn, onGoArtist, onRegisterSuccess }
               />
               {errors.email && (
                 <p id="fan-email-error" className="ka-hint ka-hint--error">{errors.email}</p>
+              )}
+            </div>
+
+            <div className="ka-field">
+              <label className="ka-label" htmlFor="fan-username">Username</label>
+              <input
+                id="fan-username"
+                className="ka-input"
+                type="text"
+                name="username"
+                placeholder="musiclover"
+                autoComplete="username"
+                value={form.username}
+                onChange={(e) => updateField("username", e.target.value)}
+                aria-invalid={!!errors.username}
+                aria-describedby={errors.username ? "fan-username-error" : "fan-username-hint"}
+                required
+              />
+              {errors.username ? (
+                <p id="fan-username-error" className="ka-hint ka-hint--error">{errors.username}</p>
+              ) : (
+                <p id="fan-username-hint" className="ka-hint">Letters, numbers, and underscores only.</p>
               )}
             </div>
 
@@ -223,12 +261,14 @@ export default function FanRegister({ onGoLogIn, onGoArtist, onRegisterSuccess }
               <p id="fan-terms-error" className="ka-hint ka-hint--error">{errors.acceptedTerms}</p>
             )}
 
-            <button className="ka-btn" type="submit">Create account</button>
+            <button className="ka-btn" type="submit" disabled={isLoading}>
+              {isLoading ? "Creating account…" : "Create account"}
+            </button>
 
             <div className="ka-footer">
-              Already have an account? <a onClick={onGoLogIn}>Log in</a>
+              Already have an account? <button type="button" onClick={onGoLogIn}>Log in</button>
               <br />
-              Are you an artist? <a onClick={onGoArtist}>Create an artist account</a>
+              Are you an artist? <button type="button" onClick={onGoArtist}>Create an artist account</button>
             </div>
           </form>
         </div>

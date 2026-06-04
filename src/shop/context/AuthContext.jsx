@@ -1,11 +1,11 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { apiPost } from "../../lib/api";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  // โหลด session จาก localStorage ตอน mount
   useEffect(() => {
     try {
       const saved = localStorage.getItem("session");
@@ -24,13 +24,18 @@ export function AuthProvider({ children }) {
     setUser(session);
   };
 
+  const register = async (userData) => {
+    const data = await apiPost("/auth/register", userData);
+    return data;
+  };
+
   const logout = () => {
     localStorage.removeItem("session");
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoggedIn: !!user }}>
+    <AuthContext.Provider value={{ user, login, register, logout, isLoggedIn: !!user }}>
       {children}
     </AuthContext.Provider>
   );

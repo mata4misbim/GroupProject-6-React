@@ -46,10 +46,10 @@ const initialForm = {
   acceptedTerms: false,
 };
 
-export default function ArtistRegister({ onGoLogIn, onGoFan, onRegisterSuccess }) {
+export default function ArtistRegister({ onGoLogIn, onGoFan, onRegister }) {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const updateField = (field, value) => {
     setForm((current) => ({ ...current, [field]: value }));
@@ -96,17 +96,28 @@ export default function ArtistRegister({ onGoLogIn, onGoFan, onRegisterSuccess }
     return nextErrors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const nextErrors = validate();
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
-      setIsSubmitted(false);
       return;
     }
     setErrors({});
-    setIsSubmitted(true);
-    if (onRegisterSuccess) setTimeout(onRegisterSuccess, 1200);
+    setIsLoading(true);
+    try {
+      await onRegister({
+        artistName: form.artistName.trim(),
+        username: form.username.trim(),
+        email: form.email.trim(),
+        genre: form.genre,
+        password: form.password,
+      });
+    } catch (err) {
+      setErrors({ server: err.message || "Registration failed. Please try again." });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -136,10 +147,8 @@ export default function ArtistRegister({ onGoLogIn, onGoFan, onRegisterSuccess }
               </button>
             </div>
 
-            {isSubmitted && (
-              <p className="ka-hint ka-hint--success" role="status">
-                Account details look good. You can now log in.
-              </p>
+            {errors.server && (
+              <p className="ka-hint ka-hint--error" role="alert">{errors.server}</p>
             )}
 
             <div className="ka-field">
@@ -276,12 +285,14 @@ export default function ArtistRegister({ onGoLogIn, onGoFan, onRegisterSuccess }
               <p id="artist-terms-error" className="ka-hint ka-hint--error">{errors.acceptedTerms}</p>
             )}
 
-            <button className="ka-btn" type="submit">Create account</button>
+            <button className="ka-btn" type="submit" disabled={isLoading}>
+              {isLoading ? "Creating account…" : "Create account"}
+            </button>
 
             <div className="ka-footer">
-              Already have an account? <a onClick={onGoLogIn}>Log in</a>
+              Already have an account? <button type="button" onClick={onGoLogIn}>Log in</button>
               <br />
-              Not an artist? <a onClick={onGoFan}>Create a fan account</a>
+              Not an artist? <button type="button" onClick={onGoFan}>Create a fan account</button>
             </div>
           </form>
         </div>
