@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Footer from "../components/common/Footer";
+import Nav from "../components/common/Nav";
+import giftDecor from "../assets/landing-page/gift.png";
 
 const cardDesigns = [
   {
@@ -70,6 +72,7 @@ export default function GiftCardsPage() {
 
   return (
     <div className="min-h-screen bg-[#03030f] font-['Plus_Jakarta_Sans',sans-serif] text-white">
+      <Nav />
       {/* Page header */}
       <div className="border-b border-white/8 bg-[#0a0a1a] px-[10%] py-12">
         <h1 className="mb-3 text-4xl font-bold tracking-tight">Gift Cards</h1>
@@ -98,6 +101,14 @@ export default function GiftCardsPage() {
               <div
                 className="pointer-events-none absolute -bottom-8 left-8 h-32 w-32 rounded-full opacity-15"
                 style={{ background: "rgba(255,255,255,0.4)", filter: "blur(20px)" }}
+              />
+
+              {/* Gift decoration */}
+              <img
+                src={giftDecor}
+                alt=""
+                className="pointer-events-none absolute h-[202px] w-[202px] object-contain opacity-90 drop-shadow-lg"
+                style={{ left: "0%", top: "-19%" }}
               />
 
               {/* Amount badge */}
