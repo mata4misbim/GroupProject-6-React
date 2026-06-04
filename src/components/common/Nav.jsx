@@ -7,9 +7,7 @@ const navItems = [
   { label: "Cassettes", to: "/shop?category=cassette" },
   { label: "T-shirts", to: "/shop?category=tshirt" },
   { label: "Gift cards", to: "/gift-cards" },
-  { label: "Editorial", to: "/shop" },
-  { label: "Club", to: "/shop" },
-  { label: "Store", to: "/shop" },
+  { label: "Community", to: "/club" },
 ];
 
 export default function Nav() {
