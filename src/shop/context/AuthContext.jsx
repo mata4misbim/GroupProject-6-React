@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
   };
 
   const register = async (userData) => {
-    const data = await apiPost("/auth/register", userData);
+    const data = await apiPost("/auth/register/fan", userData);
     return data;
   };
 
