@@ -35,39 +35,6 @@ const categories = [
 export default function Footer({ simple = false }) {
   return (
     <>
-      {!simple && <section className="mx-0 flex flex-col overflow-hidden rounded-t-lg bg-linear-to-br from-[#1a1a40] to-[#0a0a1a] text-white">
-        <ul className="flex list-none flex-row flex-wrap gap-2 px-8 pb-6 pt-8">
-          {[...genres, ...genres.slice(5)].map((genre, index) => (
-            <li
-              className="cursor-pointer rounded-full border-[1.5px] border-white/15 px-4 py-2 text-sm font-medium tracking-[0.04em] transition-all duration-200 hover:-translate-y-px hover:border-[#6c63ff]/70 hover:bg-[#6c63ff]/35"
-              key={`${genre}-${index}`}
-            >
-              <Link className="text-white no-underline" to="/shop">
-                {genre}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <div className="flex flex-wrap items-center justify-center gap-8 border-t border-white/6 p-8">
-          {categories.map((category) => (
-            <Link
-              to={category.to}
-              className="relative w-[180px] cursor-pointer overflow-hidden rounded-lg text-center transition-[box-shadow,transform] duration-200 hover:-translate-y-1.5 hover:shadow-[0_16px_40px_rgba(0,0,0,0.4)]"
-              key={category.title}
-            >
-              <img
-                className="block aspect-square w-full object-cover brightness-[0.65] transition-[filter] duration-200 hover:brightness-[0.8]"
-                src={category.img}
-                alt={category.title}
-              />
-              <span className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap font-['Plus_Jakarta_Sans',sans-serif] text-sm font-bold uppercase tracking-widest text-white [text-shadow:0_1px_6px_rgba(0,0,0,0.6)]">
-                {category.title}
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>}
 
       <footer className="mx-0 bg-[#0a0a1a] px-10 py-10 text-white">
         <div className="flex flex-col gap-3">
