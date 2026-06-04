@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { AuthProvider } from "./shop/context/AuthContext";
 import { FulfillmentProvider } from "./contexts/FulfillmentContext";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import MiniPlayer from "./components/common/MiniPlayer";
@@ -63,7 +64,8 @@ function NotFoundPage() {
 
 export default function App() {
   return (
-    <FulfillmentProvider>
+    <AuthProvider>
+      <FulfillmentProvider>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -98,6 +100,7 @@ export default function App() {
       </Routes>
       <CartDrawer />
       <MiniPlayer />
-    </FulfillmentProvider>
+      </FulfillmentProvider>
+    </AuthProvider>
   );
 }
