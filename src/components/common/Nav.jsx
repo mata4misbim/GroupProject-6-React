@@ -6,7 +6,7 @@ const navItems = [
   { label: "Compact discs", to: "/shop?category=cd" },
   { label: "Cassettes", to: "/shop?category=cassette" },
   { label: "T-shirts", to: "/shop?category=tshirt" },
-  { label: "Gift cards", to: "/shop" },
+  { label: "Gift cards", to: "/gift-cards" },
   { label: "Editorial", to: "/shop" },
   { label: "Club", to: "/shop" },
   { label: "Store", to: "/shop" },
