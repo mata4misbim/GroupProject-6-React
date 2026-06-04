@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { apiPatch } from "../lib/api";
 
 export default function ProfileSetting() {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -9,9 +10,13 @@ export default function ProfileSetting() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [status, setStatus] = useState(null);
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (isSubmitting) return;
+
     if (!currentPassword || !newPassword || !confirmPassword) {
       setStatus("error");
       setMessage("Please fill in all fields.");
@@ -27,12 +32,28 @@ export default function ProfileSetting() {
       setMessage("Password must be at least 8 characters.");
       return;
     }
-    // TODO: call your API here
-    setStatus("success");
-    setMessage("Password updated successfully.");
-    setCurrentPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
+
+    setIsSubmitting(true);
+    setStatus(null);
+    setMessage("");
+
+    try {
+      const response = await apiPatch("/profile/password", {
+        currentPassword,
+        newPassword,
+      });
+
+      setStatus("success");
+      setMessage(response.message || "Password updated successfully.");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (err) {
+      setStatus("error");
+      setMessage(err.message || "Unable to update password.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const strength = (() => {
@@ -203,9 +224,10 @@ export default function ProfileSetting() {
             {/* Submit */}
             <button
               type="submit"
-              className="mt-1 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-sm font-semibold tracking-wide cursor-pointer border-none transition-all duration-200 hover:opacity-85 active:scale-[0.98]"
+              disabled={isSubmitting}
+              className="mt-1 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-sm font-semibold tracking-wide cursor-pointer border-none transition-all duration-200 hover:opacity-85 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Update Password
+              {isSubmitting ? "Updating..." : "Update Password"}
             </button>
           </form>
         </div>
