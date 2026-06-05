@@ -144,7 +144,7 @@ export default function LivePage() {
       </Link>
 
       {/* Main content — วิดีโอ + chat */}
-      <div className="flex gap-6 items-start">
+      <div className="flex flex-col gap-6 items-start lg:flex-row">
         {/* ── ฝั่งซ้าย: วิดีโอ + info ── */}
         <div className="flex-1 min-w-0">
           {/* Video container */}

@@ -87,13 +87,13 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#0a0a1a] font-['Plus_Jakarta_Sans',sans-serif]">
       {/* Hero */}
-      <section className="relative overflow-hidden px-[10%] pt-24 pb-20">
+      <section className="relative overflow-hidden px-[5%] pt-16 pb-12 md:px-[10%] md:pt-24 md:pb-20">
         <div className="grid md:grid-cols-[1fr_1.4fr] gap-16 items-center">
           <div className="relative">
             <p className="text-accent text-[13px] font-semibold tracking-[0.12em] uppercase mb-5">
               Our story
             </p>
-            <h1 className="text-white text-[56px] font-bold leading-[1.05] tracking-tight mb-8">
+            <h1 className="text-white text-[36px] font-bold leading-[1.05] tracking-tight mb-8 md:text-[56px]">
               Built for artists.
               <br />
               <span className="text-white/35">Loved by listeners.</span>
@@ -116,7 +116,7 @@ export default function AboutPage() {
       </section>
 
       {/* Stats */}
-      <section className="px-[10%] py-14 border-y border-white/8">
+      <section className="px-[5%] py-10 border-y border-white/8 md:px-[10%] md:py-14">
         <div className="flex flex-wrap gap-x-16 gap-y-8">
           {stats.map((s) => (
             <div key={s.label} className="flex items-baseline gap-3">
@@ -132,10 +132,10 @@ export default function AboutPage() {
       </section>
 
       {/* Mission */}
-      <section className="px-[10%] py-24">
+      <section className="px-[5%] py-12 md:px-[10%] md:py-24">
         <div className="grid md:grid-cols-2 gap-20 items-center">
           <div>
-            <h2 className="text-white text-[38px] font-bold leading-[1.15] mb-8">
+            <h2 className="text-white text-[28px] font-bold leading-[1.15] mb-8 md:text-[38px]">
               Music should sustain
               <br />
               <em className="not-italic text-white/40">
@@ -165,14 +165,14 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="px-[10%] py-20 bg-bg-dark border-y border-white/8">
+      <section className="px-[5%] py-12 bg-bg-dark border-y border-white/8 md:px-[10%] md:py-20">
         <p className="text-accent text-[13px] font-semibold tracking-[0.12em] uppercase mb-4">
           What we believe
         </p>
         <h2 className="text-white text-[32px] font-bold mb-16">Our values</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-0 divide-x divide-white/8">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-0 sm:divide-x sm:divide-white/8 lg:grid-cols-4">
           {values.map((v, i) => (
-            <div key={v.title} className="px-8 first:pl-0 last:pr-0 group">
+            <div key={v.title} className="group px-0 sm:px-8 sm:first:pl-0 sm:last:pr-0">
               <p className="text-white/20 text-[48px] font-bold leading-none mb-6 group-hover:text-accent/40 transition-colors">
                 {String(i + 1).padStart(2, "0")}
               </p>
@@ -188,14 +188,14 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="px-[10%] py-20">
+      <section className="px-[5%] py-12 md:px-[10%] md:py-20">
         <p className="text-accent text-[13px] font-semibold tracking-[0.12em] uppercase mb-4">
           The team
         </p>
         <h2 className="text-white text-[32px] font-bold mb-[20%]">
           People behind the music
         </h2>
-        <div className="grid grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
           {team.map((member) => (
             <div
               key={member.name}
@@ -223,8 +223,8 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="mx-[10%] my-16 rounded-2xl bg-[#141420] border border-white/8 px-12 py-14">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+      <section className="mx-[5%] my-10 rounded-2xl bg-[#141420] border border-white/8 px-6 py-10 md:mx-[10%] md:my-16 md:px-12 md:py-14">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="text-white text-[36px] font-bold leading-tight mb-3">
               Ready to explore?

@@ -89,7 +89,7 @@ export default function ProductDetailPage() {
 
   return (
     <div className="min-h-screen bg-bg font-['Plus_Jakarta_Sans',sans-serif]">
-      <div className="px-[10%] py-10">
+      <div className="px-[5%] py-8 md:px-[10%] md:py-10">
       <Link
         to="/shop"
         className="inline-flex items-center gap-2.5 no-underline group w-fit mb-10 bg-white/6 hover:bg-white/10 border border-white/10 hover:border-white/20 px-4 py-2.5 rounded-full transition-all"
@@ -114,7 +114,7 @@ export default function ProductDetailPage() {
 
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-14">
         {/* Cover (พร้อม Play button overlay) */}
-        <div className="shrink-0 w-full md:w-[380px]">
+        <div className="w-full shrink-0 md:w-96">
           <div className="relative aspect-square overflow-hidden rounded-2xl bg-bg-card shadow-[0_8px_40px_rgba(0,0,0,0.6)] group">
             <img
               src={product.cover_url}

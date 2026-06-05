@@ -72,7 +72,7 @@ export default function ProfilePage() {
       </div>
 
       {/* ── Profile info ── */}
-      <div className="px-[10%] -mt-20 relative z-10">
+      <div className="px-[5%] -mt-20 relative z-10 md:px-[10%]">
         <div className="flex flex-col md:flex-row gap-6 items-start">
           {/* Avatar */}
           <div
@@ -112,7 +112,7 @@ export default function ProfilePage() {
       </div>
 
       {/* ── Tabs + Content ── */}
-      <div className="px-[10%] mt-10">
+      <div className="mt-10 px-[5%] md:px-[10%]">
         {/* Tab bar */}
         <div className="flex items-center gap-1 border-b border-white/10">
           {tabs.map((tab) => (
