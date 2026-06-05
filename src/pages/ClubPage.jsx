@@ -51,7 +51,7 @@ export default function ClubPage() {
     <div className="min-h-screen bg-[#03030f] font-['Plus_Jakarta_Sans',sans-serif] text-white">
       <Nav />
       {/* Page header */}
-      <div className="relative overflow-hidden border-b border-white/8 px-[10%] py-16"
+      <div className="relative overflow-hidden border-b border-white/8 px-[5%] py-10 md:px-[10%] md:py-16"
         style={{ background: "linear-gradient(135deg, #0d0d2e 0%, #1a0a2e 50%, #0a0a1a 100%)" }}
       >
         {/* Glow blobs */}
@@ -64,7 +64,7 @@ export default function ClubPage() {
         <img
           src={headclub}
           alt=""
-          className="pointer-events-none absolute right-[13%] top-1/2 h-[768px] w-[768px] -translate-y-1/2 object-contain"
+          className="pointer-events-none absolute right-0 top-1/2 h-48 w-48 -translate-y-1/2 object-contain opacity-30 md:right-[13%] md:h-192 md:w-3xl md:opacity-100"
         />
 
         <div className="relative z-10">
@@ -90,11 +90,10 @@ export default function ClubPage() {
           return (
             <div
               key={club.id}
-              className="mx-[7%] my-7 flex overflow-hidden rounded-2xl border border-white/8 shadow-[0_4px_32px_rgba(0,0,0,0.4)]"
-              style={{ flexDirection: reversed ? "row-reverse" : "row" }}
+              className={`mx-[5%] my-5 flex flex-col overflow-hidden rounded-2xl border border-white/8 shadow-[0_4px_32px_rgba(0,0,0,0.4)] md:mx-[7%] md:my-7 md:flex-row ${reversed && "md:flex-row-reverse"}`}
             >
               {/* Image */}
-              <div className="relative w-[44%] shrink-0 overflow-hidden flex items-center justify-center"
+              <div className="relative h-56 w-full shrink-0 overflow-hidden flex items-center justify-center md:h-auto md:w-[44%]"
                 style={{ background: club.accent + "18" }}
               >
                 <img
@@ -105,7 +104,7 @@ export default function ClubPage() {
               </div>
 
               {/* Text */}
-              <div className="flex flex-1 flex-col justify-center gap-4 bg-[#0c0c1e] px-12 py-10">
+              <div className="flex flex-1 flex-col justify-center gap-4 bg-[#0c0c1e] px-6 py-8 md:px-12 md:py-10">
                 <h2 className="font-['Plus_Jakarta_Sans',sans-serif] text-[24px] font-extrabold leading-[1.25] tracking-tight text-white">
                   {club.title}
                 </h2>
@@ -126,7 +125,7 @@ export default function ClubPage() {
                 </p>
 
                 <span
-                  className="mt-1 w-fit cursor-default rounded-full px-6 py-2.5 font-['Plus_Jakarta_Sans',sans-serif] text-[13px] font-bold tracking-wide text-white cursor-pointer"
+                  className="mt-1 w-fit cursor-pointer rounded-full px-6 py-2.5 font-['Plus_Jakarta_Sans',sans-serif] text-[13px] font-bold tracking-wide text-white"
                   style={{ background: "#fc3c44" }}
                 >
                   Explore club →
