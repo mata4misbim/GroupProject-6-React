@@ -126,7 +126,7 @@ export default function ClubPage() {
                 </p>
 
                 <span
-                  className="mt-1 w-fit cursor-default rounded-full px-6 py-2.5 font-['Plus_Jakarta_Sans',sans-serif] text-[13px] font-bold tracking-wide text-white"
+                  className="mt-1 w-fit cursor-default rounded-full px-6 py-2.5 font-['Plus_Jakarta_Sans',sans-serif] text-[13px] font-bold tracking-wide text-white cursor-pointer"
                   style={{ background: "#fc3c44" }}
                 >
                   Explore club →
