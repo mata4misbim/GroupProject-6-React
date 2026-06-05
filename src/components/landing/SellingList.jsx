@@ -49,8 +49,8 @@ function ItemRow({ hidden = false }) {
 export default function SellingList() {
   return (
     <section>
-      <div className="flex items-baseline gap-4 bg-[#03030f] px-[10%] pb-4 pt-8 after:h-px after:flex-1 after:bg-linear-to-r after:from-white/15 after:to-transparent after:content-['']">
-        <h2 className="font-['Plus_Jakarta_Sans',sans-serif] text-[28px] font-extrabold uppercase text-white">
+      <div className="flex items-baseline gap-4 bg-[#03030f] px-[5%] pb-4 pt-8 after:h-px after:flex-1 after:bg-linear-to-r after:from-white/15 after:to-transparent after:content-[''] md:px-[10%]">
+        <h2 className="font-['Plus_Jakarta_Sans',sans-serif] text-[20px] font-extrabold uppercase text-white md:text-[28px]">
           Selling right now
         </h2>
       </div>

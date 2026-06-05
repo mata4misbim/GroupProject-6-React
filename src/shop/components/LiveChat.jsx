@@ -67,7 +67,7 @@ export default function LiveChat({ liveId }) {
   };
 
   return (
-    <aside className="w-[320px] shrink-0 bg-[#141414] border border-white/[0.08] rounded-lg flex flex-col h-[600px]">
+    <aside className="h-80 w-full shrink-0 rounded-lg border border-white/[0.08] bg-[#141414] flex flex-col lg:h-150 lg:w-80">
       <div className="px-4 py-3 border-b border-white/[0.08] flex items-center gap-2 shrink-0">
         <svg
           width="16"

@@ -27,14 +27,14 @@ function Radio() {
 
   return (
     <>
-      <section className="mx-[10%] mb-6 overflow-hidden rounded-2xl bg-[#141420] font-['Plus_Jakarta_Sans',sans-serif] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
-        <h2 className="px-5 pb-3 pt-6 text-[24px] font-bold text-white">
+      <section className="mx-[5%] mb-6 overflow-hidden rounded-2xl bg-[#141420] font-['Plus_Jakarta_Sans',sans-serif] shadow-[0_8px_32px_rgba(0,0,0,0.4)] md:mx-[10%]">
+        <h2 className="px-5 pb-3 pt-6 text-[20px] font-bold text-white md:text-[24px]">
           Audtlist Radio
         </h2>
-        <div className="grid grid-cols-[1.35fr_1fr_1.15fr]">
+        <div className="grid grid-cols-1 md:grid-cols-[1.35fr_1fr_1.15fr]">
 
         {/* Left: Live show */}
-        <div className="min-w-0 border-r border-white/10">
+        <div className="min-w-0 border-b border-white/10 md:border-b-0 md:border-r">
           <Link to={currentLive ? `/live/${currentLive._id}` : "#"} className="block no-underline group/live">
             <div className="relative overflow-hidden cursor-pointer">
               <img
@@ -73,9 +73,9 @@ function Radio() {
         </div>
 
         {/* Center: Player — Apple Music style */}
-        <div className="flex min-w-0 flex-col items-center gap-5 border-x border-white/10 px-8 pb-8">
+        <div className="flex min-w-0 flex-col items-center gap-5 border-y border-white/10 px-6 pb-8 md:border-x md:border-y-0 md:px-8">
           <img
-            className="block aspect-square w-full object-cover shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
+            className="block aspect-square w-48 object-cover shadow-[0_8px_32px_rgba(0,0,0,0.6)] md:w-full"
             src={activeTrack.img}
             alt={`${activeTrack.name} cover`}
           />
@@ -179,7 +179,7 @@ function Radio() {
         </div>
 
         {/* Right: Tracklist */}
-        <div className="min-w-0 px-6 pb-8 pt-2">
+        <div className="min-w-0 px-4 pb-8 pt-2 md:px-6">
           <div className="mb-10">
             <h2 className="mb-2 text-[24px] font-bold leading-tight text-white">
               Tracklist

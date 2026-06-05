@@ -20,14 +20,14 @@ const sideArticles = [
 
 export default function DailyFeed() {
   return (
-    <section className="mx-[10%] mb-8 mt-8 overflow-hidden rounded-2xl border border-white/10 bg-[#141420] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+    <section className="mx-[5%] mb-8 mt-8 overflow-hidden rounded-2xl border border-white/10 bg-[#141420] shadow-[0_8px_32px_rgba(0,0,0,0.4)] md:mx-[10%]">
       <div className="border-b border-white/10 px-8 pb-4 pt-6">
-        <h2 className="font-['Plus_Jakarta_Sans',sans-serif] text-[28px] font-bold leading-tight text-white">
+        <h2 className="font-['Plus_Jakarta_Sans',sans-serif] text-[20px] font-bold leading-tight text-white md:text-[28px]">
           Audtlist Daily
         </h2>
       </div>
 
-      <div className="flex flex-row">
+      <div className="flex flex-col md:flex-row">
         <article className="min-w-0 flex-[3]">
           <Link to="/article1" aria-label="Open The Hotlist, Spring 2026">
             <img
@@ -58,7 +58,7 @@ export default function DailyFeed() {
           </div>
         </article>
 
-        <div className="ml-4 min-w-0 flex-[1.5] border-l border-white/10">
+        <div className="min-w-0 flex-[1.5] border-t border-white/10 md:ml-4 md:border-l md:border-t-0">
           {sideArticles.map((article) => (
             <article
               className="border-b border-white/10 last:border-b-0"

@@ -80,8 +80,8 @@ export default function ProfilePageAdmin() {
       </div>
 
       {/* ── Profile header ── */}
-      <div className="px-[10%] -mt-20 relative z-10">
-        <div className="flex gap-6 items-end">
+      <div className="px-[5%] -mt-20 relative z-10 md:px-[10%]">
+        <div className="flex flex-col gap-4 items-start md:flex-row md:items-end md:gap-6">
           <div
             className="relative w-36 h-36 shrink-0 rounded-full overflow-hidden bg-bg-card ring-4 ring-bg shadow-2xl cursor-pointer group"
             onClick={() => avatarInputRef.current?.click()}
@@ -113,7 +113,7 @@ export default function ProfilePageAdmin() {
       </div>
 
       {/* ── Tabs ── */}
-      <div className="px-[10%] mt-8">
+      <div className="mt-8 px-[5%] md:px-[10%]">
         <div className="flex items-center gap-0.5 border-b border-white/10">
           {tabs.map((tab) => (
             <button
@@ -268,7 +268,7 @@ function AdminOverview({ timeRange, onTimeRangeChange, onViewOrders, onViewPayou
       </div>
 
       {/* ── Platform metric cards ── */}
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         <div className="rounded-xl border border-t-2 border-t-accent border-white/10 bg-bg-card px-4 py-4">
           <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Platform GMV</p>
           <p className="text-[24px] font-bold leading-none tracking-tight text-white mt-2.5">฿{totalRevenue.toLocaleString()}</p>
@@ -295,14 +295,14 @@ function AdminOverview({ timeRange, onTimeRangeChange, onViewOrders, onViewPayou
       </div>
 
       {/* ── GMV Chart + Order status ── */}
-      <div className="grid grid-cols-[1.6fr_1fr] gap-3">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.6fr_1fr]">
         <div className="rounded-2xl border border-white/10 bg-bg-card p-5">
           <div className="flex items-center justify-between mb-5">
             <div>
               <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Platform GMV</p>
               <h3 className="text-[15px] font-semibold text-white mt-0.5">Last {timeRange} {timeRange === "1" ? "day" : "days"} — all artists</h3>
             </div>
-            <span className="text-[11px] font-medium text-white/25 bg-white/[0.05] border border-white/10 px-2.5 py-1 rounded-full">THB</span>
+            <span className="text-[11px] font-medium text-white/25 bg-white/5 border border-white/10 px-2.5 py-1 rounded-full">THB</span>
           </div>
           <div className="relative h-[130px]">
             <div className="absolute inset-y-0 left-0 flex flex-col justify-between text-[9px] text-white/20 pointer-events-none w-8">
@@ -346,7 +346,7 @@ function AdminOverview({ timeRange, onTimeRangeChange, onViewOrders, onViewPayou
                     </div>
                     <span className="text-[11px] font-semibold text-white">{s.count}</span>
                   </div>
-                  <div className="h-[3px] rounded-full bg-white/[0.06] overflow-hidden">
+                  <div className="h-[3px] rounded-full bg-white/6 overflow-hidden">
                     <div className="h-full rounded-full" style={{ width: `${Math.round((s.count / filteredOrders.length) * 100)}%`, backgroundColor: s.color }} />
                   </div>
                 </div>
@@ -357,7 +357,7 @@ function AdminOverview({ timeRange, onTimeRangeChange, onViewOrders, onViewPayou
       </div>
 
       {/* ── Artist leaderboard + Payout queue ── */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         <div className="rounded-2xl border border-white/10 bg-bg-card p-5">
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -480,11 +480,11 @@ function RevenueDashboard() {
           <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Finance</p>
           <h2 className="text-[20px] font-bold text-white mt-0.5">Revenue</h2>
         </div>
-        <button className="rounded-full border border-white/10 bg-bg-card px-4 py-2 text-[13px] font-medium text-white/60 hover:bg-white/[0.05] transition-colors">
+        <button className="rounded-full border border-white/10 bg-bg-card px-4 py-2 text-[13px] font-medium text-white/60 hover:bg-white/5 transition-colors">
           Export report
         </button>
       </div>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <AdminPanelCard label="Gross revenue" value={`฿${grossRevenue.toLocaleString()}`} detail="customer paid" />
         <AdminPanelCard label="Platform fees" value={`฿${platformFees.toLocaleString()}`} detail="10% rate" />
         <AdminPanelCard label="Artist payout" value={`฿${artistPayout.toLocaleString()}`} detail="net to artists" />
@@ -492,17 +492,24 @@ function RevenueDashboard() {
       <div className="rounded-2xl border border-white/10 bg-bg-card p-5">
         <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold mb-1">Breakdown</p>
         <h3 className="text-[15px] font-semibold text-white mb-4">By channel</h3>
-        <div className="grid grid-cols-[1fr_130px_120px_60px] gap-3 pb-3 border-b border-white/[0.06] text-[10px] uppercase tracking-widest text-white/35 font-semibold">
-          <span>Channel</span><span>Volume</span><span>Revenue</span><span className="text-right">Status</span>
-        </div>
-        {rows.map(([channel, volume, revenue, trend]) => (
-          <div key={channel} className="grid grid-cols-[1fr_130px_120px_60px] gap-3 border-b border-white/[0.05] py-3 text-[13px] text-white/70 last:border-b-0">
-            <span className="font-semibold text-white">{channel}</span>
-            <span>{volume}</span>
-            <span>{revenue}</span>
-            <span className="text-right font-semibold text-[#4ade80]">{trend}</span>
+        <div className="overflow-x-auto">
+        <div className="min-w-120 grid grid-cols-[1fr_130px_120px_60px]">
+          <div className="contents text-[10px] uppercase tracking-widest text-white/35 font-semibold">
+            <span className="pb-3 border-b border-white/6">Channel</span>
+            <span className="pb-3 border-b border-white/6">Volume</span>
+            <span className="pb-3 border-b border-white/6">Revenue</span>
+            <span className="pb-3 border-b border-white/6 text-right">Status</span>
           </div>
-        ))}
+          {rows.map(([channel, volume, revenue, trend]) => (
+            <>
+              <span key={channel + "c"} className="py-3 border-b border-white/5 text-[13px] font-semibold text-white last:border-b-0">{channel}</span>
+              <span key={channel + "v"} className="py-3 border-b border-white/5 text-[13px] text-white/70">{volume}</span>
+              <span key={channel + "r"} className="py-3 border-b border-white/5 text-[13px] text-white/70">{revenue}</span>
+              <span key={channel + "t"} className="py-3 border-b border-white/5 text-[13px] text-right font-semibold text-[#4ade80]">{trend}</span>
+            </>
+          ))}
+        </div>
+        </div>
       </div>
     </section>
   );
@@ -578,7 +585,7 @@ function OrdersDashboard() {
           </span>
         )}
       </div>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <AdminPanelCard label="Total orders" value={orders.length} detail="All time" />
         <AdminPanelCard label="Gross sales" value={`฿${totalRevenue.toLocaleString()}`} detail="Customer paid" />
         <AdminPanelCard label="Platform fees" value={`฿${platformFees.toLocaleString()}`} detail="10% fee" />
@@ -606,7 +613,7 @@ function OrdersDashboard() {
               return (
                 <div key={order._id} className="rounded-xl border border-white/[0.07] bg-bg overflow-hidden">
                   {/* Order header */}
-                  <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+                  <div className="flex items-center justify-between px-4 py-3 border-b border-white/6">
                     <div className="flex items-center gap-3">
                       <div className="w-7 h-7 rounded-full bg-white/[0.07] border border-white/10 flex items-center justify-center text-[11px] font-semibold text-white/45 shrink-0">
                         {buyerName[0].toUpperCase()}
@@ -624,7 +631,7 @@ function OrdersDashboard() {
                         {orderStatusStyle.label}
                       </span>
                       {hasUpdate && (
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#00d9ff]/10 border border-[#00d9ff]/30 text-[#00d9ff]">
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan">
                           Artist updated
                         </span>
                       )}
@@ -632,7 +639,7 @@ function OrdersDashboard() {
                     </div>
                   </div>
                   {/* Items */}
-                  <div className="divide-y divide-white/[0.04]">
+                  <div className="divide-y divide-white/4">
                     {order.items.map((item) => {
                       const effectiveStatus = getStatus(order._id, item.product_id, item.fulfillment_status);
                       const style = ITEM_STATUS_STYLE[effectiveStatus] ?? { label: effectiveStatus, color: "#fff" };
@@ -706,14 +713,15 @@ function PayoutsDashboard() {
         <h2 className="text-[20px] font-bold text-white mt-0.5">Artist Payouts</h2>
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <AdminPanelCard label="Total Pending" value={`฿${totalPending.toLocaleString()}`} detail="awaiting disbursement" />
         <AdminPanelCard label="Artists with Balance" value={payoutQueue.filter(a => (a.payout_balance ?? 0) > 0).length} detail={`of ${payoutQueue.length} active`} />
         <AdminPanelCard label="Platform Rate" value="10%" detail="fee per transaction" />
       </div>
 
-      <div className="rounded-2xl border border-white/10 bg-bg-card overflow-hidden">
-        <div className="grid grid-cols-[1fr_100px_100px_100px_110px_120px] gap-4 px-5 py-3 border-b border-white/[0.06] text-[10px] uppercase tracking-widest text-white/35 font-semibold">
+      <div className="overflow-x-auto rounded-2xl border border-white/10">
+      <div className="min-w-175 bg-bg-card overflow-hidden rounded-2xl">
+        <div className="grid grid-cols-[1fr_100px_100px_100px_110px_120px] gap-4 px-5 py-3 border-b border-white/6 text-[10px] uppercase tracking-widest text-white/35 font-semibold">
           <span>Artist</span>
           <span className="text-right">Gross</span>
           <span className="text-right">Fee (10%)</span>
@@ -730,7 +738,7 @@ function PayoutsDashboard() {
           const isPaid = paid.includes(a._id);
           const hasPending = (a.payout_balance ?? 0) > 0;
           return (
-            <div key={a._id} className="grid grid-cols-[1fr_100px_100px_100px_110px_120px] gap-4 items-center px-5 py-4 border-b border-white/[0.04] last:border-b-0 hover:bg-white/[0.02] transition-colors">
+            <div key={a._id} className="grid grid-cols-[1fr_100px_100px_100px_110px_120px] gap-4 items-center px-5 py-4 border-b border-white/4 last:border-b-0 hover:bg-white/2 transition-colors">
               <div className="flex items-center gap-3 min-w-0">
                 <img src={a.banner_url} alt="" className="h-8 w-8 rounded-full object-cover shrink-0" />
                 <div className="min-w-0">
@@ -767,7 +775,7 @@ function PayoutsDashboard() {
         })}
 
         {totalPending > 0 && (
-          <div className="px-5 py-4 border-t border-white/10 flex items-center justify-between bg-white/[0.02]">
+          <div className="px-5 py-4 border-t border-white/10 flex items-center justify-between bg-white/2">
             <p className="text-[13px] text-white/50">
               {payoutQueue.filter(a => (a.payout_balance ?? 0) > 0 && !paid.includes(a._id)).length} artists pending · ฿{(totalPending - totalPaid).toLocaleString()} remaining
             </p>
@@ -780,6 +788,7 @@ function PayoutsDashboard() {
             </button>
           </div>
         )}
+      </div>
       </div>
     </section>
   );
@@ -810,8 +819,8 @@ function UserGrid() {
             </div>
           </div>
           <div className="flex items-center gap-2 shrink-0 ml-4">
-            <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/10 text-white/50 capitalize">{item.user_type}</span>
-            <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${item.status === "active" ? "bg-[#4ade80]/10 border border-[#4ade80]/20 text-[#4ade80]" : "bg-white/[0.05] border border-white/10 text-white/35"}`}>{item.status}</span>
+            <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white/6 border border-white/10 text-white/50 capitalize">{item.user_type}</span>
+            <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${item.status === "active" ? "bg-[#4ade80]/10 border border-[#4ade80]/20 text-[#4ade80]" : "bg-white/5 border border-white/10 text-white/35"}`}>{item.status}</span>
           </div>
         </div>
       ))}
@@ -885,14 +894,14 @@ function ProductGrid() {
           <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Catalog admin</p>
           <h2 className="text-[20px] font-bold text-white mt-0.5">Products</h2>
         </div>
-        <div className="flex gap-1 p-1 bg-white/[0.04] rounded-xl border border-white/[0.06]">
+        <div className="flex gap-1 p-1 bg-white/4 rounded-xl border border-white/6">
           {productTabs.map((tab) => (
             <button
               key={tab.key}
               onClick={() => setProductTab(tab.key)}
               className={`px-4 py-2 text-[13px] font-medium rounded-lg transition-all ${
                 productTab === tab.key
-                  ? "bg-white/10 text-white border border-white/[0.08]"
+                  ? "bg-white/10 text-white border border-white/8"
                   : "text-white/40 hover:text-white/65"
               }`}
             >
@@ -928,7 +937,7 @@ function ProductGrid() {
                   <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-bold uppercase text-white/55">
                     {product.type}
                   </span>
-                  <span className="text-[10px] font-bold uppercase text-[#00d9ff]">
+                  <span className="text-[10px] font-bold uppercase text-brand-cyan">
                     {product.status}
                   </span>
                 </div>
