@@ -7,6 +7,7 @@ import Radio from "../components/landing/Radio";
 import SellingList from "../components/landing/SellingList";
 import StatsSection from "../components/landing/StatsSection";
 import FeaturedArtists from "../components/landing/FeaturedArtists";
+import GenreSection from "../components/landing/GenreSection";
 import flairBanner from "../assets/landing-page/bannerv05.png";
 
 export default function LandingPage() {
@@ -50,6 +51,7 @@ export default function LandingPage() {
         <div className="h-4 bg-[#03030f]"></div>
         <Radio />
         <FeaturedArtists />
+        <GenreSection />
       </main>
       <Footer />
     </div>

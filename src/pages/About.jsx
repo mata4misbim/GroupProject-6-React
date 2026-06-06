@@ -11,9 +11,9 @@ import aboutus2Img from "../assets/aboutus2.png";
 
 const stats = [
   { value: "1,200+", label: "Independent Artists" },
-  { value: "5,000+", label: "Albums & Tracks" },
-  { value: "120+", label: "Countries Reached" },
-  { value: "82%", label: "Revenue to Artists" },
+  { value: "5,000+", label: "Tracks Available" },
+  { value: "1 Year", label: "Supporting Local Music" },
+  { value: "Bangkok", label: "& Beyond" },
 ];
 
 const team = [
@@ -141,12 +141,16 @@ export default function AboutPage() {
               <em className="not-italic text-white/40">
                 the people who make it.
               </em>
+              <br />
+              <span className="text-[16px] font-extrabold tracking-widest text-accent uppercase not-italic">
+                team-6-kamui-jenkins
+              </span>
             </h2>
             <div className="w-12 h-px bg-accent mb-8" />
             <p className="text-white/55 text-[15px] leading-[1.9] mb-5">
               Streaming pays fractions of a cent per play. We offer a
               marketplace where fans buy directly — downloads, vinyl, merch —
-              and artists keep 82% of every transaction.
+              and artists keep 90% of every transaction.
             </p>
             <p className="text-white/40 text-[14px] leading-[1.9]">
               No algorithms deciding who gets heard. No label gatekeeping. Just
@@ -201,7 +205,7 @@ export default function AboutPage() {
               key={member.name}
               className="bg-bg-card rounded-2xl p-6 border border-white/8"
             >
-              <div className="w-20 h-20 rounded-full mb-4 overflow-hidden ring-2 ring-accent/40 ring-offset-2 ring-offset-bg-card mx-auto">
+              <div className="w-full aspect-square rounded-xl mb-4 overflow-hidden ring-2 ring-accent/40">
                 <img
                   src={member.avatar}
                   alt={member.name}
