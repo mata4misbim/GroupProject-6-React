@@ -257,7 +257,6 @@ export default function ProfilePage() {
                   <h1 className="text-white text-[2rem] font-bold tracking-tight leading-tight">
                     {savedProfile.display_name || user?.username || "Profile"}
                   </h1>
-                  <p className="text-white/40 text-[13px] mt-1">Fan account</p>
                 </div>
               )}
             </form>
