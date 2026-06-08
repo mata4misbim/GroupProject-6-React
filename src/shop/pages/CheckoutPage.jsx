@@ -144,10 +144,12 @@ export default function CheckoutPage() {
               />
             </section>
 
-            <section className="rounded-2xl border border-white/10 bg-[#162040] p-6">
-              <h2 className="text-[15px] font-semibold uppercase tracking-widest text-white/40 mb-5">Shipping</h2>
-              <ShippingForm onSubmit={handleShippingSubmit} />
-            </section>
+            {hasMerch && (
+              <section className="rounded-2xl border border-white/10 bg-[#162040] p-6">
+                <h2 className="text-[15px] font-semibold uppercase tracking-widest text-white/40 mb-5">Shipping</h2>
+                <ShippingForm onSubmit={handleShippingSubmit} />
+              </section>
+            )}
 
             <section className="rounded-2xl border border-white/10 bg-[#162040] p-6">
               <h2 className="text-[15px] font-semibold uppercase tracking-widest text-white/40 mb-5">Payment</h2>
@@ -195,6 +197,7 @@ export default function CheckoutPage() {
                   discountCode={appliedDiscountCode}
                   discountAmount={discountAmount}
                   shippingFee={shippingFee}
+                  requiresShipping={hasMerch}
                   onSubmitSuccess={handleOrderSuccess}
                 />
               </section>
