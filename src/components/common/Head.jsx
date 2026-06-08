@@ -10,6 +10,8 @@ export default function Head() {
   const { isLoggedIn, user, logout } = useAuth();
   const navigate = useNavigate();
   const cart = useContext(CartContext);
+  const isArtist =
+    isLoggedIn && (user?.role === "artist" || Boolean(user?.artistName));
 
   const handleLogout = () => {
     logout();
@@ -32,6 +34,14 @@ export default function Head() {
       </div>
       {/* Auth buttons */}
       <div className="flex shrink-0 items-center gap-1.5 md:gap-2">
+        {isArtist && (
+          <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white/80 transition-all hover:bg-white/15 md:mr-1">
+            <span aria-hidden="true" className="text-lg">
+              🎸
+            </span>
+            <span className="sr-only">Artist guitar icon</span>
+          </div>
+        )}
         {cart && (
           <button
             onClick={() => cart.setOpen(true)}
