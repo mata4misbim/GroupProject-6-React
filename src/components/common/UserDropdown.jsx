@@ -1,6 +1,32 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+const readStoredSession = () => {
+  try {
+    return JSON.parse(localStorage.getItem("session") || "null");
+  } catch {
+    return null;
+  }
+};
+
+const normalizeRole = (value) => String(value || "").trim().toLowerCase();
+
+const getUserRole = (user) => {
+  const storedSession = readStoredSession();
+  return normalizeRole(
+    user?.role ||
+      user?.user_type ||
+      user?.type ||
+      user?.user?.role ||
+      user?.data?.role ||
+      storedSession?.role ||
+      storedSession?.user_type ||
+      storedSession?.type ||
+      storedSession?.user?.role ||
+      storedSession?.data?.role,
+  );
+};
+
 export default function UserDropdown({ user, handleLogout }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
@@ -16,6 +42,13 @@ export default function UserDropdown({ user, handleLogout }) {
   }, []);
 
   const initials = user?.email?.[0]?.toUpperCase() ?? "?";
+  const normalizedRole = getUserRole(user);
+  const dashboardLink =
+    ["admin", "administrator"].includes(normalizedRole)
+      ? { to: "/admin", label: "Admin Dashboard" }
+      : normalizedRole === "artist"
+        ? { to: "/artist", label: "Artist Dashboard" }
+        : null;
 
   return (
     <div ref={ref} className="relative">
@@ -73,6 +106,34 @@ export default function UserDropdown({ user, handleLogout }) {
                 Profile
               </span>
             </Link>
+
+            {dashboardLink && (
+              <Link
+                to={dashboardLink.to}
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-3 px-4 py-2.5 text-sm text-white/70 no-underline transition-colors hover:bg-white/5 hover:text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="3" y="3" width="7" height="7" rx="1" />
+                  <rect x="14" y="3" width="7" height="7" rx="1" />
+                  <rect x="14" y="14" width="7" height="7" rx="1" />
+                  <rect x="3" y="14" width="7" height="7" rx="1" />
+                </svg>
+                <span className="font-['Plus_Jakarta_Sans',sans-serif]">
+                  {dashboardLink.label}
+                </span>
+              </Link>
+            )}
 
             <Link
               to="/profilesetting"
