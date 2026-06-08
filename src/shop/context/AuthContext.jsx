@@ -4,6 +4,14 @@ import { socket } from "../../lib/socket";
 
 const AuthContext = createContext(null);
 
+const readStoredSession = () => {
+  try {
+    return JSON.parse(localStorage.getItem("session") || "null");
+  } catch {
+    return null;
+  }
+};
+
 const buildRegisterRequest = (userData = {}) => {
   if (userData.role === "artist") {
     return {
@@ -31,7 +39,7 @@ const buildRegisterRequest = (userData = {}) => {
 };
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(readStoredSession);
   const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
