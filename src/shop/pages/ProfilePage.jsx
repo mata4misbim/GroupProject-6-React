@@ -82,6 +82,11 @@ export default function ProfilePage() {
   };
 
   const startProfileEdit = () => {
+    setProfileForm({
+      display_name: savedProfile.display_name,
+      profile_picture: null,
+      banner_picture: null,
+    });
     setIsEditingProfile(true);
     setProfileStatus(null);
     setProfileMessage("");
@@ -141,7 +146,7 @@ export default function ProfilePage() {
       }
 
       const response = await apiUpload("/profile", fd, "PUT");
-      const updatedProfile = response.data;
+      const updatedProfile = response.data || response.user || response;
       const nextProfile = {
         display_name: updatedProfile.display_name || updatedProfile.username || "",
         profile_picture_url: updatedProfile.profile_picture?.url || avatarUrl,
@@ -232,8 +237,8 @@ export default function ProfilePage() {
 
           {/* Info */}
           <div className="flex-1 pt-2 w-full">
-            <form onSubmit={handleProfileSubmit} className="max-w-2xl">
-              <div className="grid gap-3">
+            <form id="profile-edit-form" onSubmit={handleProfileSubmit} className="max-w-2xl">
+              {isEditingProfile ? (
                 <div>
                   <label className="block text-[11px] uppercase tracking-[0.1em] text-white/45 mb-1.5">
                     Display name
@@ -242,53 +247,60 @@ export default function ProfilePage() {
                     type="text"
                     value={profileForm.display_name}
                     onChange={(e) => updateProfileField("display_name", e.target.value)}
-                    disabled={!isEditingProfile}
                     maxLength={80}
-                    className={`w-full max-w-xl px-3.5 py-2.5 rounded-lg border outline-none text-white text-[14px] ${
-                      isEditingProfile
-                        ? "bg-white/[0.05] border-white/10 focus:border-white/30"
-                        : "bg-transparent border-transparent px-0 text-[2rem] font-bold tracking-tight disabled:opacity-100"
-                    }`}
+                    autoFocus
+                    className="w-full max-w-xl px-3.5 py-2.5 rounded-lg border outline-none text-white text-[14px] bg-white/[0.05] border-white/10 focus:border-white/30"
                   />
                 </div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3 mt-4">
-                {isEditingProfile ? (
-                  <>
-                    <button
-                      type="submit"
-                      disabled={profileSaving}
-                      className="px-4 py-2 text-[13px] font-semibold text-white bg-[#fc3c44] hover:bg-[#e8333b] rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {profileSaving ? "Saving..." : "Save"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={cancelProfileEdit}
-                      disabled={profileSaving}
-                      className="px-4 py-2 text-[13px] font-medium text-white/65 hover:text-white border border-white/15 hover:border-white/30 rounded-lg transition-colors disabled:opacity-50"
-                    >
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={startProfileEdit}
-                    className="px-4 py-2 text-[13px] font-semibold text-white bg-white/[0.08] hover:bg-white/[0.12] border border-white/10 rounded-lg transition-colors"
-                  >
-                    Edit profile
-                  </button>
-                )}
-              </div>
-
-              {profileStatus && (
-                <p className={`text-[12px] mt-3 ${profileStatus === "success" ? "text-green-400" : "text-[#fc3c44]"}`}>
-                  {profileMessage}
-                </p>
+              ) : (
+                <div>
+                  <h1 className="text-white text-[2rem] font-bold tracking-tight leading-tight">
+                    {savedProfile.display_name || user?.username || "Profile"}
+                  </h1>
+                  <p className="text-white/40 text-[13px] mt-1">Fan account</p>
+                </div>
               )}
             </form>
+
+            <div className="flex flex-wrap items-center gap-3 mt-4">
+              {user?.email && (
+                <p className="text-white/40 text-[13px] hidden">{user.email}</p>
+              )}
+              {isEditingProfile ? (
+                <>
+                  <button
+                    type="submit"
+                    form="profile-edit-form"
+                    disabled={profileSaving}
+                    className="px-4 py-2 text-[13px] font-semibold text-white bg-[#fc3c44] hover:bg-[#e8333b] rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {profileSaving ? "Saving..." : "Save"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={cancelProfileEdit}
+                    disabled={profileSaving}
+                    className="px-4 py-2 text-[13px] font-medium text-white/65 hover:text-white border border-white/15 hover:border-white/30 rounded-lg transition-colors disabled:opacity-50"
+                  >
+                    Cancel
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  onClick={startProfileEdit}
+                  className="px-4 py-2 text-[13px] font-semibold text-white bg-white/[0.08] hover:bg-white/[0.12] border border-white/10 rounded-lg transition-colors"
+                >
+                  Edit profile
+                </button>
+              )}
+            </div>
+
+            {profileStatus && (
+              <p className={`text-[12px] mt-3 ${profileStatus === "success" ? "text-green-400" : "text-[#fc3c44]"}`}>
+                {profileMessage}
+              </p>
+            )}
           </div>
         </div>
       </div>
