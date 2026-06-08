@@ -12,6 +12,7 @@ export default function Head() {
   const cart = useContext(CartContext);
   const isArtist =
     isLoggedIn && (user?.role === "artist" || Boolean(user?.artistName));
+  const isFan = isLoggedIn && !isArtist;
 
   const handleLogout = () => {
     logout();
@@ -41,6 +42,18 @@ export default function Head() {
             </span>
             <span className="sr-only">Artist guitar icon</span>
           </div>
+        )}
+        {isFan && (
+          <Link
+            to="/profile"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white/80 transition-all hover:bg-white/15 md:mr-1 cursor-pointer"
+            title="Go to profile"
+          >
+            <span aria-hidden="true" className="text-lg">
+              🎧
+            </span>
+            <span className="sr-only">Fan headphone icon - Go to profile</span>
+          </Link>
         )}
         {cart && (
           <button
