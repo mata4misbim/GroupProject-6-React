@@ -20,6 +20,7 @@ export default function OrderSubmissionProcessor({
   discountCode,
   discountAmount,
   shippingFee = 0,
+  requiresShipping = false,
   onSubmitSuccess,
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,13 +45,15 @@ export default function OrderSubmissionProcessor({
       missing.push(`Remove out-of-stock item${outOfStockItems.length > 1 ? 's' : ''}: ${outOfStockItems.map((i) => i.name).join(', ')}`);
     }
 
-    // Check shipping
-    if (!shippingInformation) {
-      missing.push('Shipping information');
-    } else {
-      const shippingValidation = validateShippingInformation(shippingInformation);
-      if (!shippingValidation.isValid) {
-        missing.push('Valid shipping information');
+    // Check shipping (only required when cart has physical merch)
+    if (requiresShipping) {
+      if (!shippingInformation) {
+        missing.push('Shipping information');
+      } else {
+        const shippingValidation = validateShippingInformation(shippingInformation);
+        if (!shippingValidation.isValid) {
+          missing.push('Valid shipping information');
+        }
       }
     }
 
@@ -65,7 +68,7 @@ export default function OrderSubmissionProcessor({
     }
 
     return missing;
-  }, [cartItems, shippingInformation, paymentDetails]);
+  }, [cartItems, shippingInformation, paymentDetails, requiresShipping]);
 
   const missingFields = getMissingFields();
   const isFormComplete = missingFields.length === 0;
@@ -81,14 +84,16 @@ export default function OrderSubmissionProcessor({
       errors.push(ERROR_MESSAGES.EMPTY_CART);
     }
 
-    // Shipping validation
-    if (shippingInformation) {
-      const shippingValidation = validateShippingInformation(shippingInformation);
-      if (!shippingValidation.isValid) {
-        Object.values(shippingValidation.errors).forEach((error) => errors.push(error));
+    // Shipping validation (only when cart has physical merch)
+    if (requiresShipping) {
+      if (shippingInformation) {
+        const shippingValidation = validateShippingInformation(shippingInformation);
+        if (!shippingValidation.isValid) {
+          Object.values(shippingValidation.errors).forEach((error) => errors.push(error));
+        }
+      } else {
+        errors.push('Shipping information is required');
       }
-    } else {
-      errors.push('Shipping information is required');
     }
 
     // Payment validation
@@ -102,7 +107,7 @@ export default function OrderSubmissionProcessor({
     }
 
     return errors;
-  }, [cartItems, shippingInformation, paymentDetails]);
+  }, [cartItems, shippingInformation, paymentDetails, requiresShipping]);
 
   /**
    * Handle order submission
@@ -246,6 +251,7 @@ OrderSubmissionProcessor.propTypes = {
   discountCode: PropTypes.string,
   discountAmount: PropTypes.number,
   shippingFee: PropTypes.number,
+  requiresShipping: PropTypes.bool,
   onSubmitSuccess: PropTypes.func,
 };
 
@@ -255,5 +261,6 @@ OrderSubmissionProcessor.defaultProps = {
   discountCode: '',
   discountAmount: 0,
   shippingFee: 0,
+  requiresShipping: false,
   onSubmitSuccess: null,
 };

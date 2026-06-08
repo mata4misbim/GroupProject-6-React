@@ -1,276 +1,304 @@
-## สถานะโปรเจกต์
+<div align="center">
 
-✅ **พร้อมใช้งาน**
+# AUDTLIST
 
-- Nav bar → ทำงาน
-- Footer → ทำงาน
-- Dark mode → รองรับ
-- Responsive → มี flex-wrap
+**DROP YOUR SOUND INTO THE ZONE**
 
-🔄 **พัฒนาต่อ**
-
-- เพิ่มหน้าสินค้า (Products)
-- เพิ่มหน้ารายละเอียดสินค้า
-- เพิ่มระบบ Cart
-- เชื่อมต่อ API / Database
-
-
-
-# Music Store - เว็บไซต์ขายเครื่องดนตรี
-
-## ภาพรวมโปรเจกต์
-
-| รายการ        | รายละเอียด                  |
-| ------------- | --------------------------- |
-| **Framework** | React 19 + Vite 8           |
-| **ภาษา**      | JavaScript (JSX)            |
-| **CSS**       | Vanilla CSS + CSS Variables |
-| **Port**      | http://localhost:5173       |
+*A marketplace for independent artists — music, merch, and live streams, all in one place.*
 
 ---
 
-## โครงสร้างไฟล์
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-7-CA4245?logo=reactrouter&logoColor=white)
+![Socket.io](https://img.shields.io/badge/Socket.io-4-010101?logo=socketdotio&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-Express-339933?logo=nodedotjs&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
+
+</div>
+
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Pages & Routes](#pages--routes)
+- [State Management](#state-management)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [Team](#team)
+
+---
+
+## Overview
+
+**EN:** Audtlist is a full-stack web application built as a marketplace platform for independent music artists. It lets artists upload and sell digital music (singles, albums), physical goods (vinyl, CDs, cassettes, merch), and run live stream events — all from a single platform. Fans can browse, preview, purchase, and follow artists they love.
+
+**TH:** Audtlist คือแพลตฟอร์ม marketplace สำหรับศิลปินอิสระ ที่รวมการขายดนตรี (digital และ physical), เสื้อผ้า/ของที่ระลึก, และ live streaming ไว้ในที่เดียว แฟนๆ สามารถ browse, ฟัง preview, ซื้อสินค้า, และติดตามศิลปินได้ในแอปเดียว
+
+---
+
+## Features
+
+### 🎵 Music Store
+- Browse products by category: **Digital**, **Vinyl**, **CD**, **Cassette**, **T-shirt**
+- Filter by genre (multi-select), free-text search
+- Product detail page with audio preview and variant selection
+- Cart drawer with quantity editing and real-time total calculation
+- Fixed shipping cost only applied when physical items are in cart
+
+### 💳 Checkout & Payments
+- Multi-step checkout: cart review → shipping info → payment
+- Two payment methods: **Credit / Debit Card** and **QR PromptPay**
+- Discount code input
+- Order confirmation page with order summary
+
+### 🎤 Artist System
+- Two user roles: **Fan** and **Artist**
+- Artist dashboard for uploading music (singles, albums) and merch
+- Public artist profile page showing releases, merch, and bio
+- Follow / unfollow artists with persistent follow state
+
+### 📻 Live Streaming
+- Simulated live stream page (`/live/:id`) with video sync
+- Live badge, real-time viewer count, elapsed time display
+- Volume control with mute toggle
+- Live chat with auto-generated messages (Socket.io)
+- Prevents seeking and pausing to simulate a real broadcast
+
+### 🔊 Audio Player
+- Persistent mini player at the bottom of the screen
+- Plays across page navigation
+- Context-based audio state shared globally
+
+### 👤 Authentication
+- Login and registration for Fans and Artists
+- Session restoration via `/auth/me` API call on load
+- Forgot password flow
+- Profile settings page
+
+### 🌐 Other Pages
+- Landing page: hero banner, best-sellers, daily feed, radio section, stats, featured artists
+- About page with team members and company values
+- Community / Club page
+- Gift cards page
+- Help center with article pages
+- Terms & Conditions
+- 404 page
+
+---
+
+## Tech Stack
+
+### Frontend
+
+| Technology | Version | Purpose |
+|---|---|---|
+| React | ^19.2.5 | UI framework |
+| Vite | ^8.0.10 | Build tool & dev server |
+| React Router DOM | ^7.15.1 | Client-side routing |
+| Tailwind CSS | ^4.3.0 | Utility-first CSS |
+| Socket.io-client | ^4.8.3 | Realtime live chat |
+| Lucide React | ^1.3.0 | Icon library |
+| Plus Jakarta Sans | — | Primary typeface (Google Fonts) |
+
+### Backend (separate repository)
+
+| Technology | Purpose |
+|---|---|
+| Node.js + Express | REST API server |
+| MongoDB | Primary document database (users, artists, products, orders) |
+| PostgreSQL | Relational data |
+| Socket.io | Realtime events (live chat, session sync) |
+
+---
+
+## Project Structure
 
 ```
-src/
-├── main.jsx          # Entry point หลัก
-├── App.jsx           # Root component
-├── App.css           # Global styles
-├── index.css         # Reset & base styles
-└── components/
-    ├── Nav.jsx       # Navigation bar
-    └── Footer.jsx    # Footer
+GroupProject-6-React/
+├── public/                        # Static assets
+├── src/
+│   ├── assets/                    # Images, audio files
+│   │   └── landing-page/          # Landing-specific assets
+│   ├── components/
+│   │   ├── common/                # Shared UI (Nav, Footer, MiniPlayer, SearchBar, UserDropdown)
+│   │   ├── landing/               # Landing page sections (Banner, DailyFeed, Radio, SellingList…)
+│   │   └── signin/                # Auth form components (LogIn, FanRegister, ArtistRegister…)
+│   ├── contexts/                  # App-level contexts (AuthContext, AudioContext, FulfillmentContext…)
+│   ├── hooks/                     # Custom hooks (useAuth)
+│   ├── layouts/                   # Layout wrappers (MainLayout)
+│   ├── lib/
+│   │   ├── api.js                 # Centralised fetch wrapper (apiGet, apiPost, apiPatch)
+│   │   └── socket.js              # Socket.io client instance
+│   ├── mock-db/                   # Mock data for development (users, artists, tracks, albums…)
+│   ├── pages/                     # Top-level page components (Landing, About, Login, Help…)
+│   ├── shop/
+│   │   ├── components/
+│   │   │   ├── audio/             # AudioPlayer, PlayButton
+│   │   │   ├── cart/              # CartDrawer
+│   │   │   ├── checkout/          # ShippingForm, PaymentMethodSelector, CreditCardForm, QRPromptPay…
+│   │   │   ├── layout/            # Shop-specific Header & Footer
+│   │   │   └── product/           # ProductCard
+│   │   ├── context/               # Shop contexts (Cart, Wishlist, Collection, AudioPlayer, Auth)
+│   │   ├── data/
+│   │   │   ├── mockDb/            # Full mock dataset (artists, albums, tracks, merch, orders…)
+│   │   │   ├── helpers.js         # Query/filter helpers
+│   │   │   ├── liveHelpers.js     # Live stream timing utilities
+│   │   │   └── constants.js       # CATEGORIES, FIXED_SHIPPING_THB, etc.
+│   │   ├── pages/                 # Shop pages (Shop, ProductDetail, Checkout, Artist, Profile, Live…)
+│   │   └── ShopLayout.jsx         # Layout wrapper for all shop routes
+│   ├── utils/                     # Upload validation helpers
+│   ├── App.jsx                    # Root component, all route definitions
+│   ├── main.jsx                   # React entry point
+│   ├── App.css                    # Global CSS variables (fonts, colors, spacing)
+│   └── index.css                  # Base reset + dark mode variables
+├── index.html
+├── vite.config.js
+├── vercel.json                    # SPA rewrite rule for Vercel deployment
+└── package.json
 ```
 
 ---
 
-## ไฟล์และการทำงาน
+## Pages & Routes
 
-### 1. [main.jsx](src/main.jsx)
-
-```jsx
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App.jsx";
-
-createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
-```
-
-**หน้าที่:**
-
-- เป็นจุดเริ่มต้นของ React app
-- `createRoot` → สร้าง React root จาก DOM element `#root`
-- `StrictMode` → ช่วยตรวจจับ code ที่ล้าสมัยและ side effects ที่อาจมีปัญหา
-
----
-
-### 2. [App.jsx](src/App.jsx)
-
-```jsx
-import React from "react";
-import "./App.css";
-import Footer from "./components/Footer";
-import Nav from "./components/Nav";
-
-export default function App() {
-  return (
-    <>
-      <Nav />
-      <main style={{ minHeight: "80vh", padding: "20px" }}>
-        <h1>ยินดีต้อนรับสู่ Music Store 🎵</h1>
-      </main>
-      <Footer />
-    </>
-  );
-}
-```
-
-**หน้าที่:**
-
-- Root component หลักของแอป
-- รวม Nav + เนื้อหาหลัก + Footer เข้าด้วยกัน
-- ใช้ `<>` (Fragment) เพื่อ return หลาย element โดยไม่ต้องมี wrapper div
+| Route | Component | Description |
+|---|---|---|
+| `/` | `LandingPage` | Hero, best-sellers, daily feed, radio, stats, featured artists |
+| `/login` | `LoginPage` | Email + password login |
+| `/register/fan` | `FanRegisterPage` | New fan account registration |
+| `/register/artist` | `ArtistRegisterPage` | New artist account registration |
+| `/forgot-password` | `ForgotPasswordPage` | Password reset request |
+| `/about` | `About` | Company story, team, values |
+| `/shop` | `ShopPage` | Browse all products with filters |
+| `/discover/:genres` | `ShopPage` | Pre-filtered by genre slug(s) |
+| `/product/:slug` | `ProductDetailPage` | Product info, audio preview, add to cart |
+| `/checkout` | `CheckoutPage` | Multi-step checkout flow |
+| `/order-confirmed` | `OrderConfirmedPage` | Post-purchase confirmation |
+| `/artist/:slug` | `ArtistPage` | Public artist profile |
+| `/profile` | `ProfilePage` | Fan profile & purchase history |
+| `/artist` | `ProfilePageArtist` | Artist dashboard (upload, analytics) |
+| `/admin` | `ProfilePageAdmin` | Admin dashboard |
+| `/profilesetting` | `ProfileSetting` | Edit profile, change password |
+| `/live/:id` | `LivePage` | Live stream + live chat |
+| `/gift-cards` | `GiftCardsPage` | Gift card purchase |
+| `/club` | `ClubPage` | Community / club page |
+| `/help` | `HelpPage` | Help centre |
+| `/help/:slug` | `HelpArticlePage` | Individual help article |
+| `/terms` | `TermsConditions` | Terms of service |
+| `/article1` `/article2` `/article3` | `Article*Page` | Editorial articles |
+| `*` | `NotFoundPage` | 404 |
 
 ---
 
-### 3. [components/Nav.jsx](src/components/Nav.jsx)
+## State Management
 
-```jsx
-export default function Nav() {
-  return (
-    <nav style={styles.nav}>
-      <div style={styles.container}>
-        <h1 style={styles.logo}>🎵 Music Store</h1>
-        <ul style={styles.menu}>
-          <li>
-            <a href="#" style={styles.link}>
-              หน้าหลัก
-            </a>
-          </li>
-          <li>
-            <a href="#" style={styles.link}>
-              สินค้า
-            </a>
-          </li>
-          <li>
-            <a href="#" style={styles.link}>
-              ติดต่อ
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  );
-}
+Audtlist uses React Context for all shared state. No external state library is used.
+
+| Context | Location | Responsibility |
+|---|---|---|
+| `AuthContext` | `src/shop/context/AuthContext.jsx` | User session, login, logout, register |
+| `CartContext` | `src/shop/context/CartContext.jsx` | Cart items, totals, shipping, cart drawer open/close |
+| `WishlistContext` | `src/shop/context/WishlistContext.jsx` | Saved/liked products (persisted in localStorage) |
+| `CollectionContext` | `src/shop/context/CollectionContext.jsx` | User's owned products |
+| `AudioPlayerContext` | `src/shop/context/AudioPlayerContext.jsx` | Global audio playback state for MiniPlayer |
+| `FollowContext` | `src/contexts/FollowContext.jsx` | Follow/unfollow artist state |
+| `FulfillmentContext` | `src/contexts/FulfillmentContext.jsx` | Order fulfillment status overrides (cross-tab sync via localStorage) |
+| `AudioContext` | `src/contexts/AudioContext.jsx` | App-level audio context |
+
+### API Layer
+
+All HTTP calls go through `src/lib/api.js`:
+
+```js
+// Base URL from environment variable, defaults to http://localhost:3000/api/v1
+apiGet('/auth/me')
+apiPost('/auth/login', { email, password })
+apiPatch('/users/me', { ... })
 ```
 
-**หน้าที่:** แสดง navigation bar ด้านบน
-
-**Styles:**
-| Property | Value |
-|----------|-------|
-| Background | `#222` (ดำ) |
-| Logo color | `#f0c040` (ทอง) |
-| Layout | Flexbox (space-between) |
+Cookies are sent with every request (`credentials: "include"`), so session management is handled server-side.
 
 ---
 
-### 4. [components/Footer.jsx](src/components/Footer.jsx)
+## Getting Started
 
-```jsx
-export default function Footer() {
-  return (
-    <footer style={styles.footer}>
-      <div style={styles.container}>
-        <div style={styles.section}>
-          <h3 style={styles.title}>เกี่ยวกับเรา</h3>
-          <p style={styles.text}>...</p>
-        </div>
-        <div style={styles.section}>
-          <h3 style={styles.title}>ลิงก์</h3>
-          ...
-        </div>
-        <div style={styles.section}>
-          <h3 style={styles.title}>ติดต่อ</h3>
-          ...
-        </div>
-      </div>
-      <div style={styles.copyright}>
-        © 2026 Music Store. All rights reserved.
-      </div>
-    </footer>
-  );
-}
-```
+### Prerequisites
 
-**หน้าที่:** แสดง footer ด้านล่าง
+- Node.js ≥ 18
+- npm ≥ 9
+- Backend server running (see backend repo)
 
-**โครงสร้าง 3 คอลัมน์:**
-
-1. **เกี่ยวกับเรา** - คำอธิบายร้าน
-2. **ลิงก์** - ลิงก์นำทาง
-3. **ติดต่อ** - ข้อมูลติดต่อ (ที่อยู่, เบอร์, อีเมล)
-
-**Styles:**
-| Property | Value |
-|----------|-------|
-| Background | `#333` (เทาเข้ม) |
-| Title color | `#f0c040` (ทอง) |
-| Layout | Flexbox + flex-wrap (responsive) |
-
----
-
-### 5. [App.css](src/App.css)
-
-```css
-:root {
-  --font-display: "Caesar Dressing", system-ui;
-  --font-body: "TikTok Sans", "Noto Sans Thai", sans-serif;
-  --font-ui: "Montserrat", sans-serif;
-
-  --text-xs: 12px;
-  --text-sm: 14px;
-  --text-base: 16px;
-  --text-md: 21px;
-  --text-lg: 28px;
-  --text-xl: 37px;
-  --text-2xl: 50px;
-
-  --color-bg: #e7f2ef;
-  --color-accent: #6c63ff;
-  --color-text-dark: #0f172a;
-  --radius: 12px;
-}
-```
-
-**หน้าที่:** กำหนด CSS variables สำหรับ:
-
-- **Fonts** → Caesar Dressing, TikTok Sans, Noto Sans Thai, Montserrat
-- **Font sizes** → xs, sm, base, md, lg, xl, 2xl
-- **Colors** → พื้นหลัง, accent, ข้อความ
-- **Spacing** → ระยะห่าง (1-8)
-
----
-
-### 6. [index.css](src/index.css)
-
-```css
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --accent: #aa3bff;
-  ...
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    ...
-  }
-}
-```
-
-**หน้าที่:**
-
-- Base styles และ CSS reset
-- กำหนดตัวแปรสีหลัก
-- **Dark mode support** → ตรวจจับ `prefers-color-scheme: dark` และเปลี่ยนสีอัตโนมัติ
-
----
-
-## การติดตั้งและรันโปรเจกต์
+### Installation
 
 ```bash
-# ติดตั้ง dependencies
+# Clone the repository
+git clone <repo-url>
+cd GroupProject-6-React
+
+# Install dependencies
 npm install
+```
 
-# รัน development server
+### Running in Development
+
+```bash
 npm run dev
+# App available at http://localhost:5173
+```
 
-# Build สำหรับ production
+### Build for Production
+
+```bash
 npm run build
-
-# Preview production build
 npm run preview
 ```
 
----
+### Linting
 
-## เทคโนโลยีที่ใช้
-
-| เทคโนโลยี    | เวอร์ชัน |
-| ------------ | -------- |
-| React        | ^19.2.5  |
-| Vite         | ^8.0.10  |
-| Tailwind CSS | ^4.2.4   |
-| ESLint       | ^10.2.1  |
+```bash
+npm run lint
+```
 
 ---
 
+## Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+VITE_API_BASE_URL=http://localhost:3000
+```
+
+| Variable | Default | Description |
+|---|---|---|
+| `VITE_API_BASE_URL` | `http://localhost:3000` | Base URL of the backend API and Socket.io server |
+
+---
+
+## Team
+
+| Name | Role |
+|---|---|
+| Akkarawin Suchaichit | Tech Leader & Co-Founder |
+| Jinvaramas Piklunklin | Product Lead & Co-Founder |
+| Kasidate Sae-eaw | Tech Agile Coach |
+| Thaweeratch Khongrachata | Product Designer |
+| Mata Chobmee | Backend Engineer |
+| Piyawat Kamton | Team Coordinator |
+
+---
+
+<div align="center">
+
+**AUDTLIST** — *Your Sound, Your Space.*
+
+© 2026 Audtlist. All rights reserved.
+
+</div>
