@@ -74,7 +74,7 @@ export default function GiftCardsPage() {
     <div className="min-h-screen bg-[#03030f] font-['Plus_Jakarta_Sans',sans-serif] text-white">
       <Nav />
       {/* Page header */}
-      <div className="border-b border-white/8 bg-[#0a0a1a] px-[10%] py-12">
+      <div className="border-b border-white/8 bg-[#0a0a1a] px-[5%] py-8 md:px-[10%] md:py-12">
         <h1 className="mb-3 text-4xl font-bold tracking-tight">Gift Cards</h1>
         <p className="max-w-2xl text-[15px] leading-relaxed text-white/55">
           Give the gift of music. Gift cards can be used to purchase digital
@@ -84,10 +84,10 @@ export default function GiftCardsPage() {
       </div>
 
       {/* Main content */}
-      <div className="px-[10%] py-14">
-        <div className="flex gap-14">
+      <div className="px-[5%] py-8 md:px-[10%] md:py-14">
+        <div className="flex flex-col gap-10 md:flex-row md:gap-14">
           {/* Left — card preview + design picker */}
-          <div className="flex flex-col gap-6" style={{ width: "420px", flexShrink: 0 }}>
+          <div className="flex flex-col gap-6 md:w-105 md:shrink-0">
             {/* Large card preview */}
             <div
               className="relative flex h-[240px] w-full items-end overflow-hidden rounded-2xl p-6"
@@ -171,7 +171,7 @@ export default function GiftCardsPage() {
               <label className="mb-3 block text-sm font-semibold text-white/70">
                 Choose value
               </label>
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 {amounts.map((a) => (
                   <button
                     key={a.value}
@@ -258,7 +258,7 @@ export default function GiftCardsPage() {
             </div>
 
             {/* Summary + CTA */}
-            <div className="mt-2 flex items-center justify-between rounded-2xl border border-white/8 bg-[#1c1c2e] p-5">
+            <div className="mt-2 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/8 bg-[#1c1c2e] p-5">
               <div>
                 <p className="text-xs text-white/40">Total</p>
                 <p className="text-2xl font-bold">฿{selectedAmount.toLocaleString()} THB</p>

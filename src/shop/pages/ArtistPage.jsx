@@ -33,14 +33,14 @@ export default function ArtistPage() {
     <div className="min-h-screen bg-bg font-['Plus_Jakarta_Sans',sans-serif]">
       {/* Banner */}
       <div
-        className="relative h-[300px] bg-cover bg-center"
+        className="relative h-48 bg-cover bg-center md:h-75"
         style={{ backgroundImage: `url(${artist.banner_url})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-transparent" />
       </div>
 
       {/* Artist info */}
-      <div className="px-[10%] -mt-20 relative z-10">
+      <div className="px-[5%] -mt-20 relative z-10 md:px-[10%]">
         <Link
           to="/shop"
           className="inline-flex items-center gap-2 mb-6 text-white/60 hover:text-white text-[13px] no-underline transition-colors"
@@ -87,7 +87,7 @@ export default function ArtistPage() {
       </div>
 
       {/* Products grid */}
-      <div className="px-[10%] py-10 mt-6">
+      <div className="mt-6 px-[5%] py-8 md:px-[10%] md:py-10">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-white text-[1.4rem] font-bold">
             Releases ({products.length})

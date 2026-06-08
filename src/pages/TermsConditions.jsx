@@ -135,31 +135,31 @@ function RevenueChart() {
       {/*
         Circle: center (100,100) r=80  — angles in SVG convention (0°=right, CW+)
         Slices start from top (270°) going clockwise:
-          Slice 1 "your share"   82%  → ends at 205.2°  path large-arc=1
-          Slice 2 "platform fee" 13%  → ends at 252°    path large-arc=0
-          Slice 3 "payment fees"  5%  → ends at 270°    path large-arc=0
+          Slice 1 "your share"   85%  → ends at 216°  path large-arc=1
+          Slice 2 "platform fee" 10%  → ends at 252°  path large-arc=0
+          Slice 3 "payment fees"  5%  → ends at 270°  path large-arc=0
         Key coordinates:
           top       = (100, 20)
-          205.2°    = (27.6, 66)
+          216°      = (35.3, 53.0)
           252°      = (75.3, 23.9)
       */}
       <svg width="170" height="170" viewBox="0 0 200 200" style={{ flexShrink: 0 }}>
-        <path d="M 100 100 L 100 20 A 80 80 0 1 1 27.6 66 Z"     fill="#2d8c6e" />
-        <path d="M 100 100 L 27.6 66 A 80 80 0 0 1 75.3 23.9 Z"  fill="#1b5e47" />
+        <path d="M 100 100 L 100 20 A 80 80 0 1 1 35.3 53 Z"     fill="#2d8c6e" />
+        <path d="M 100 100 L 35.3 53 A 80 80 0 0 1 75.3 23.9 Z"  fill="#1b5e47" />
         <path d="M 100 100 L 75.3 23.9 A 80 80 0 0 1 100 20 Z"   fill="#91c4b4" />
 
         {/* white dividers */}
         <line x1="100" y1="100" x2="100"  y2="20"   stroke="white" strokeWidth="1.5" />
-        <line x1="100" y1="100" x2="27.6" y2="66"   stroke="white" strokeWidth="1.5" />
+        <line x1="100" y1="100" x2="35.3" y2="53"   stroke="white" strokeWidth="1.5" />
         <line x1="100" y1="100" x2="75.3" y2="23.9" stroke="white" strokeWidth="1.5" />
 
-        {/* label "your share" — midpoint angle 57.6°, r=45 → (124, 138) */}
-        <rect x="97"  y="130" width="54" height="16" rx="2" fill="#1a1a40" />
-        <text x="124" y="142" textAnchor="middle" fontSize="9.5" fill="white" fontFamily="Plus Jakarta Sans, sans-serif">your share</text>
+        {/* label "your share" — midpoint angle 63°, r=45 → (120, 140) */}
+        <rect x="93"  y="130" width="54" height="16" rx="2" fill="#1a1a40" />
+        <text x="120" y="142" textAnchor="middle" fontSize="9.5" fill="white" fontFamily="Plus Jakarta Sans, sans-serif">your share</text>
 
-        {/* label "platform fee" — midpoint angle 228.6°, r=50 → (67, 63) */}
-        <rect x="38"  y="55"  width="58" height="16" rx="2" fill="#1a1a40" />
-        <text x="67"  y="67"  textAnchor="middle" fontSize="9.5" fill="white" fontFamily="Plus Jakarta Sans, sans-serif">platform fee</text>
+        {/* label "platform fee" — midpoint angle 234°, r=50 → (71, 60) */}
+        <rect x="42"  y="52"  width="58" height="16" rx="2" fill="#1a1a40" />
+        <text x="71"  y="64"  textAnchor="middle" fontSize="9.5" fill="white" fontFamily="Plus Jakarta Sans, sans-serif">platform fee</text>
 
         {/* label "payment fees" — midpoint angle 261°, r=60 → (91, 41) */}
         <rect x="61"  y="33"  width="60" height="16" rx="2" fill="#1a1a40" />
@@ -172,10 +172,7 @@ function RevenueChart() {
           Pricing
         </p>
         <p style={{ fontSize: "13px", color: "#5a5a7a", lineHeight: 1.65, marginBottom: "10px" }}>
-          Artist accounts are free. We make money through a <strong>10% revenue share on merch sales</strong> and <strong>15% on digital music</strong> (payment processor fees are separate and vary by transaction size).
-        </p>
-        <p style={{ fontSize: "13px", color: "#5a5a7a", lineHeight: 1.65 }}>
-          The remainder — <strong style={{ color: "#4a47c4" }}>82% on average</strong> — goes directly into your PayPal account, typically within 24 to 48 hours.
+          Artist accounts are free. We make money through a <strong>flat 10% platform fee on all products</strong> — music and merch alike (payment processor fees are separate and vary by transaction size).
         </p>
       </div>
 

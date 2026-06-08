@@ -36,7 +36,7 @@ export default function Footer({ simple = false }) {
   return (
     <>
 
-      <footer className="mx-0 bg-[#0a0a1a] px-10 py-10 text-white">
+      <footer className="mx-0 bg-[#0a0a1a] px-5 py-8 text-white md:px-10 md:py-10">
         <div className="flex flex-col gap-3">
           <Link to="/"><img src={logoA} alt="AUDTLIST" className="h-24 w-auto object-left object-contain self-start -ml-3 hover:opacity-80 transition-opacity cursor-pointer" /></Link>
           <p className="text-white/45 text-[13px] max-w-sm leading-relaxed">

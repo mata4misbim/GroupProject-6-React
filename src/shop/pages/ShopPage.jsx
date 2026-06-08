@@ -216,7 +216,7 @@ export default function ShopPage() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-x-3 gap-y-5">
+          <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7">
             {filtered.map((product) => (
               <ProductCard
                 key={product._id}
@@ -236,7 +236,7 @@ function FilterPill({ active, onClick, children }) {
   return (
     <button
       onClick={onClick}
-      className={`px-[18px] py-[7px] rounded-full text-[15px] font-medium transition-all ${
+      className={`px-4.5 py-1.75 rounded-full text-[15px] font-medium transition-all ${
         active
           ? "bg-accent text-white"
           : "bg-white/[0.07] text-white/55 hover:bg-white/10 hover:text-white/85"
@@ -251,7 +251,7 @@ function CategoryPill({ active, icon, onClick, children }) {
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-1.5 px-[15px] py-[7px] rounded-full text-[14px] font-medium border transition-all ${
+      className={`flex items-center gap-1.5 px-3.75 py-1.75 rounded-full text-[14px] font-medium border transition-all ${
         active
           ? "bg-[rgba(252,60,68,0.15)] text-white border-[rgba(252,60,68,0.45)]"
           : "bg-transparent text-white/45 border-white/10 hover:border-white/25 hover:text-white/75"

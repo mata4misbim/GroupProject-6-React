@@ -16,10 +16,10 @@ export default function MiniPlayer() {
   if (!isVisible || (!isPlaying && currentTime === 0)) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-999 flex items-center gap-3 border-t border-white/15 bg-[#0a0a1f]/95 px-5 py-2 backdrop-blur-xl font-['Plus_Jakarta_Sans',sans-serif] shadow-[0_-2px_18px_rgba(255,255,255,0.07)]">
+    <div className="fixed bottom-0 left-0 right-0 z-999 flex items-center gap-2 border-t border-white/15 bg-[#0a0a1f]/95 px-3 py-2 backdrop-blur-xl font-['Plus_Jakarta_Sans',sans-serif] shadow-[0_-2px_18px_rgba(255,255,255,0.07)] md:gap-3 md:px-5">
 
       {/* Track info */}
-      <div className="flex items-center gap-2 w-56 shrink-0">
+      <div className="flex w-32 shrink-0 items-center gap-2 md:w-56">
         <img src={activeTrack.img} alt={activeTrack.name} className="h-8 w-8 rounded-md object-cover" />
         <div className="min-w-0">
           <p className="truncate text-xs font-semibold text-white">{activeTrack.name}</p>
@@ -69,7 +69,7 @@ export default function MiniPlayer() {
       </div>
 
       {/* Volume + Close */}
-      <div className="flex items-center gap-2 w-36 shrink-0 justify-end">
+      <div className="flex shrink-0 items-center justify-end gap-2 md:w-36">
         <button
           onClick={() => setIsMuted((m) => !m)}
           className="text-white/40 hover:text-white transition-colors"
@@ -87,7 +87,7 @@ export default function MiniPlayer() {
           type="range" min="0" max="1" step="0.01"
           value={isMuted ? 0 : volume}
           onChange={(e) => { setVolume(Number(e.target.value)); setIsMuted(false); }}
-          className="h-1 w-20 cursor-pointer accent-white"
+          className="hidden h-1 w-20 cursor-pointer accent-white md:block"
         />
         <button
           onClick={closeMiniPlayer}

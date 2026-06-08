@@ -84,8 +84,8 @@ export default function ProfilePageArtist() {
       </div>
 
       {/* ── Profile header ── */}
-      <div className="px-[10%] -mt-20 relative z-10">
-        <div className="flex gap-6 items-end">
+      <div className="px-[5%] -mt-20 relative z-10 md:px-[10%]">
+        <div className="flex flex-col gap-4 items-start md:flex-row md:items-end md:gap-6">
 
           {/* Avatar */}
           <div
@@ -170,7 +170,7 @@ export default function ProfilePageArtist() {
       </div>
 
       {/* ── Tabs ── */}
-      <div className="px-[10%] mt-8">
+      <div className="mt-8 px-[5%] md:px-[10%]">
         <div className="flex items-center gap-0.5 border-b border-white/10">
           {tabs.map((tab) => (
             <button
