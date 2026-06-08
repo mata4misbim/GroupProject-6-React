@@ -1,10 +1,11 @@
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { useFollow } from "../../contexts/FollowContext";
 import { useWishlist } from "../context/WishlistContext";
 import { useCollection } from "../context/CollectionContext";
 import { findArtistById, getProductWithDetails } from "../data/helpers";
+import { apiGet, apiUpload } from "../../lib/api";
 
 export default function ProfilePage() {
   const { user, isLoggedIn } = useAuth();
@@ -13,33 +14,116 @@ export default function ProfilePage() {
   const { wishlistedIds } = useWishlist();
 
   const [activeTab, setActiveTab] = useState("collection");
-  const [bannerUrl, setBannerUrl] = useState(
-    () => localStorage.getItem("userBannerUrl") || ""
-  );
-  const [avatarUrl, setAvatarUrl] = useState(
-    () => localStorage.getItem("userAvatarUrl") || ""
-  );
+  const [bannerUrl, setBannerUrl] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [profileForm, setProfileForm] = useState({
+    display_name: "",
+    profile_picture: null,
+    banner_picture: null,
+  });
+  const [profileStatus, setProfileStatus] = useState(null);
+  const [profileMessage, setProfileMessage] = useState("");
+  const [profileSaving, setProfileSaving] = useState(false);
 
   const bannerInputRef = useRef(null);
   const avatarInputRef = useRef(null);
 
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadProfile = async () => {
+      try {
+        const profile = await apiGet("/profile");
+        if (cancelled) return;
+
+        setProfileForm({
+          display_name: profile.display_name || profile.username || "",
+          profile_picture: null,
+          banner_picture: null,
+        });
+        setAvatarUrl(profile.profile_picture?.url || "");
+        setBannerUrl(profile.banner_picture?.url || "");
+      } catch (err) {
+        if (!cancelled) {
+          setProfileStatus("error");
+          setProfileMessage(err.message || "Unable to load profile.");
+        }
+      }
+    };
+
+    if (isLoggedIn) {
+      loadProfile();
+    }
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isLoggedIn]);
+
   if (!isLoggedIn) return <Navigate to="/login" replace />;
+
+  const updateProfileField = (name, value) => {
+    setProfileForm((prev) => ({ ...prev, [name]: value }));
+    setProfileStatus(null);
+    setProfileMessage("");
+  };
 
   const handleImageChange = (e, type) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
     const reader = new FileReader();
     reader.onload = (ev) => {
       const url = ev.target.result;
       if (type === "banner") {
         setBannerUrl(url);
-        localStorage.setItem("userBannerUrl", url);
+        updateProfileField("banner_picture", file);
       } else {
         setAvatarUrl(url);
-        localStorage.setItem("userAvatarUrl", url);
+        updateProfileField("profile_picture", file);
       }
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleProfileSubmit = async (e) => {
+    e.preventDefault();
+    if (profileSaving) return;
+
+    setProfileSaving(true);
+    setProfileStatus(null);
+    setProfileMessage("");
+
+    try {
+      const fd = new FormData();
+      fd.append("display_name", profileForm.display_name.trim());
+
+      if (profileForm.profile_picture) {
+        fd.append("profile_picture", profileForm.profile_picture);
+      }
+
+      if (profileForm.banner_picture) {
+        fd.append("banner_picture", profileForm.banner_picture);
+      }
+
+      const response = await apiUpload("/profile", fd, "PUT");
+      const updatedProfile = response.data;
+
+      setProfileForm({
+        display_name: updatedProfile.display_name || updatedProfile.username || "",
+        profile_picture: null,
+        banner_picture: null,
+      });
+      setAvatarUrl(updatedProfile.profile_picture?.url || avatarUrl);
+      setBannerUrl(updatedProfile.banner_picture?.url || bannerUrl);
+      setProfileStatus("success");
+      setProfileMessage("Profile updated successfully.");
+    } catch (err) {
+      setProfileStatus("error");
+      setProfileMessage(err.message || "Unable to update profile.");
+    } finally {
+      setProfileSaving(false);
+    }
   };
 
   const tabs = [
@@ -102,11 +186,40 @@ export default function ProfilePage() {
           </div>
 
           {/* Info */}
-          <div className="flex-1 pt-2">
-            <h1 className="text-white text-[2rem] font-bold tracking-tight truncate max-w-xl">
-              {user?.email}
-            </h1>
-            <p className="text-white/40 text-[14px] mt-1">Fan account</p>
+          <div className="flex-1 pt-2 w-full">
+            <form onSubmit={handleProfileSubmit} className="max-w-2xl">
+              <div className="grid gap-3">
+                <div>
+                  <label className="block text-[11px] uppercase tracking-[0.1em] text-white/45 mb-1.5">
+                    Display name
+                  </label>
+                  <input
+                    type="text"
+                    value={profileForm.display_name}
+                    onChange={(e) => updateProfileField("display_name", e.target.value)}
+                    maxLength={80}
+                    className="w-full max-w-xl px-3.5 py-2.5 rounded-lg bg-white/[0.05] border border-white/10 focus:border-white/30 outline-none text-white text-[14px]"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 mt-4">
+                <button
+                  type="submit"
+                  disabled={profileSaving}
+                  className="px-4 py-2 text-[13px] font-semibold text-white bg-[#fc3c44] hover:bg-[#e8333b] rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {profileSaving ? "Saving..." : "Save profile"}
+                </button>
+                <p className="text-white/40 text-[13px]">{user?.email}</p>
+              </div>
+
+              {profileStatus && (
+                <p className={`text-[12px] mt-3 ${profileStatus === "success" ? "text-green-400" : "text-[#fc3c44]"}`}>
+                  {profileMessage}
+                </p>
+              )}
+            </form>
           </div>
         </div>
       </div>

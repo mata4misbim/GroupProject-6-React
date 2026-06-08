@@ -32,9 +32,9 @@ export const apiPatch = (path, body) => apiRequest(path, {
   body: JSON.stringify(body ?? {}),
 });
 
-export const apiUpload = async (path, formData) => {
+export const apiUpload = async (path, formData, method = "POST") => {
   const response = await fetch(`${API_BASE_URL}${path}`, {
-    method: "POST",
+    method,
     credentials: "include",
     body: formData,
   });
