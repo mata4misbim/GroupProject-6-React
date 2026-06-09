@@ -4,6 +4,7 @@ import { useAuth } from "../../hooks/useAuth.js";
 import SearchBar from "./SearchBar.jsx";
 import logoA from "../../assets/landing-page/logoa.png";
 import introFan from "../../assets/intro_fan_music.mp3";
+import introArtist from "../../assets/intro_artist_music.mp3";
 import { useAudio } from "../../contexts/AudioContext";
 import { CartContext } from "../../shop/context/CartContext";
 import UserDropdown from "./UserDropdown.jsx";
@@ -31,6 +32,13 @@ export default function Head() {
     navigate("/profile");
   };
 
+  const handleArtistClick = () => {
+    try {
+      audio?.playIntro?.(introArtist, { volume: 0.7 });
+    } catch (e) {}
+    navigate("/artist");
+  };
+
   return (
     <nav className="sticky top-0 z-100 flex h-17 items-center justify-between gap-3 border-b border-white/10 bg-black/35 px-4 backdrop-blur-xl md:gap-6 md:px-[10%]">
       <div className="flex shrink-0 cursor-pointer items-center gap-2 text-white transition-opacity duration-150 hover:opacity-75">
@@ -48,12 +56,20 @@ export default function Head() {
       {/* Auth buttons */}
       <div className="flex shrink-0 items-center gap-1.5 md:gap-2">
         {isArtist && (
-          <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white/80 transition-all hover:bg-white/15 md:mr-1">
+          <button
+            type="button"
+            onClick={handleArtistClick}
+            className={`flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white/80 transition-all hover:bg-white/15 md:mr-1 cursor-pointer ${audio?.introPlaying ? "ring-2 ring-accent" : ""}`}
+            title="Go to artist dashboard"
+            aria-label="Go to artist dashboard"
+          >
             <span aria-hidden="true" className="text-lg">
               🎸
             </span>
-            <span className="sr-only">Artist guitar icon</span>
-          </div>
+            <span className="sr-only">
+              Artist guitar icon - Go to artist dashboard
+            </span>
+          </button>
         )}
         {isFan && (
           <button
