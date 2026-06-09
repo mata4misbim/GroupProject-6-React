@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth.js";
 import SearchBar from "./SearchBar.jsx";
 import logoA from "../../assets/landing-page/logoa.png";
-import introFan from "../../assets/intro_fan_music.mp3";
-import introArtist from "../../assets/intro_artist_music.mp3";
+import introArtist from "../../assets/intro_artist2_sound.mp3";
 import { useAudio } from "../../contexts/AudioContext";
 import { CartContext } from "../../shop/context/CartContext";
 import UserDropdown from "./UserDropdown.jsx";
@@ -25,10 +24,6 @@ export default function Head() {
   const audio = useAudio();
 
   const handleFanClick = () => {
-    try {
-      // use global audio context so playback continues across navigation
-      audio?.playIntro?.(introFan, { volume: 0.7 });
-    } catch (e) {}
     navigate("/profile");
   };
 
