@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth.js";
 import SearchBar from "./SearchBar.jsx";
 import logoA from "../../assets/landing-page/logoa.png";
+import introFan from "../../assets/intro_fan_music.mp3";
+import { useAudio } from "../../contexts/AudioContext";
 import { CartContext } from "../../shop/context/CartContext";
 import UserDropdown from "./UserDropdown.jsx";
 
@@ -17,6 +19,16 @@ export default function Head() {
   const handleLogout = () => {
     logout();
     navigate("/");
+  };
+
+  const audio = useAudio();
+
+  const handleFanClick = () => {
+    try {
+      // use global audio context so playback continues across navigation
+      audio?.playIntro?.(introFan, { volume: 0.7 });
+    } catch (e) {}
+    navigate("/profile");
   };
 
   return (
@@ -44,16 +56,18 @@ export default function Head() {
           </div>
         )}
         {isFan && (
-          <Link
-            to="/profile"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white/80 transition-all hover:bg-white/15 md:mr-1 cursor-pointer"
+          <button
+            type="button"
+            onClick={handleFanClick}
+            className={`flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white/80 transition-all hover:bg-white/15 md:mr-1 cursor-pointer ${audio?.introPlaying ? "ring-2 ring-accent" : ""}`}
             title="Go to profile"
+            aria-label="Go to profile"
           >
             <span aria-hidden="true" className="text-lg">
               🎧
             </span>
             <span className="sr-only">Fan headphone icon - Go to profile</span>
-          </Link>
+          </button>
         )}
         {cart && (
           <button
